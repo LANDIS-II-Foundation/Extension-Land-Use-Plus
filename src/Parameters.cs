@@ -10,6 +10,7 @@ namespace Landis.Extension.LandUse
     public class Parameters
     {
         private int timestep;
+        private string inputMapNameTemplate;
 
         //---------------------------------------------------------------------
 
@@ -25,6 +26,27 @@ namespace Landis.Extension.LandUse
                     throw new InputValueException(value.ToString(),
                                                   "Timestep must be > or = 0");
                 timestep = value;
+            }
+        }
+
+        //---------------------------------------------------------------------
+
+        /// <summary>
+        /// Template for pathnames for input maps of land use.
+        /// </summary>
+        public string InputMaps
+        {
+            get
+            {
+                return inputMapNameTemplate;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    MapNames.CheckTemplateVars(value);
+                }
+                inputMapNameTemplate = value;
             }
         }
     }

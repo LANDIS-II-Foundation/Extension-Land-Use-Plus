@@ -3,11 +3,15 @@
 using Edu.Wisc.Forest.Flel.Util;
 using System.Collections.Generic;
 
-namespace Landis.Harvest
+// Although this utility class was designed for output path templates, it
+// can also be used for input path templates.  Should rename it in the library
+// eventually.
+using FilePath = Edu.Wisc.Forest.Flel.Util.OutputPath;
+
+namespace Landis.Extension.LandUse
 {
     /// <summary>
-    /// Methods for working with the template for the names of prescription
-    /// maps.
+    /// Methods for working with the template for the names of input maps.
     /// </summary>
     public static class MapNames
     {
@@ -21,7 +25,7 @@ namespace Landis.Harvest
         static MapNames()
         {
             knownVars = new Dictionary<string, bool>();
-            knownVars[TimestepVar] = true;
+            knownVars[TimestepVar] = true;  // true --> required
 
             varValues = new Dictionary<string, string>();
         }
@@ -30,7 +34,7 @@ namespace Landis.Harvest
 
         public static void CheckTemplateVars(string template)
         {
-            OutputPath.CheckTemplateVars(template, knownVars);
+            FilePath.CheckTemplateVars(template, knownVars);
         }
 
         //---------------------------------------------------------------------
@@ -39,7 +43,7 @@ namespace Landis.Harvest
                                                  int    timestep)
         {
             varValues[TimestepVar] = timestep.ToString();
-            return OutputPath.ReplaceTemplateVars(template, varValues);
+            return FilePath.ReplaceTemplateVars(template, varValues);
         }
     }
 }
