@@ -15,17 +15,20 @@ namespace Landis.Extension.LandUse
         public string Name { get; protected set; }
         public ushort MapCode { get; protected set; }
         public bool AllowHarvest { get; protected set; }
+        public LandCover.IChange LandCoverChange { get; protected set; }
 
         //---------------------------------------------------------------------
 
         public LandUse(
             string name,
             ushort mapCode,
-            bool harvestingAllowed)
+            bool harvestingAllowed,
+            LandCover.IChange initialLCC)
         {
             Name = name;
             MapCode = mapCode;
             AllowHarvest = harvestingAllowed;
+            LandCoverChange = initialLCC;
         }
     }
 }

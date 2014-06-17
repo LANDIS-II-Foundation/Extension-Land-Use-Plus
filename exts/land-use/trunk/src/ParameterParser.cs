@@ -86,7 +86,8 @@ namespace Landis.Extension.LandUse
 
                 LandUse landUse = new LandUse(name.Value.Actual,
                                               mapCode.Value.Actual,
-                                              allowHarvest.Value.Actual);
+                                              allowHarvest.Value.Actual,
+                                              null /* Land Cover Change */);
                 LandUseRegistry.Register(landUse);
             }
         }
