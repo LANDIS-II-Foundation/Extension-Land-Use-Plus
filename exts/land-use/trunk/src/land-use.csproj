@@ -37,6 +37,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="LandUse.cs" />
+    <Compile Include="LandUseRegistry.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="ParameterParser.cs" />
     <Compile Include="Parameters.cs" />
