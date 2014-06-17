@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="LandCover\IChange.cs" />
+    <Compile Include="LandCover\NoChange.cs" />
     <Compile Include="LandUse.cs" />
     <Compile Include="LandUseRegistry.cs" />
     <Compile Include="Main.cs" />
