@@ -1,3 +1,5 @@
+// Copyright 2005 University of Wisconsin
+
 using Edu.Wisc.Forest.Flel.Util;
 using System.Collections.Generic;
 
