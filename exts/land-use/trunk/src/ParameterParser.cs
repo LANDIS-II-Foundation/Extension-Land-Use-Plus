@@ -16,6 +16,11 @@ namespace Landis.Extension.LandUse
     public class ParameterParser
         : TextParser<Parameters>
     {
+        // Singleton for all the land uses that have no land cover changes
+        private static LandCover.IChange noLandCoverChange = new LandCover.NoChange();
+
+        //---------------------------------------------------------------------
+
         public override string LandisDataValue
         {
             get {
@@ -55,6 +60,7 @@ namespace Landis.Extension.LandUse
             InputVar<string> name = new InputVar<string>("LandUse");
             InputVar<ushort> mapCode = new InputVar<ushort>("MapCode");
             InputVar<bool> allowHarvest = new InputVar<bool>("AllowHarvest?");
+            InputVar<string> landCoverChangeType = new InputVar<string>("LandCoverChange");
 
             Dictionary<string, int> nameLineNumbers = new Dictionary<string, int>();
             Dictionary<ushort, int> mapCodeLineNumbers = new Dictionary<ushort, int>();
@@ -84,10 +90,19 @@ namespace Landis.Extension.LandUse
 
                 ReadVar(allowHarvest);
 
+                ReadVar(landCoverChangeType);
+                LandCover.IChange landCoverChange = null;
+                if (landCoverChangeType.Value.Actual == LandCover.NoChange.TypeName)
+                    landCoverChange = noLandCoverChange;
+                else
+                    throw new InputValueException(landCoverChangeType.Value.String,
+                                                  "\"{0}\" is not a type of land cover change",
+                                                  landCoverChangeType.Value.Actual);
+
                 LandUse landUse = new LandUse(name.Value.Actual,
                                               mapCode.Value.Actual,
                                               allowHarvest.Value.Actual,
-                                              null /* Land Cover Change */);
+                                              landCoverChange);
                 LandUseRegistry.Register(landUse);
             }
         }
