@@ -49,6 +49,10 @@ namespace Landis.Extension.LandUse
             ReadVar(timestep);
             parameters.Timestep = timestep.Value;
 
+            InputVar<string> inputMaps = new InputVar<string>("InputMaps");
+            ReadVar(inputMaps);
+            parameters.InputMaps = inputMaps.Value;
+
             ReadLandUses();
             return parameters;
         }

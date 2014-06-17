@@ -42,8 +42,11 @@
     <Compile Include="LandUse.cs" />
     <Compile Include="LandUseRegistry.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="MapNames.cs" />
+    <Compile Include="MapPixel.cs" />
     <Compile Include="ParameterParser.cs" />
     <Compile Include="Parameters.cs" />
+    <Compile Include="SiteVars.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Edu.Wisc.Forest.Flel.Util">
