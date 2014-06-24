@@ -5,6 +5,7 @@
 
 using Edu.Wisc.Forest.Flel.Util;
 using Landis.Core;
+using Landis.Library.Harvest;
 using System.Collections.Generic;
 
 namespace Landis.Extension.LandUse
@@ -14,7 +15,7 @@ namespace Landis.Extension.LandUse
     /// a text file.
     /// </summary>
     public class ParameterParser
-        : TextParser<Parameters>
+        : BasicParameterParser<Parameters>
     {
         // Singleton for all the land uses that have no land cover changes
         private static LandCover.IChange noLandCoverChange = new LandCover.NoChange();
@@ -33,7 +34,9 @@ namespace Landis.Extension.LandUse
         /// <summary>
         /// Initializes a new instance.
         /// </summary>
-        public ParameterParser()
+        public ParameterParser(ISpeciesDataset speciesDataset)
+            : base(speciesDataset, false)
+            // The "false" above --> keywords are disabled for cohort selectors
         {
         }
 
