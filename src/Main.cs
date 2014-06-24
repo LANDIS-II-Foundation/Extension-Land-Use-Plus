@@ -15,7 +15,6 @@ namespace Landis.Extension.LandUse
         public static readonly ExtensionType ExtType = new ExtensionType("disturbance:land use");
         public static readonly string ExtensionName = "Land Use";
 
-        private static ICore modelCore;
         private Parameters parameters;
         private string inputMapTemplate;
 
@@ -29,12 +28,12 @@ namespace Landis.Extension.LandUse
         //---------------------------------------------------------------------
 
         public override void LoadParameters(string dataFile,
-                                            ICore mCore)
+                                            ICore modelCore)
         {
-            modelCore = mCore;
-            Landis.Library.BiomassHarvest.Main.InitializeLib(modelCore);
-            modelCore.UI.WriteLine("  Loading parameters from {0}", dataFile);
-            ParameterParser parser = new ParameterParser(modelCore.Species);
+            Model.Core = modelCore;
+            Landis.Library.BiomassHarvest.Main.InitializeLib(Model.Core);
+            Model.Core.UI.WriteLine("  Loading parameters from {0}", dataFile);
+            ParameterParser parser = new ParameterParser(Model.Core.Species);
             parameters = Landis.Data.Load<Parameters>(dataFile, parser);
         }
 
@@ -42,8 +41,8 @@ namespace Landis.Extension.LandUse
 
         public override void Initialize()
         {
-            modelCore.UI.WriteLine("Initializing {0}...", Name);
-            SiteVars.Initialize(modelCore);
+            Model.Core.UI.WriteLine("Initializing {0}...", Name);
+            SiteVars.Initialize(Model.Core);
             Timestep = parameters.Timestep;
             inputMapTemplate = parameters.InputMaps;
 
@@ -88,14 +87,14 @@ namespace Landis.Extension.LandUse
 
         public void ProcessInputMap(ProcessLandUseAt processLandUseAt)
         {
-            string inputMapPath = MapNames.ReplaceTemplateVars(inputMapTemplate, modelCore.CurrentTime);
-            modelCore.UI.WriteLine("  Reading map \"{0}\"...", inputMapPath);
+            string inputMapPath = MapNames.ReplaceTemplateVars(inputMapTemplate, Model.Core.CurrentTime);
+            Model.Core.UI.WriteLine("  Reading map \"{0}\"...", inputMapPath);
             IInputRaster<MapPixel> inputMap;
             Dictionary<string, int> counts = new Dictionary<string, int>();
-            using (inputMap = modelCore.OpenRaster<MapPixel>(inputMapPath))
+            using (inputMap = Model.Core.OpenRaster<MapPixel>(inputMapPath))
             {
                 MapPixel pixel = inputMap.BufferPixel;
-                foreach (Site site in modelCore.Landscape)
+                foreach (Site site in Model.Core.Landscape)
                 {
                     inputMap.ReadBufferPixel();
                     if (site.IsActive)
@@ -122,7 +121,7 @@ namespace Landis.Extension.LandUse
                 }
             }
             foreach (string key in counts.Keys)
-                modelCore.UI.WriteLine("    {0} ({1:#,##0})", key, counts[key]);
+                Model.Core.UI.WriteLine("    {0} ({1:#,##0})", key, counts[key]);
         }
     }
 }
