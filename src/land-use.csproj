@@ -40,6 +40,7 @@
     <Compile Include="LandCover\IChange.cs" />
     <Compile Include="LandCover\NoChange.cs" />
     <Compile Include="LandCover\RemoveTrees.cs" />
+    <Compile Include="LandCover\RemoveTreesWithPartialHarvest.cs" />
     <Compile Include="LandUse.cs" />
     <Compile Include="LandUseRegistry.cs" />
     <Compile Include="Main.cs" />
@@ -58,6 +59,12 @@
     </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts">
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.AgeOnlyCohorts.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Library.BiomassCohorts">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.BiomassCohorts.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Library.BiomassHarvest-v0">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\LANDIS-II\v6\bin\build\Landis.Library.BiomassHarvest-v0.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.Harvest-v0">
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\build\Landis.Library.Harvest-v0.dll</HintPath>

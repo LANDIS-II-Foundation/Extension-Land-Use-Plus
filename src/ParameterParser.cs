@@ -5,6 +5,7 @@
 
 using Edu.Wisc.Forest.Flel.Util;
 using Landis.Core;
+using Landis.Library.BiomassHarvest;
 using Landis.Library.Harvest;
 using System.Collections.Generic;
 
@@ -104,7 +105,10 @@ namespace Landis.Extension.LandUse
                 else if (landCoverChangeType.Value.Actual == LandCover.RemoveTrees.TypeName)
                 {
                     ICohortSelector selector = ReadSpeciesAndCohorts("LandUse");
-                    landCoverChange = new LandCover.RemoveTrees(selector);
+                    if (PartialThinning.CohortSelectors.Count == 0)
+                        landCoverChange = new LandCover.RemoveTrees(selector);
+                    else
+                        landCoverChange = new LandCover.RemoveTreesWithPartialHarvest(selector, PartialThinning.CohortSelectors);
                 }
                 else
                     throw new InputValueException(landCoverChangeType.Value.String,
@@ -116,6 +120,29 @@ namespace Landis.Extension.LandUse
                                               allowHarvest.Value.Actual,
                                               landCoverChange);
                 LandUseRegistry.Register(landUse);
+            }
+        }
+
+        //---------------------------------------------------------------------
+
+        /// <summary>
+        /// Creates a cohort selection method for a specific set of ages and
+        /// age ranges.
+        /// </summary>
+        /// <remarks>
+        /// This overrides the base method so it can use the PartialThinning
+        /// class to handle cohort selections with percentages.
+        /// </remarks>
+        protected override void CreateCohortSelectionMethodFor(ISpecies species,
+                                                               IList<ushort> ages,
+                                                               IList<AgeRange> ranges)
+        {
+            if (! PartialThinning.CreateCohortSelectorFor(species, ages, ranges))
+            {
+                // There were no percentages specified for this species' ages
+                // and ranges.  So just create and store a whole cohort
+                // selector using the base method.
+                base.CreateCohortSelectionMethodFor(species, ages, ranges);
             }
         }
     }
