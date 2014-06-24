@@ -101,6 +101,11 @@ namespace Landis.Extension.LandUse
                 LandCover.IChange landCoverChange = null;
                 if (landCoverChangeType.Value.Actual == LandCover.NoChange.TypeName)
                     landCoverChange = noLandCoverChange;
+                else if (landCoverChangeType.Value.Actual == LandCover.RemoveTrees.TypeName)
+                {
+                    ICohortSelector selector = ReadSpeciesAndCohorts("LandUse");
+                    landCoverChange = new LandCover.RemoveTrees(selector);
+                }
                 else
                     throw new InputValueException(landCoverChangeType.Value.String,
                                                   "\"{0}\" is not a type of land cover change",
