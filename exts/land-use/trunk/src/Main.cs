@@ -32,6 +32,7 @@ namespace Landis.Extension.LandUse
                                             ICore mCore)
         {
             modelCore = mCore;
+            Landis.Library.Harvest.Main.InitializeLib(modelCore);
             modelCore.UI.WriteLine("  Loading parameters from {0}", dataFile);
             ParameterParser parser = new ParameterParser(modelCore.Species);
             parameters = Landis.Data.Load<Parameters>(dataFile, parser);
