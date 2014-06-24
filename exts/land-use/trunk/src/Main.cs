@@ -33,7 +33,7 @@ namespace Landis.Extension.LandUse
         {
             modelCore = mCore;
             modelCore.UI.WriteLine("  Loading parameters from {0}", dataFile);
-            ParameterParser parser = new ParameterParser();
+            ParameterParser parser = new ParameterParser(modelCore.Species);
             parameters = Landis.Data.Load<Parameters>(dataFile, parser);
         }
 
