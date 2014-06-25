@@ -57,6 +57,12 @@ namespace Landis.Extension.LandUse
             ReadVar(inputMaps);
             parameters.InputMaps = inputMaps.Value;
 
+            InputVar<string> siteLog = new InputVar<string>("SiteLog");
+            if (ReadOptionalVar(siteLog))
+                parameters.SiteLogPath = siteLog.Value;
+            else
+                parameters.SiteLogPath = null;
+
             ReadLandUses();
             return parameters;
         }

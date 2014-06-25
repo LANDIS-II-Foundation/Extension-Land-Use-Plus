@@ -11,6 +11,7 @@ namespace Landis.Extension.LandUse
     {
         private int timestep;
         private string inputMapNameTemplate;
+        private string siteLogPath;
 
         //---------------------------------------------------------------------
 
@@ -47,6 +48,27 @@ namespace Landis.Extension.LandUse
                     MapNames.CheckTemplateVars(value);
                 }
                 inputMapNameTemplate = value;
+            }
+        }
+
+        //---------------------------------------------------------------------
+
+        /// <summary>
+        /// Path to the CSV log file with biomass harvested per species at
+        /// each timestep by individual sites.
+        /// </summary>
+        public string SiteLogPath
+        {
+            get
+            {
+                return siteLogPath;
+            }
+            set
+            {
+                if (value == "")
+                    throw new InputValueException(value.ToString(),
+                                                  "Site log path is empty string");
+                siteLogPath = value;
             }
         }
     }

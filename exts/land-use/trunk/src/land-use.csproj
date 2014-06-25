@@ -49,6 +49,7 @@
     <Compile Include="Model.cs" />
     <Compile Include="ParameterParser.cs" />
     <Compile Include="Parameters.cs" />
+    <Compile Include="SiteLog.cs" />
     <Compile Include="SiteVars.cs" />
   </ItemGroup>
   <ItemGroup>
