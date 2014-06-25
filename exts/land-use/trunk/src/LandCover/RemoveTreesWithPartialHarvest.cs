@@ -3,10 +3,9 @@
 // files in this project's top-level directory, and at:
 //   http://landis-extensions.googlecode.com/svn/exts/land-use/trunk/
 
-using Landis.Core;
+using Landis.Library.BiomassCohorts;
 using Landis.Library.BiomassHarvest;
 using Landis.SpatialModeling;
-using System.Collections.Generic;
 
 namespace Landis.Extension.LandUse.LandCover
 {
@@ -41,6 +40,15 @@ namespace Landis.Extension.LandUse.LandCover
         {
             CurrentSite = site;
             Cut(site);
+        }
+
+        //---------------------------------------------------------------------
+
+        protected override void Record(int     reduction,
+                                       ICohort cohort)
+        {
+            if (SiteLog.Enabled)
+                SiteLog.RecordHarvest(cohort.Species, reduction);
         }
     }
 }
