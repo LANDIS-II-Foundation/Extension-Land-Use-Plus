@@ -45,6 +45,8 @@ namespace Landis.Extension.LandUse
             SiteVars.Initialize(Model.Core);
             Timestep = parameters.Timestep;
             inputMapTemplate = parameters.InputMaps;
+            if (parameters.SiteLogPath != null)
+                SiteLog.Initialize(parameters.SiteLogPath);
 
             // Load initial land uses from input map for timestep 0
             ProcessInputMap(
@@ -60,6 +62,9 @@ namespace Landis.Extension.LandUse
 
         public override void Run()
         {
+            if (SiteLog.Enabled)
+                SiteLog.TimestepSetUp();
+
             ProcessInputMap(
                 delegate(Site site,
                          LandUse newLandUse)
@@ -69,6 +74,8 @@ namespace Landis.Extension.LandUse
                     {
                         SiteVars.LandUse[site] = newLandUse;
                         newLandUse.LandCoverChange.ApplyTo((ActiveSite)site);
+                        if (SiteLog.Enabled)
+                            SiteLog.WriteTotalsFor((ActiveSite)site);
 
                         string transition = string.Format("{0} --> {1}", currentLandUse.Name, newLandUse.Name);
                         return transition;
@@ -76,6 +83,9 @@ namespace Landis.Extension.LandUse
                     else
                         return null;
                 });
+
+            if (SiteLog.Enabled)
+                SiteLog.TimestepTearDown();
         }
 
         //---------------------------------------------------------------------
@@ -122,6 +132,14 @@ namespace Landis.Extension.LandUse
             }
             foreach (string key in counts.Keys)
                 Model.Core.UI.WriteLine("    {0} ({1:#,##0})", key, counts[key]);
+        }
+
+        //---------------------------------------------------------------------
+
+        public new void CleanUp()
+        {
+            if (SiteLog.Enabled)
+                SiteLog.Close();
         }
     }
 }
