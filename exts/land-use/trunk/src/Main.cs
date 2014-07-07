@@ -5,6 +5,7 @@
 
 using Landis.Core;
 using Landis.SpatialModeling;
+using log4net;
 using System.Collections.Generic;
 
 namespace Landis.Extension.LandUse
@@ -12,6 +13,9 @@ namespace Landis.Extension.LandUse
     public class Main
         : Landis.Core.ExtensionMain
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(Main));
+        private static readonly bool isDebugEnabled = log.IsDebugEnabled;
+
         public static readonly ExtensionType ExtType = new ExtensionType("disturbance:land use");
         public static readonly string ExtensionName = "Land Use";
 
@@ -78,6 +82,8 @@ namespace Landis.Extension.LandUse
                             SiteLog.WriteTotalsFor((ActiveSite)site);
 
                         string transition = string.Format("{0} --> {1}", currentLandUse.Name, newLandUse.Name);
+                        if (isDebugEnabled)
+                            log.DebugFormat("    LU at {0}: {1}", site.Location, transition);
                         return transition;
                     }
                     else
