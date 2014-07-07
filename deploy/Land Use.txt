@@ -1,9 +1,9 @@
 LandisData   Extension
 
-Name         "Land Use 0.1"
-Version      "0.1 (alpha 1)"
+Name         "Land Use 0.2 [dev]"
+Version      "0.2"
 Type         "disturbance:land use"
-Assembly     Landis.Extension.LandUse-0.1
+Assembly     Landis.Extension.LandUse-0.2-DEV
 Class        Landis.Extension.LandUse.Main
 Description  "Land Use and Land Cover Change"
 CoreVersion  6.0
