@@ -77,13 +77,12 @@ namespace Landis.Extension.LandUse
                     if (newLandUse != currentLandUse)
                     {
                         SiteVars.LandUse[site] = newLandUse;
-                        newLandUse.LandCoverChange.ApplyTo((ActiveSite)site);
-                        if (SiteLog.Enabled)
-                            SiteLog.WriteTotalsFor((ActiveSite)site);
-
                         string transition = string.Format("{0} --> {1}", currentLandUse.Name, newLandUse.Name);
                         if (isDebugEnabled)
                             log.DebugFormat("    LU at {0}: {1}", site.Location, transition);
+                        newLandUse.LandCoverChange.ApplyTo((ActiveSite)site);
+                        if (SiteLog.Enabled)
+                            SiteLog.WriteTotalsFor((ActiveSite)site);
                         return transition;
                     }
                     else
