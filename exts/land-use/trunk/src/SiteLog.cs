@@ -6,6 +6,7 @@
 using Landis.Core;
 using Landis.Library.BiomassCohorts;
 using Landis.SpatialModeling;
+using log4net;
 using System.Collections.Generic;
 using System.IO;
 
@@ -19,6 +20,8 @@ namespace Landis.Extension.LandUse
         public static bool Enabled { get; private set; }
         private static StreamWriter logFile;
         private static IDictionary<ISpecies, int> biomassHarvested;
+        private static readonly ILog log = LogManager.GetLogger(typeof(SiteLog));
+        private static readonly bool isDebugEnabled = log.IsDebugEnabled;
 
         //---------------------------------------------------------------------
 
@@ -71,6 +74,11 @@ namespace Landis.Extension.LandUse
                                       DeathEventArgs eventArgs)
         {
             ICohort cohort = eventArgs.Cohort;
+            if (isDebugEnabled)
+                log.DebugFormat("    cohort died: {0}, age {1}, biomass {2}",
+                                cohort.Species.Name,
+                                cohort.Age,
+                                cohort.Biomass);
             RecordHarvest(cohort.Species, cohort.Biomass);
         }
 
