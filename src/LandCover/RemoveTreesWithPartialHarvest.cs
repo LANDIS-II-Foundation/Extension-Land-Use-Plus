@@ -6,6 +6,7 @@
 using Landis.Library.BiomassCohorts;
 using Landis.Library.BiomassHarvest;
 using Landis.SpatialModeling;
+using log4net;
 
 namespace Landis.Extension.LandUse.LandCover
 {
@@ -17,6 +18,8 @@ namespace Landis.Extension.LandUse.LandCover
         : BiomassCohortHarvest, IChange
     {
         public const string TypeName = "RemoveTrees";
+        private static readonly ILog log = LogManager.GetLogger(typeof(RemoveTreesWithPartialHarvest));
+        private static readonly bool isDebugEnabled = log.IsDebugEnabled;
 
         //---------------------------------------------------------------------
 
@@ -38,8 +41,21 @@ namespace Landis.Extension.LandUse.LandCover
 
         public void ApplyTo(ActiveSite site)
         {
+            if (isDebugEnabled)
+            {
+                log.DebugFormat("    Applying LCC {0} to site {1}; cohorts are:",
+                                GetType().Name,
+                                site.Location);
+                Debug.WriteSiteCohorts(log, site);
+            }
             CurrentSite = site;
             Cut(site);
+            if (isDebugEnabled)
+            {
+                log.DebugFormat("    Cohorts after cutting site {0}:",
+                                site.Location);
+                Debug.WriteSiteCohorts(log, site);
+            }
         }
 
         //---------------------------------------------------------------------
@@ -48,7 +64,15 @@ namespace Landis.Extension.LandUse.LandCover
                                        ICohort cohort)
         {
             if (SiteLog.Enabled)
+            {
                 SiteLog.RecordHarvest(cohort.Species, reduction);
+                if (isDebugEnabled)
+                    log.DebugFormat("    {0}, age {1}, biomass {2} : reduction = {3}",
+                                    cohort.Species.Name,
+                                    cohort.Age,
+                                    cohort.Biomass,
+                                    reduction);
+            }
         }
     }
 }

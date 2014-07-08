@@ -5,6 +5,7 @@
 
 using Landis.Library.Harvest;
 using Landis.SpatialModeling;
+using log4net;
 
 namespace Landis.Extension.LandUse.LandCover
 {
@@ -12,6 +13,8 @@ namespace Landis.Extension.LandUse.LandCover
         : AgeCohortHarvest, IChange
     {
         public const string TypeName = "RemoveTrees";
+        private static readonly ILog log = LogManager.GetLogger(typeof(RemoveTrees));
+        private static readonly bool isDebugEnabled = log.IsDebugEnabled;
 
         //---------------------------------------------------------------------
 
@@ -32,6 +35,10 @@ namespace Landis.Extension.LandUse.LandCover
 
         public void ApplyTo(ActiveSite site)
         {
+            if (isDebugEnabled)
+                log.DebugFormat("    Applying LCC {0} to site {1}",
+                                GetType().Name,
+                                site.Location);
             CurrentSite = site;
             Cut(site);
         }
