@@ -109,7 +109,7 @@ namespace Landis.Extension.LandUse
             using (inputMap = Model.Core.OpenRaster<MapPixel>(inputMapPath))
             {
                 MapPixel pixel = inputMap.BufferPixel;
-                foreach (Site site in Model.Core.Landscape)
+                foreach (Site site in Model.Core.Landscape.AllSites)
                 {
                     inputMap.ReadBufferPixel();
                     if (site.IsActive)
