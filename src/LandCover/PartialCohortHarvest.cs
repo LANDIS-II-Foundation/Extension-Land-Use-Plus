@@ -11,27 +11,19 @@ using log4net;
 namespace Landis.Extension.LandUse.LandCover
 {
     /// <summary>
-    /// A land cover change that removes trees with partial thinning (i.e.,
+    /// A harvest where at least one species is partially thinned (i.e.,
     /// a percentage of one or more cohorts are harvested).
     /// </summary>
-    public class RemoveTreesWithPartialHarvest
-        : BiomassCohortHarvest, IChange
+    public class PartialCohortHarvest
+        : BiomassCohortHarvest, ICohortHarvest
     {
-        public const string TypeName = "RemoveTrees";
-        private static readonly ILog log = LogManager.GetLogger(typeof(RemoveTreesWithPartialHarvest));
+        private static readonly ILog log = LogManager.GetLogger(typeof(PartialCohortHarvest));
         private static readonly bool isDebugEnabled = log.IsDebugEnabled;
 
         //---------------------------------------------------------------------
 
-        string IChange.Type
-        {
-            get { return TypeName; }
-        }
-
-        //---------------------------------------------------------------------
-
-        public RemoveTreesWithPartialHarvest(Landis.Library.Harvest.ICohortSelector cohortSelector,
-                                             PartialCohortSelectors                 partialCohortSelectors)
+        public PartialCohortHarvest(Landis.Library.Harvest.ICohortSelector cohortSelector,
+                                    PartialCohortSelectors                 partialCohortSelectors)
             : base(cohortSelector, partialCohortSelectors)
         {
             base.Type = Main.ExtType;
@@ -39,17 +31,17 @@ namespace Landis.Extension.LandUse.LandCover
 
         //---------------------------------------------------------------------
 
-        public void ApplyTo(ActiveSite site)
+        void ICohortHarvest.Cut(ActiveSite site)
         {
             if (isDebugEnabled)
             {
-                log.DebugFormat("    Applying LCC {0} to site {1}; cohorts are:",
+                log.DebugFormat("    {0} is cutting site {1}; cohorts are:",
                                 GetType().Name,
                                 site.Location);
                 Debug.WriteSiteCohorts(log, site);
             }
             CurrentSite = site;
-            Cut(site);
+            base.Cut(site);
             if (isDebugEnabled)
             {
                 log.DebugFormat("    Cohorts after cutting site {0}:",

@@ -39,9 +39,11 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="LandCover\IChange.cs" />
+    <Compile Include="LandCover\ICohortHarvest.cs" />
     <Compile Include="LandCover\NoChange.cs" />
+    <Compile Include="LandCover\PartialCohortHarvest.cs" />
     <Compile Include="LandCover\RemoveTrees.cs" />
-    <Compile Include="LandCover\RemoveTreesWithPartialHarvest.cs" />
+    <Compile Include="LandCover\WholeCohortHarvest.cs" />
     <Compile Include="LandUse.cs" />
     <Compile Include="LandUseRegistry.cs" />
     <Compile Include="Main.cs" />
