@@ -111,10 +111,12 @@ namespace Landis.Extension.LandUse
                 else if (landCoverChangeType.Value.Actual == LandCover.RemoveTrees.TypeName)
                 {
                     ICohortSelector selector = ReadSpeciesAndCohorts("LandUse");
+                    LandCover.ICohortHarvest cohortHarvest;
                     if (PartialThinning.CohortSelectors.Count == 0)
-                        landCoverChange = new LandCover.RemoveTrees(selector);
+                        cohortHarvest = new LandCover.WholeCohortHarvest(selector);
                     else
-                        landCoverChange = new LandCover.RemoveTreesWithPartialHarvest(selector, PartialThinning.CohortSelectors);
+                        cohortHarvest = new LandCover.PartialCohortHarvest(selector, PartialThinning.CohortSelectors);
+                    landCoverChange = new LandCover.RemoveTrees(cohortHarvest);
                 }
                 else
                     throw new InputValueException(landCoverChangeType.Value.String,
