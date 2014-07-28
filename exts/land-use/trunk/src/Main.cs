@@ -4,6 +4,7 @@
 //   http://landis-extensions.googlecode.com/svn/exts/land-use/trunk/
 
 using Landis.Core;
+using Landis.Library.Succession;
 using Landis.SpatialModeling;
 using log4net;
 using System.Collections.Generic;
@@ -78,6 +79,16 @@ namespace Landis.Extension.LandUse
                     {
                         SiteVars.LandUse[site] = newLandUse;
                         string transition = string.Format("{0} --> {1}", currentLandUse.Name, newLandUse.Name);
+                        if (!currentLandUse.AllowEstablishment && newLandUse.AllowEstablishment)
+                        {
+                            string message = string.Format("Error: The land-use change ({0}) at pixel {1} requires re-enabling establishment, but that's not currently supported",
+                                                           transition,
+                                                           site.Location);
+                            throw new System.ApplicationException(message);
+                        }
+                        else if (currentLandUse.AllowEstablishment && !newLandUse.AllowEstablishment)
+                            Reproduction.PreventEstablishment((ActiveSite) site);
+
                         if (isDebugEnabled)
                             log.DebugFormat("    LU at {0}: {1}", site.Location, transition);
                         newLandUse.LandCoverChange.ApplyTo((ActiveSite)site);
