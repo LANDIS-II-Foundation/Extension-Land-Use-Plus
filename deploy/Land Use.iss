@@ -27,10 +27,10 @@ Source: {#LandisBuildDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extension
 Source: {#LandisBuildDir}\Landis.Library.Harvest-v0.dll; DestDir: {app}\bin\extensions
 Source: {#LandisBuildDir}\Landis.Library.BiomassHarvest-v0.dll; DestDir: {app}\bin\extensions
 
-; The user guide  [**** TO DO ****]
-;#define UserGuideSrc ExtensionName + " vX.Y User Guide.pdf"
-;#define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)
-;Source: docs\{#UserGuideSrc}; DestDir: {app}\docs; DestName: {#UserGuide}
+; The user guide
+#define UserGuideSrc ExtensionName + " vX.Y - User Guide.txt"
+#define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)
+Source: docs\{#UserGuideSrc}; DestDir: {app}\docs; DestName: {#UserGuide}
 
 ; Sample input files
 Source: examples\*; DestDir: {app}\examples\{#ExtensionName}; Flags: recursesubdirs

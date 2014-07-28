@@ -23,6 +23,7 @@ LandCoverChange  RemoveTrees
                  CAOV2	1-250
 				 FAGR	10 50-70(9%) 150-2,000
                  FRAM2	1-300(34%)
+PreventEstablishment
 
 >>------------------------------------
 LandUse          "no-harvest easement"
