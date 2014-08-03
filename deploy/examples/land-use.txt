@@ -18,12 +18,13 @@ LandUse          "rural development"
 MapCode          2
 AllowHarvest?    no
 LandCoverChange  RemoveTrees
-                 ABBA   10 30-50
-                 CAGL8	100(55%) 110-200
-                 CAOV2	1-250
-				 FAGR	10 50-70(9%) 150-2,000
-                 FRAM2	1-300(34%)
-PreventEstablishment
+                   ABBA   10 30-50
+                   CAGL8  100(55%) 110-200
+                   CAOV2  1-250
+				   FAGR   10 50-70(9%) 150-2,000
+                   FRAM2  1-300(34%)
+				 Plant NorwaySpruce     << Optional
+                 PreventEstablishment   << Optional
 
 >>------------------------------------
 LandUse          "no-harvest easement"
