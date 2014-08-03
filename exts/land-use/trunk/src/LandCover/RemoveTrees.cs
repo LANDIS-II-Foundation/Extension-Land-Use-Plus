@@ -4,6 +4,7 @@
 //   http://landis-extensions.googlecode.com/svn/exts/land-use/trunk/
 
 using Landis.Library.Harvest;
+using Landis.Library.Succession;
 using Landis.SpatialModeling;
 using log4net;
 
@@ -14,6 +15,7 @@ namespace Landis.Extension.LandUse.LandCover
     {
         public const string TypeName = "RemoveTrees";
         private ICohortHarvest cohortHarvest;
+        private Planting.SpeciesList speciesToPlant;
         private static readonly ILog log = LogManager.GetLogger(typeof(RemoveTrees));
         private static readonly bool isDebugEnabled = log.IsDebugEnabled;
 
@@ -26,9 +28,11 @@ namespace Landis.Extension.LandUse.LandCover
 
         //---------------------------------------------------------------------
 
-        public RemoveTrees(ICohortHarvest cohortHarvest)
+        public RemoveTrees(ICohortHarvest       cohortHarvest,
+                           Planting.SpeciesList speciesToPlant)
         {
             this.cohortHarvest = cohortHarvest;
+            this.speciesToPlant = speciesToPlant;
         }
 
         //---------------------------------------------------------------------
@@ -40,6 +44,8 @@ namespace Landis.Extension.LandUse.LandCover
                                 GetType().Name,
                                 site.Location);
             cohortHarvest.Cut(site);
+            if (speciesToPlant != null)
+                Reproduction.ScheduleForPlanting(speciesToPlant, site);
         }
     }
 }
