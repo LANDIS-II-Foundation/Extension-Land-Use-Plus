@@ -10,10 +10,9 @@ using log4net;
 namespace Landis.Extension.LandUse.LandCover
 {
     class RemoveTrees
-        : IChange
+        : AgeCohortHarvest, IChange
     {
         public const string TypeName = "RemoveTrees";
-        private ICohortHarvest cohortHarvest;
         private static readonly ILog log = LogManager.GetLogger(typeof(RemoveTrees));
         private static readonly bool isDebugEnabled = log.IsDebugEnabled;
 
@@ -26,9 +25,10 @@ namespace Landis.Extension.LandUse.LandCover
 
         //---------------------------------------------------------------------
 
-        public RemoveTrees(ICohortHarvest cohortHarvest)
+        public RemoveTrees(ICohortSelector cohortSelector)
+            : base(cohortSelector)
         {
-            this.cohortHarvest = cohortHarvest;
+            base.Type = Main.ExtType;
         }
 
         //---------------------------------------------------------------------
@@ -39,7 +39,8 @@ namespace Landis.Extension.LandUse.LandCover
                 log.DebugFormat("    Applying LCC {0} to site {1}",
                                 GetType().Name,
                                 site.Location);
-            cohortHarvest.Cut(site);
+            CurrentSite = site;
+            Cut(site);
         }
     }
 }

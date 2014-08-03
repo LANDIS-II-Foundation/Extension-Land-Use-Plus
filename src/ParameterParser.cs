@@ -104,26 +104,17 @@ namespace Landis.Extension.LandUse
 
                 ReadVar(allowHarvest);
 
-                // By default, a land use allows trees to establish.
-                bool allowEstablishment = true;
-
                 ReadVar(landCoverChangeType);
                 LandCover.IChange landCoverChange = null;
                 if (landCoverChangeType.Value.Actual == LandCover.NoChange.TypeName)
                     landCoverChange = noLandCoverChange;
                 else if (landCoverChangeType.Value.Actual == LandCover.RemoveTrees.TypeName)
                 {
-                    ICohortSelector selector = ReadSpeciesAndCohorts("LandUse",
-                                                                     ParameterNames.PreventEstablishment);
-                    LandCover.ICohortHarvest cohortHarvest;
+                    ICohortSelector selector = ReadSpeciesAndCohorts("LandUse");
                     if (PartialThinning.CohortSelectors.Count == 0)
-                        cohortHarvest = new LandCover.WholeCohortHarvest(selector);
+                        landCoverChange = new LandCover.RemoveTrees(selector);
                     else
-                        cohortHarvest = new LandCover.PartialCohortHarvest(selector, PartialThinning.CohortSelectors);
-                    landCoverChange = new LandCover.RemoveTrees(cohortHarvest);
-
-                    if (ReadPreventEstablishment())
-                        allowEstablishment = false;
+                        landCoverChange = new LandCover.RemoveTreesWithPartialHarvest(selector, PartialThinning.CohortSelectors);
                 }
                 else
                     throw new InputValueException(landCoverChangeType.Value.String,
@@ -133,7 +124,6 @@ namespace Landis.Extension.LandUse
                 LandUse landUse = new LandUse(name.Value.Actual,
                                               mapCode.Value.Actual,
                                               allowHarvest.Value.Actual,
-                                              allowEstablishment,
                                               landCoverChange);
                 LandUseRegistry.Register(landUse);
             }
