@@ -7,6 +7,7 @@ using Edu.Wisc.Forest.Flel.Util;
 using Landis.Core;
 using Landis.Library.BiomassHarvest;
 using Landis.Library.Harvest;
+using Landis.Library.Succession;
 using System.Collections.Generic;
 
 namespace Landis.Extension.LandUse
@@ -114,13 +115,15 @@ namespace Landis.Extension.LandUse
                 else if (landCoverChangeType.Value.Actual == LandCover.RemoveTrees.TypeName)
                 {
                     ICohortSelector selector = ReadSpeciesAndCohorts("LandUse",
+                                                                     ParameterNames.Plant,
                                                                      ParameterNames.PreventEstablishment);
                     LandCover.ICohortHarvest cohortHarvest;
                     if (PartialThinning.CohortSelectors.Count == 0)
                         cohortHarvest = new LandCover.WholeCohortHarvest(selector);
                     else
                         cohortHarvest = new LandCover.PartialCohortHarvest(selector, PartialThinning.CohortSelectors);
-                    landCoverChange = new LandCover.RemoveTrees(cohortHarvest);
+                    Planting.SpeciesList speciesToPlant = ReadSpeciesToPlant();
+                    landCoverChange = new LandCover.RemoveTrees(cohortHarvest, speciesToPlant);
 
                     if (ReadPreventEstablishment())
                         allowEstablishment = false;
