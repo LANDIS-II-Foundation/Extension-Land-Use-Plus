@@ -1,0 +1,10 @@
+LandisData   Extension
+
+Name         "Land Use 0.3"
+Version      "0.3"
+Type         "disturbance:land use"
+Assembly     Landis.Extension.LandUse-0.3
+Class        Landis.Extension.LandUse.Main
+Description  "Land Use and Land Cover Change"
+UserGuide    "Land Use v0.3 - User Guide.txt"
+CoreVersion  6.0
