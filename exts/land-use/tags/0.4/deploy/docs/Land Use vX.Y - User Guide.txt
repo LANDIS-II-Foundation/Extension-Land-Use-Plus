@@ -1,0 +1,12 @@
+Land Use version 0.4
+LANDIS-II Extension
+User Guide
+
+Limitations
+-----------
+The land use for a site cannot change from a land use that prevents
+establishment to a land use that allows establishment.  If this situation
+occurs, the extension will print an error message.  This restriction
+is due to a limitation in the succession module (library) shared by all
+the succession extensions.  It is anticipated that this limitation will
+be addressed in the future.
