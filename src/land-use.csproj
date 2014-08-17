@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Landis.Extension.LandUse</RootNamespace>
-    <AssemblyName>Landis.Extension.LandUse-1.0-a.1</AssemblyName>
+    <AssemblyName>Landis.Extension.LandUse-1.0</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
