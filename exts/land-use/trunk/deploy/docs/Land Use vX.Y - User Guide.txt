@@ -1,4 +1,4 @@
-Land Use version 0.4
+Land Use version 1.0
 LANDIS-II Extension
 User Guide
 
