@@ -3,7 +3,7 @@
 // files in this project's top-level directory, and at:
 //   http://landis-extensions.googlecode.com/svn/exts/land-use/trunk/
 
-using Landis.Library.Harvest;
+using Landis.Library.SiteHarvest;
 using Landis.Library.Succession;
 using Landis.SpatialModeling;
 using log4net;
@@ -14,7 +14,7 @@ namespace Landis.Extension.LandUse.LandCover
         : IChange
     {
         public const string TypeName = "RemoveTrees";
-        private ICohortHarvest cohortHarvest;
+        private ICohortCutter cohortCutter;
         private Planting.SpeciesList speciesToPlant;
         private static readonly ILog log = LogManager.GetLogger(typeof(RemoveTrees));
         private static readonly bool isDebugEnabled = log.IsDebugEnabled;
@@ -28,10 +28,10 @@ namespace Landis.Extension.LandUse.LandCover
 
         //---------------------------------------------------------------------
 
-        public RemoveTrees(ICohortHarvest       cohortHarvest,
+        public RemoveTrees(ICohortCutter        cohortCutter,
                            Planting.SpeciesList speciesToPlant)
         {
-            this.cohortHarvest = cohortHarvest;
+            this.cohortCutter = cohortCutter;
             this.speciesToPlant = speciesToPlant;
         }
 
@@ -43,7 +43,10 @@ namespace Landis.Extension.LandUse.LandCover
                 log.DebugFormat("    Applying LCC {0} to site {1}",
                                 GetType().Name,
                                 site.Location);
-            cohortHarvest.Cut(site);
+
+            // For now, we don't do anything with the counts of cohorts cut.
+            CohortCounts cohortCounts = new CohortCounts();
+            cohortCutter.Cut(site, cohortCounts);
             if (speciesToPlant != null)
                 Reproduction.ScheduleForPlanting(speciesToPlant, site);
         }
