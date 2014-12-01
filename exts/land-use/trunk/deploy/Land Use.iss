@@ -42,11 +42,11 @@ Source: {#ExtInfoFile}; DestDir: {#LandisExtInfoDir}; DestName: {#ExtensionInfo}
 
 
 [Run]
-Filename: {#ExtAdminTool}; Parameters: "remove ""{#ExtensionName}"" "; WorkingDir: {#LandisExtInfoDir}
+Filename: {#ExtAdminTool}; Parameters: "remove ""{#ExtensionName_X_Y}"" "; WorkingDir: {#LandisExtInfoDir}
 Filename: {#ExtAdminTool}; Parameters: "add ""{#ExtensionInfo}"" "; WorkingDir: {#LandisExtInfoDir}
 
 [UninstallRun]
-Filename: {#ExtAdminTool}; Parameters: "remove ""{#ExtensionName}"" "; WorkingDir: {#LandisExtInfoDir}
+Filename: {#ExtAdminTool}; Parameters: "remove ""{#ExtensionName_X_Y}"" "; WorkingDir: {#LandisExtInfoDir}
 
 [Code]
 #include LandisSDK + '\packaging\Pascal-code.iss'
