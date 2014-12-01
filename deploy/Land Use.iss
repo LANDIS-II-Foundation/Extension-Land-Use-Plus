@@ -24,8 +24,9 @@ LicenseFile=..\LICENSE.txt
 Source: {#LandisBuildDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extensions
 
 ; Harvest libraries
-Source: {#LandisBuildDir}\Landis.Library.Harvest-v0.dll; DestDir: {app}\bin\extensions
-Source: {#LandisBuildDir}\Landis.Library.BiomassHarvest-v0.dll; DestDir: {app}\bin\extensions
+#define ConfigOutDir "..\src\bin\Debug"
+Source: {#ConfigOutDir}\Landis.Library.BiomassHarvest-v0.dll; DestDir: {app}\bin\extensions
+Source: {#ConfigOutDir}\Landis.Library.SiteHarvest-v0.dll; DestDir: {app}\bin\extensions
 
 ; The user guide
 #define UserGuideSrc ExtensionName + " vX.Y - User Guide.txt"
