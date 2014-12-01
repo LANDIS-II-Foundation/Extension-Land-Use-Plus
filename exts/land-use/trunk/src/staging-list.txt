@@ -1,0 +1,2 @@
+{OutDir}\Landis.Extension.LandUse-1.0-a.2-DEV.dll
+{OutDir}\Landis.Extension.LandUse-1.0-a.2-DEV.pdb
