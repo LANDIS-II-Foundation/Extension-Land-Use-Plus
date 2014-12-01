@@ -1,4 +1,5 @@
 {OutDir}\Landis.Extension.LandUse-1.0-a.2-DEV.dll
 {OutDir}\Landis.Extension.LandUse-1.0-a.2-DEV.pdb
 --no-overwrite
+{OutDir}\Landis.Library.BiomassHarvest-v0.dll
 {OutDir}\Landis.Library.SiteHarvest-v0.dll
