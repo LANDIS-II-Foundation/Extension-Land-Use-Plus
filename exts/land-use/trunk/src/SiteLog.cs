@@ -5,6 +5,7 @@
 
 using Landis.Core;
 using Landis.Library.BiomassCohorts;
+using Landis.Library.BiomassHarvest;
 using Landis.SpatialModeling;
 using log4net;
 using System.Collections.Generic;
@@ -19,7 +20,6 @@ namespace Landis.Extension.LandUse
     {
         public static bool Enabled { get; private set; }
         private static StreamWriter logFile;
-        private static IDictionary<ISpecies, int> biomassHarvested;
         private static readonly ILog log = LogManager.GetLogger(typeof(SiteLog));
         private static readonly bool isDebugEnabled = log.IsDebugEnabled;
 
@@ -41,9 +41,8 @@ namespace Landis.Extension.LandUse
                 logFile.Write(",{0}", species.Name);
             logFile.WriteLine();
             Enabled = true;
-            
-            biomassHarvested = new Dictionary<ISpecies, int>(Model.Core.Species.Count);
-            ResetSiteTotals();
+
+            SiteBiomass.ResetHarvestTotals();
         }
 
         //---------------------------------------------------------------------
@@ -54,7 +53,7 @@ namespace Landis.Extension.LandUse
         /// </summary>
         public static void TimestepSetUp()
         {
-            Cohort.AgeOnlyDeathEvent += CohortDied;
+            SiteBiomass.EnableRecordingForHarvest();
         }
 
         //---------------------------------------------------------------------
@@ -65,39 +64,7 @@ namespace Landis.Extension.LandUse
         /// </summary>
         public static void TimestepTearDown()
         {
-            Cohort.AgeOnlyDeathEvent -= CohortDied;
-        }
-
-        //---------------------------------------------------------------------
-
-        public static void CohortDied(object sender,
-                                      DeathEventArgs eventArgs)
-        {
-            ICohort cohort = eventArgs.Cohort;
-            if (isDebugEnabled)
-                log.DebugFormat("    cohort died: {0}, age {1}, biomass {2}",
-                                cohort.Species.Name,
-                                cohort.Age,
-                                cohort.Biomass);
-            RecordHarvest(cohort.Species, cohort.Biomass);
-        }
-
-        //---------------------------------------------------------------------
-
-        public static void ResetSiteTotals()
-        {
-            foreach (ISpecies species in Model.Core.Species)
-            {
-                biomassHarvested[species] = 0;
-            }
-        }
-
-        //---------------------------------------------------------------------
-
-        public static void RecordHarvest(ISpecies species,
-                                         int      biomass)
-        {
-            biomassHarvested[species] += biomass;
+            SiteBiomass.DisableRecordingForHarvest();
         }
 
         //---------------------------------------------------------------------
@@ -106,9 +73,9 @@ namespace Landis.Extension.LandUse
         {
             logFile.Write("{0},{1},{2}", Model.Core.CurrentTime, site.Location.Row, site.Location.Column);
             foreach (ISpecies species in Model.Core.Species)
-                logFile.Write(",{0}", biomassHarvested[species]);
+                logFile.Write(",{0}", SiteBiomass.Harvested[species]);
             logFile.WriteLine();
-            ResetSiteTotals();
+            SiteBiomass.ResetHarvestTotals();
         }
 
         //---------------------------------------------------------------------
