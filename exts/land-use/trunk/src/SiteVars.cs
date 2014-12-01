@@ -11,12 +11,15 @@ namespace Landis.Extension.LandUse
     public class SiteVars
     {
         private static ISiteVar<LandUse> landUse;
+        private static AllowHarvestSiteVar allowHarvest;
 
         //---------------------------------------------------------------------
 
         public static void Initialize(ICore modelCore)
         {
             landUse = modelCore.Landscape.NewSiteVar<LandUse>();
+            allowHarvest = new AllowHarvestSiteVar();
+            Model.Core.RegisterSiteVar(allowHarvest, "LandUse.AllowHarvest");
         }
 
         //---------------------------------------------------------------------

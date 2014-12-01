@@ -36,6 +36,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AllowHarvestSiteVar.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="LandCover\IChange.cs" />
     <Compile Include="LandCover\NoChange.cs" />
