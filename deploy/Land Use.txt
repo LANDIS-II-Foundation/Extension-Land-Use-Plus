@@ -1,7 +1,7 @@
 LandisData   Extension
 
 Name         "Land Use 1.0"
-Version      "1.0 (alpha 1 release)"
+Version      "1.0 (beta 1 release)"
 Type         "disturbance:land use"
 Assembly     Landis.Extension.LandUse-1.0
 Class        Landis.Extension.LandUse.Main
