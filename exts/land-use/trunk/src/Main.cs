@@ -32,27 +32,11 @@ namespace Landis.Extension.LandUse
 
         //---------------------------------------------------------------------
 
-        /// <summary>
-        /// Is harvesting allowed at a site?
-        /// </summary>
-        /// <remarks>
-        /// This method is registered with the harvest library so that a site's
-        /// land use can affect site selection in the harvest extensions (if
-        /// they are used in a scenario).
-        /// </remarks>
-        public static bool IsHarvestAllowedAt(ActiveSite site)
-        {
-            return SiteVars.LandUse[site].AllowHarvest;
-        }
-
-        //---------------------------------------------------------------------
-
         public override void LoadParameters(string dataFile,
                                             ICore modelCore)
         {
             Model.Core = modelCore;
             Landis.Library.BiomassHarvest.Main.InitializeLib(Model.Core);
-            Landis.Library.SiteHarvest.Main.RegisterMethod(IsHarvestAllowedAt);
             Model.Core.UI.WriteLine("  Loading parameters from {0}", dataFile);
             ParameterParser parser = new ParameterParser(Model.Core.Species);
             parameters = Landis.Data.Load<Parameters>(dataFile, parser);
