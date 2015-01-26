@@ -25,8 +25,8 @@ Source: {#LandisBuildDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extension
 
 ; Harvest libraries
 #define ConfigOutDir "..\src\bin\Debug"
-Source: {#ConfigOutDir}\Landis.Library.BiomassHarvest-v0.dll; DestDir: {app}\bin\extensions
-Source: {#ConfigOutDir}\Landis.Library.SiteHarvest-v0.dll; DestDir: {app}\bin\extensions
+Source: {#ConfigOutDir}\Landis.Library.BiomassHarvest-v1.dll; DestDir: {app}\bin\extensions
+Source: {#ConfigOutDir}\Landis.Library.SiteHarvest-v1.dll; DestDir: {app}\bin\extensions
 
 ; The user guide
 #define UserGuideSrc ExtensionName + " vX.Y - User Guide.txt"
