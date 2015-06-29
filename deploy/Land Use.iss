@@ -29,7 +29,7 @@ Source: {#ConfigOutDir}\Landis.Library.BiomassHarvest-v1.dll; DestDir: {app}\bin
 Source: {#ConfigOutDir}\Landis.Library.SiteHarvest-v1.dll; DestDir: {app}\bin\extensions
 
 ; The user guide
-#define UserGuideSrc ExtensionName + " vX.Y - User Guide.txt"
+#define UserGuideSrc ExtensionName + " vX.Y - User Guide.pdf"
 #define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)
 Source: docs\{#UserGuideSrc}; DestDir: {app}\docs; DestName: {#UserGuide}
 
