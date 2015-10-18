@@ -1,7 +1,7 @@
 ﻿// This file is part of the Land Use extension for LANDIS-II.
 // For copyright and licensing information, see the NOTICE and LICENSE
 // files in this project's top-level directory, and at:
-//   http://landis-extensions.googlecode.com/svn/exts/land-use/trunk/
+//   https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Change
 
 using Landis.Core;
 using Landis.Library.BiomassCohorts;
