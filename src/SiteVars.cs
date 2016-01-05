@@ -20,6 +20,7 @@ namespace Landis.Extension.LandUse
             landUse = modelCore.Landscape.NewSiteVar<LandUse>();
             allowHarvest = new AllowHarvestSiteVar();
             Model.Core.RegisterSiteVar(allowHarvest, "LandUse.AllowHarvest");
+            Landis.Library.BiomassHarvest.SiteVars.CohortsPartiallyDamaged = modelCore.Landscape.NewSiteVar<int>();
         }
 
         //---------------------------------------------------------------------

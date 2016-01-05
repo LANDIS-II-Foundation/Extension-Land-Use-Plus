@@ -59,14 +59,16 @@
     <Reference Include="Landis.Core">
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.1\Landis.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Library.AgeOnlyCohorts">
-      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.AgeOnlyCohorts.dll</HintPath>
+    <Reference Include="Landis.Library.AgeOnlyCohorts, Version=2.1.5520.27428, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Landis.Library.AgeOnlyCohorts.2.1.0-rc2\lib\net35\Landis.Library.AgeOnlyCohorts.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Landis.Library.BiomassCohorts">
-      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.BiomassCohorts.dll</HintPath>
+    <Reference Include="Landis.Library.BiomassCohorts, Version=1.3.5520.27608, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Landis.Library.BiomassCohorts.1.3.0-rc2\lib\net35\Landis.Library.BiomassCohorts.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Landis.Library.BiomassHarvest-v1">
-      <HintPath>..\packages\Landis.Library.BiomassHarvest.1.0.0\lib\net35\Landis.Library.BiomassHarvest-v1.dll</HintPath>
+    <Reference Include="Landis.Library.BiomassHarvest-v1, Version=1.1.5767.22971, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Landis.Library.BiomassHarvest.1.1.0\lib\net35\Landis.Library.BiomassHarvest-v1.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Landis.Library.Cohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -77,8 +79,9 @@
       <HintPath>..\packages\Landis.Library.SiteHarvest.1.0.0\lib\net35\Landis.Library.SiteHarvest-v1.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Landis.Library.Succession">
-      <HintPath>C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Succession.dll</HintPath>
+    <Reference Include="Landis.Library.Succession, Version=4.0.5521.15032, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Landis.Library.Succession.4.0.0-rc2\lib\net35\Landis.Library.Succession.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Landis.SpatialModeling">
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.1\Landis.SpatialModeling.dll</HintPath>
@@ -93,6 +96,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+
   <ItemDefinitionGroup>
     <Reference>
       <!-- Do not copy any of referenced assemblies to the output directory during a build.
