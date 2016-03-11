@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Landis.Extension.LandUse</RootNamespace>
-    <AssemblyName>Landis.Extension.LandUse-1.0</AssemblyName>
+    <AssemblyName>Landis.Extension.LandUse-1.1</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -96,7 +96,6 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-
   <ItemDefinitionGroup>
     <Reference>
       <!-- Do not copy any of referenced assemblies to the output directory during a build.
