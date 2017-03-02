@@ -152,7 +152,7 @@ namespace Landis.Extension.LandUse
 
         //---------------------------------------------------------------------
 
-        public new void CleanUp()
+        public override void CleanUp()
         {
             if (SiteLog.Enabled)
                 SiteLog.Close();
