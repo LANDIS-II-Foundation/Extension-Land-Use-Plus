@@ -12,6 +12,7 @@ namespace Landis.Extension.LandUse
     {
         private static ISiteVar<LandUse> landUse;
         private static AllowHarvestSiteVar allowHarvest;
+        //private static AllowEstablishmentSitVar allowEstablishment;
 
         //---------------------------------------------------------------------
 
@@ -20,6 +21,10 @@ namespace Landis.Extension.LandUse
             landUse = modelCore.Landscape.NewSiteVar<LandUse>();
             allowHarvest = new AllowHarvestSiteVar();
             Model.Core.RegisterSiteVar(allowHarvest, "LandUse.AllowHarvest");
+
+            //allowEstablishment = new AllowEstablishmentSiteVar();
+            //Model.Core.RegisterSiteVar(allowEstablishment, "LandUse.AllowEstablishment");
+
             Landis.Library.BiomassHarvest.SiteVars.CohortsPartiallyDamaged = modelCore.Landscape.NewSiteVar<int>();
         }
 

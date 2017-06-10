@@ -10,3 +10,7 @@ src/obj/
 
 # Compiled installers
 deploy/*.exe
+
+#Misc
+insect_example/
+wobegon_PnET/

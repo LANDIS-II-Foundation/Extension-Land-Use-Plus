@@ -42,6 +42,8 @@ namespace Landis.Extension.LandUse
 
         #region ISiteVar<bool> members
         // Other extensions only need read access.
+        // We can add write-access to the AllowHarvest property by creating a setter modifying the field.
+        // Discover: AllowHarvest is per land-use type, or per raster cell? Likely the former
 
         bool ISiteVar<bool>.this[Site site]
         {
@@ -51,6 +53,7 @@ namespace Landis.Extension.LandUse
             }
             set
             {
+                //SiteVars.LandUse[site].AllowHarvest = value;
                 throw new System.InvalidOperationException("Site variable is read-only");
             }
         }
