@@ -64,6 +64,26 @@ namespace Landis.Extension.LandUse
             else
                 parameters.SiteLogPath = null;
 
+            //Adding parse for script engine location, script name, script command line input
+            InputVar<string> pauseScript = new InputVar<string>("ExternalScript");
+            if (ReadOptionalVar(pauseScript))
+                parameters.ExternalScript = pauseScript.Value;
+            else
+                parameters.ExternalScript = null;
+
+            InputVar<string> pauseEngine = new InputVar<string>("Executable");
+            if (ReadOptionalVar(pauseEngine))
+                parameters.ExternalEngine = pauseEngine.Value;
+            else
+                parameters.ExternalEngine = null;
+
+            //Adding parse for script engine location, script name, script command line input
+            InputVar<string> pauseCommand = new InputVar<string>("ExternalCommand");
+            if (ReadOptionalVar(pauseCommand))
+                parameters.ExternalCommand = pauseCommand.Value;
+            else
+                parameters.ExternalCommand = null;
+
             ReadLandUses();
             return parameters;
         }

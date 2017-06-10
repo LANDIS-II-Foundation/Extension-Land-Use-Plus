@@ -13,6 +13,11 @@ namespace Landis.Extension.LandUse
         private string inputMapNameTemplate;
         private string siteLogPath;
 
+        //Input variables for LANDIS Pause scripting
+        private string externalScriptPath;
+        private string externalScriptEngine;
+        private string externalScriptCommand;
+
         //---------------------------------------------------------------------
 
         public int Timestep
@@ -69,6 +74,60 @@ namespace Landis.Extension.LandUse
                     throw new InputValueException(value.ToString(),
                                                   "Site log path is empty string");
                 siteLogPath = value;
+            }
+        }
+
+        /// <summary>
+        /// Path to the external script used during LANDIS Pause functionality
+        /// </summary>
+        public string ExternalScript
+        {
+            get
+            {
+                return externalScriptPath;
+            }
+            set
+            {
+                if (value == "")
+                    throw new InputValueException(value.ToString(),
+                                                  "Please specify a script for use in Pause functionality");
+                externalScriptPath = value;
+            }
+        }
+
+        /// <summary>
+        /// Path to the external script used during LANDIS Pause functionality
+        /// </summary>
+        public string ExternalEngine
+        {
+            get
+            {
+                return externalScriptEngine;
+            }
+            set
+            {
+                if (value == "")
+                    throw new InputValueException(value.ToString(),
+                                                  "Please specify an executable for processing scripts in Pause functionality");
+                externalScriptEngine = value;
+            }
+        }
+
+        /// <summary>
+        /// Path to the external script used during LANDIS Pause functionality
+        /// </summary>
+        public string ExternalCommand
+        {
+            get
+            {
+                return externalScriptCommand;
+            }
+            set
+            {
+                if (value == "")
+                    throw new InputValueException(value.ToString(),
+                                                  "Please specify a command-line input for use in Pause functionality");
+                externalScriptCommand = value;
             }
         }
     }

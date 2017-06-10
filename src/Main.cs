@@ -2,6 +2,10 @@
 // For copyright and licensing information, see the NOTICE and LICENSE
 // files in this project's top-level directory, and at:
 //   https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Change
+//
+//  Pause Extension for Thomspon lab
+//   https://github.com/llmorreale/LANDISPauseButton
+//
 
 using Landis.Core;
 using Landis.Library.Succession;
@@ -21,6 +25,7 @@ namespace Landis.Extension.LandUse
         public static readonly string ExtensionName = "Land Use";
 
         private Parameters parameters;
+        private Pause pauseFunction;
         private string inputMapTemplate;
 
         //---------------------------------------------------------------------
@@ -47,9 +52,13 @@ namespace Landis.Extension.LandUse
         public override void Initialize()
         {
             Model.Core.UI.WriteLine("Initializing {0}...", Name);
+
             SiteVars.Initialize(Model.Core);
             Timestep = parameters.Timestep;
             inputMapTemplate = parameters.InputMaps;
+
+            pauseFunction = new Pause(parameters.ExternalScript, parameters.ExternalEngine, parameters.ExternalCommand);
+
             if (parameters.SiteLogPath != null)
                 SiteLog.Initialize(parameters.SiteLogPath);
 
@@ -70,6 +79,8 @@ namespace Landis.Extension.LandUse
             if (SiteLog.Enabled)
                 SiteLog.TimestepSetUp();
 
+            pauseFunction.PauseTimestep();
+            
             ProcessInputMap(
                 delegate(Site site,
                          LandUse newLandUse)
@@ -110,13 +121,16 @@ namespace Landis.Extension.LandUse
         public delegate string ProcessLandUseAt(Site site, LandUse landUse);
 
         //---------------------------------------------------------------------
-
+        
+        //Modified to add inputMapPath, allowing users to specify raster paths to change at timestep
         public void ProcessInputMap(ProcessLandUseAt processLandUseAt)
         {
             string inputMapPath = MapNames.ReplaceTemplateVars(inputMapTemplate, Model.Core.CurrentTime);
             Model.Core.UI.WriteLine("  Reading map \"{0}\"...", inputMapPath);
+
             IInputRaster<MapPixel> inputMap;
             Dictionary<string, int> counts = new Dictionary<string, int>();
+
             using (inputMap = Model.Core.OpenRaster<MapPixel>(inputMapPath))
             {
                 MapPixel pixel = inputMap.BufferPixel;
@@ -148,14 +162,16 @@ namespace Landis.Extension.LandUse
             }
             foreach (string key in counts.Keys)
                 Model.Core.UI.WriteLine("    {0} ({1:#,##0})", key, counts[key]);
-        }
+        }    
 
         //---------------------------------------------------------------------
 
-        public override void CleanUp()
+        public new void CleanUp()
         {
             if (SiteLog.Enabled)
                 SiteLog.Close();
         }
     }
+
+    //----------------------------------------------------
 }
