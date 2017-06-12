@@ -57,7 +57,12 @@ namespace Landis.Extension.LandUse
             Timestep = parameters.Timestep;
             inputMapTemplate = parameters.InputMaps;
 
-            pauseFunction = new Pause(parameters.ExternalScript, parameters.ExternalEngine, parameters.ExternalCommand);
+            pauseFunction = new Pause(parameters.ExternalScript, parameters.ExternalExecutable, parameters.ExternalCommand);
+            if (!pauseFunction.UsePause)
+            {
+                Model.Core.UI.WriteLine("No pause processes specified, continuing normally");
+                pauseFunction = null;
+            }
 
             if (parameters.SiteLogPath != null)
                 SiteLog.Initialize(parameters.SiteLogPath);
@@ -79,8 +84,11 @@ namespace Landis.Extension.LandUse
             if (SiteLog.Enabled)
                 SiteLog.TimestepSetUp();
 
-            pauseFunction.PauseTimestep();
-            
+            if (pauseFunction != null)
+            {
+                pauseFunction.PauseTimestep();
+            }
+
             ProcessInputMap(
                 delegate(Site site,
                          LandUse newLandUse)
@@ -92,10 +100,11 @@ namespace Landis.Extension.LandUse
                         string transition = string.Format("{0} --> {1}", currentLandUse.Name, newLandUse.Name);
                         if (!currentLandUse.AllowEstablishment && newLandUse.AllowEstablishment)
                         {
-                            string message = string.Format("Error: The land-use change ({0}) at pixel {1} requires re-enabling establishment, but that's not currently supported",
-                                                           transition,
-                                                           site.Location);
-                            throw new System.ApplicationException(message);
+                            //string message = string.Format("Error: The land-use change ({0}) at pixel {1} requires re-enabling establishment, but that's not currently supported",
+                            //                               transition,
+                            //                               site.Location);
+                            //throw new System.ApplicationException(message);
+                            Reproduction.EnableEstablishment((ActiveSite) site);
                         }
                         else if (currentLandUse.AllowEstablishment && !newLandUse.AllowEstablishment)
                             Reproduction.PreventEstablishment((ActiveSite) site);

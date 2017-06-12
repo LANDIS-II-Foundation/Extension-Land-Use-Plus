@@ -10,41 +10,58 @@ namespace Landis.Extension.LandUse
     class Pause
     {
         public string ExternalScript { get; private set; }
-        public string ExternalEngine{ get; private set; }
+        public string ExternalExecutable{ get; private set; }
         public string ExternalCommand { get; private set; }
+
+        public bool UsePause { get; private set; }
+        private bool useScript = false;
+        private bool useShell = false;
         
         public Pause(string script, string engine, string command)
         {
             ExternalScript = script;
-            ExternalEngine = engine;
+            ExternalExecutable = engine;
             ExternalCommand = command;
+
+            if (ExternalCommand != "" && ExternalCommand != null)
+            {
+                useShell = true;
+                useScript = false;
+            }
+            else if (ExternalScript != "" && ExternalExecutable != "" && ExternalScript != null && ExternalExecutable != null)
+            {
+                useScript = true;
+                useShell = false;
+            }
+
+            if (!useShell && !useScript)
+                UsePause = false;
+            else
+                UsePause = true;
         }
 
         public void PauseTimestep()
         {
             Model.Core.UI.WriteLine("Current time: ", Model.Core.CurrentTime);
 
-            //Create an empty lockfile at the appropriate path - may need a separate path for lockfile and rasterfile
+            //Create an empty lockfile at the appropriate path - write model timestep to the contents
             StreamWriter lock_file = new StreamWriter(System.IO.Directory.GetCurrentDirectory() + "/lockfile");
             lock_file.WriteLine(Model.Core.CurrentTime.ToString());
             lock_file.Close();
 
-            Process pause_process;
-            if (ExternalCommand != "") //Exhibits preference for custom commands
+            Process pause_process = null;
+            if (useShell) //Exhibits preference for custom commands
             {
                 pause_process = CallShellScript();
                 pause_process.WaitForExit();
                 pause_process.Close();
             }
-            else if (ExternalEngine != "" && ExternalScript != "")
+            else
             {
                 pause_process = CallExternalExecutable();
                 pause_process.WaitForExit();
+                Model.Core.UI.WriteLine(pause_process.StandardOutput.ReadToEnd());
                 pause_process.Close();
-            }
-            else
-            {
-                Model.Core.UI.WriteLine("No pause processes specified, continuing normally");
             }
         }
 
@@ -81,18 +98,18 @@ namespace Landis.Extension.LandUse
         //Directly running a script using a scripting engine executable
         public Process CallExternalExecutable()
         {
-            Process python_process = new Process();
+            Model.Core.UI.WriteLine("Starting external process...");
+            Process external_process = new Process();
 
-            python_process.StartInfo.FileName = ExternalEngine;
-            python_process.StartInfo.UseShellExecute = false;
-            python_process.StartInfo.CreateNoWindow = true;
-            python_process.StartInfo.Arguments = ExternalScript;
-            python_process.StartInfo.RedirectStandardOutput = true;
+            external_process.StartInfo.FileName = ExternalExecutable;
+            external_process.StartInfo.UseShellExecute = false;
+            external_process.StartInfo.CreateNoWindow = true;
+            external_process.StartInfo.Arguments = ExternalScript;
+            external_process.StartInfo.RedirectStandardOutput = true;
 
-            Model.Core.UI.WriteLine(python_process.StartInfo.FileName);
             try
             {
-                python_process.Start(); // start the process (the python program)
+                external_process.Start(); // start the process (the python program)
             }
             catch (Win32Exception w)
             {
@@ -105,14 +122,14 @@ namespace Landis.Extension.LandUse
                 Model.Core.UI.WriteLine(e.Message);
             }
 
-            return python_process;
+            return external_process;
         }
 
         public void PrintPause()
         {
             Model.Core.UI.WriteLine("Pause routines: ");
             Model.Core.UI.WriteLine("External script path: " + ExternalScript);
-            Model.Core.UI.WriteLine("External script executable: " + ExternalEngine);
+            Model.Core.UI.WriteLine("External script executable: " + ExternalExecutable);
             Model.Core.UI.WriteLine("External command to execute: " + ExternalCommand);
         }
     }

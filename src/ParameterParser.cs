@@ -71,11 +71,11 @@ namespace Landis.Extension.LandUse
             else
                 parameters.ExternalScript = null;
 
-            InputVar<string> pauseEngine = new InputVar<string>("Executable");
+            InputVar<string> pauseEngine = new InputVar<string>("ExternalExecutable");
             if (ReadOptionalVar(pauseEngine))
-                parameters.ExternalEngine = pauseEngine.Value;
+                parameters.ExternalExecutable = pauseEngine.Value;
             else
-                parameters.ExternalEngine = null;
+                parameters.ExternalExecutable = null;
 
             //Adding parse for script engine location, script name, script command line input
             InputVar<string> pauseCommand = new InputVar<string>("ExternalCommand");
