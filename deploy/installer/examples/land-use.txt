@@ -6,7 +6,7 @@ InputMaps   path\to\land-use_{timestep}.tif
 SiteLog     logging/site-log.csv   << optional: default = don't generate log
 
 ExternalScript external_module.py  		<< optional 
-Executable C:/Python27/ArcGIS10.4/python.exe	<< optional
+ExternalExecutable C:/Python27/ArcGIS10.4/python.exe	<< optional
 ExternalCommand "python external_module.py”	<< optional 
 
 >>------------------------------------

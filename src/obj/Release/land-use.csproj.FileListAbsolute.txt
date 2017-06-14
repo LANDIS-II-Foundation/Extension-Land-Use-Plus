@@ -1,0 +1,13 @@
+C:\Users\achmurzy\Documents\LANDISPauseButton\src\bin\Release\Landis.Extension.LandUse-1.2.dll
+C:\Users\achmurzy\Documents\LANDISPauseButton\src\bin\Release\Landis.Extension.LandUse-1.2.pdb
+C:\Users\achmurzy\Documents\LANDISPauseButton\src\obj\Release\Landis.Extension.LandUse-1.2.dll
+C:\Users\achmurzy\Documents\LANDISPauseButton\src\obj\Release\Landis.Extension.LandUse-1.2.pdb
+C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.LandUse-1.2.dll
+C:\Program Files\LANDIS-II\6.0\bin\Landis.Extension.LandUse-1.2.pdb
+C:\Program Files\LANDIS-II\v6\bin\build\Landis.Extension.LandUse-1.2.dll
+C:\Program Files\LANDIS-II\v6\bin\build\Landis.Extension.LandUse-1.2.pdb
+C:\Users\achmurzy\Documents\Extension-Land-Use-Change\src\obj\Release\land-use.csprojResolveAssemblyReference.cache
+C:\Users\achmurzy\Documents\Extension-Land-Use-Change\src\obj\Release\Landis.Extension.LandUse-1.2.dll
+C:\Users\achmurzy\Documents\Extension-Land-Use-Change\src\obj\Release\Landis.Extension.LandUse-1.2.pdb
+C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.LandUse-1.2.dll
+C:\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.LandUse-1.2.pdb

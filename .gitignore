@@ -6,7 +6,7 @@ packages/
 
 # Build directories
 src/bin/
-src/obj/
+# src/obj/
 
 # Compiled installers
 deploy/*.exe
