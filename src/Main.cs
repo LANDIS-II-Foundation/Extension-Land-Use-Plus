@@ -94,30 +94,45 @@ namespace Landis.Extension.LandUse
                          LandUse newLandUse)
                 {
                     LandUse currentLandUse = SiteVars.LandUse[site];
+                    string siteKey = null;
                     if (newLandUse != currentLandUse)
                     {
                         SiteVars.LandUse[site] = newLandUse;
-                        string transition = string.Format("{0} --> {1}", currentLandUse.Name, newLandUse.Name);
+                        siteKey = string.Format("{0} --> {1}", currentLandUse.Name, newLandUse.Name);
                         if (!currentLandUse.AllowEstablishment && newLandUse.AllowEstablishment)
                         {
-                            //string message = string.Format("Error: The land-use change ({0}) at pixel {1} requires re-enabling establishment, but that's not currently supported",
-                            //                               transition,
-                            //                               site.Location);
-                            //throw new System.ApplicationException(message);
-                            Reproduction.EnableEstablishment((ActiveSite) site);
+                            Reproduction.EnableEstablishment((ActiveSite)site);
                         }
                         else if (currentLandUse.AllowEstablishment && !newLandUse.AllowEstablishment)
-                            Reproduction.PreventEstablishment((ActiveSite) site);
+                        {
+                            Reproduction.PreventEstablishment((ActiveSite)site);
+                        }
 
                         if (isDebugEnabled)
-                            log.DebugFormat("    LU at {0}: {1}", site.Location, transition);
+                            log.DebugFormat("    LU at {0}: {1}", site.Location, siteKey);
+
+                        //Originally LandCoverChange application only when newLandUse != currentLandUse
                         newLandUse.LandCoverChange.ApplyTo((ActiveSite)site);
-                        if (SiteLog.Enabled)
-                            SiteLog.WriteTotalsFor((ActiveSite)site);
-                        return transition;
                     }
                     else
-                        return null;
+                    {
+                        //When LandUse stays the same, almost nothing happens
+                        //no land-use type is returned so the RasterMap is not updated using the
+                        //Dict defined in encapsulating function. Not sure what this dict even does
+ 
+                        //Tree removal occurs in class implementing IChange interface
+                        //IChange defines 'ApplyTo', a very broad abstraction indicating
+                        //a change to an active site. Do we need any other housekeeping
+                        //if we allow harvests to occur in this part of the logic?
+                        
+                        //Calling this should allow repeat harvests. 
+                        currentLandUse.LandCoverChange.ApplyTo((ActiveSite)site);
+                    }
+
+                    if (SiteLog.Enabled)
+                        SiteLog.WriteTotalsFor((ActiveSite)site);
+
+                    return siteKey;
                 });
 
             if (SiteLog.Enabled)
