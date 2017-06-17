@@ -38,7 +38,7 @@
   <ItemGroup>
     <Compile Include="AllowHarvestSiteVar.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="InsectDefoliant.cs" />
+    <Compile Include="LandCover\InsectDefoliation.cs" />
     <Compile Include="LandCover\IChange.cs" />
     <Compile Include="LandCover\NoChange.cs" />
     <Compile Include="LandCover\RemoveTrees.cs" />

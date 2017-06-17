@@ -95,8 +95,9 @@ namespace Landis.Extension.LandUse
             InputVar<string> name = new InputVar<string>("LandUse");
             InputVar<ushort> mapCode = new InputVar<ushort>("MapCode");
             InputVar<bool> allowHarvest = new InputVar<bool>("AllowHarvest?");
+            InputVar<bool> repeatableHarvest = new InputVar<bool>("RepeatHarvest?");
             InputVar<string> landCoverChangeType = new InputVar<string>("LandCoverChange");
-
+            
             Dictionary<string, int> nameLineNumbers = new Dictionary<string, int>();
             Dictionary<ushort, int> mapCodeLineNumbers = new Dictionary<ushort, int>();
 
@@ -125,8 +126,15 @@ namespace Landis.Extension.LandUse
 
                 ReadVar(allowHarvest);
 
+                bool repeatHarvest = false;
+                if(ReadOptionalVar(repeatableHarvest))
+                    repeatHarvest = repeatableHarvest.Value.Actual;
+
                 // By default, a land use allows trees to establish.
                 bool allowEstablishment = true;
+
+                //It would be very wise to specify InsectDefoliation as a land cover change type.
+                //However, is it possible to have multiple cover change types for a single LandUse?
 
                 ReadVar(landCoverChangeType);
                 LandCover.IChange landCoverChange = null;
@@ -145,6 +153,16 @@ namespace Landis.Extension.LandUse
                     if (ReadPreventEstablishment())
                         allowEstablishment = false;
                 }
+                else if (landCoverChangeType.Value.Actual == LandCover.InsectDefoliation.TypeName)
+                {
+                    //Insects will reduce biomass of cohorts rather than directly affecting demographics       
+                    ICohortSelector selector = ReadSpeciesAndCohorts("LandUse",
+                                                                     ParameterNames.Plant,
+                                                                     ParameterNames.PreventEstablishment);
+
+                    Planting.SpeciesList speciesToPlant = ReadSpeciesToPlant();
+                    landCoverChange = new LandCover.InsectDefoliation(speciesToPlant);
+                }
                 else
                     throw new InputValueException(landCoverChangeType.Value.String,
                                                   "\"{0}\" is not a type of land cover change",
@@ -153,6 +171,7 @@ namespace Landis.Extension.LandUse
                 LandUse landUse = new LandUse(name.Value.Actual,
                                               mapCode.Value.Actual,
                                               allowHarvest.Value.Actual,
+                                              repeatHarvest,
                                               allowEstablishment,
                                               landCoverChange);
                 LandUseRegistry.Register(landUse);

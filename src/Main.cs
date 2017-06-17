@@ -114,19 +114,13 @@ namespace Landis.Extension.LandUse
                         //Originally LandCoverChange application only when newLandUse != currentLandUse
                         newLandUse.LandCoverChange.ApplyTo((ActiveSite)site);
                     }
-                    else
-                    {
-                        //When LandUse stays the same, almost nothing happens
-                        //no land-use type is returned so the RasterMap is not updated using the
-                        //Dict defined in encapsulating function. Not sure what this dict even does
- 
-                        //Tree removal occurs in class implementing IChange interface
-                        //IChange defines 'ApplyTo', a very broad abstraction indicating
-                        //a change to an active site. Do we need any other housekeeping
-                        //if we allow harvests to occur in this part of the logic?
-                        
+                    else if (currentLandUse.RepeatHarvest)
+                    {                        
                         //Calling this should allow repeat harvests. 
                         currentLandUse.LandCoverChange.ApplyTo((ActiveSite)site);
+
+                        //Do we need to set the siteKey to mess with anything if we repeat harvests?
+                        //siteKey = string.Format("{0} --> {1}", currentLandUse.Name, currentLandUse.Name);
                     }
 
                     if (SiteLog.Enabled)
