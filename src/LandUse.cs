@@ -15,10 +15,11 @@ namespace Landis.Extension.LandUse
         public string Name { get; protected set; }
         public ushort MapCode { get; protected set; }
         public bool AllowHarvest { get; protected set; }
-        public bool RepeatHarvest { get; protected set; }
         public bool AllowEstablishment { get; protected set; }
-        //May need to generalize to array of LandCoverChanges?
+
+        //Maintaining support for single LandCoverChange -- probably not necessary like this.
         public LandCover.IChange LandCoverChange { get; protected set; }
+        public LandCover.IChange[] LandCoverChanges { get; protected set; }
 
         //---------------------------------------------------------------------
 
@@ -32,7 +33,6 @@ namespace Landis.Extension.LandUse
             Name = name;
             MapCode = mapCode;
             AllowHarvest = harvestingAllowed;
-            RepeatHarvest = false;
             AllowEstablishment = establishmentAllowed;
             LandCoverChange = initialLCC;
         }
@@ -41,16 +41,14 @@ namespace Landis.Extension.LandUse
             string name,
             ushort mapCode,
             bool harvestingAllowed,
-            bool repeatHarvesting,
             bool establishmentAllowed,
-            LandCover.IChange initialLCC)
+            LandCover.IChange[] initialLCC)
         {
             Name = name;
             MapCode = mapCode;
             AllowHarvest = harvestingAllowed;
-            RepeatHarvest = repeatHarvesting;
             AllowEstablishment = establishmentAllowed;
-            LandCoverChange = initialLCC;
+            LandCoverChanges = initialLCC;
         }
     }
 }

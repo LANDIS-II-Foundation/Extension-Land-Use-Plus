@@ -111,14 +111,20 @@ namespace Landis.Extension.LandUse
                         if (isDebugEnabled)
                             log.DebugFormat("    LU at {0}: {1}", site.Location, siteKey);
 
-                        //Originally LandCoverChange application only when newLandUse != currentLandUse
-                        newLandUse.LandCoverChange.ApplyTo((ActiveSite)site);
+                        for (int i = 0; i < newLandUse.LandCoverChanges.Length; i++)
+                        {
+                            LandCover.IChange LandCoverChange = newLandUse.LandCoverChanges[i];
+                            LandCoverChange.ApplyTo((ActiveSite)site);
+                        }
                     }
-                    else if (currentLandUse.RepeatHarvest)
+                    else
                     {                        
-                        //Calling this should allow repeat harvests. 
-                        currentLandUse.LandCoverChange.ApplyTo((ActiveSite)site);
-
+                        for (int i = 0; i < currentLandUse.LandCoverChanges.Length; i++)
+                        {
+                            LandCover.IChange LandCoverChange = newLandUse.LandCoverChanges[i];
+                            if(LandCoverChange.Repeat)
+                                LandCoverChange.ApplyTo((ActiveSite)site);
+                        }
                         //Do we need to set the siteKey to mess with anything if we repeat harvests?
                         //siteKey = string.Format("{0} --> {1}", currentLandUse.Name, currentLandUse.Name);
                     }

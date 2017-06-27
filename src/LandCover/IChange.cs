@@ -13,6 +13,7 @@ namespace Landis.Extension.LandUse.LandCover
     public interface IChange
     {
         string Type { get; }
+        bool Repeat { get; }
 
         /// <summary>
         /// Apply the change to the land cover at an individual site.

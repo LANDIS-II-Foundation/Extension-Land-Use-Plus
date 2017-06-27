@@ -2,7 +2,6 @@
 using Landis.Library.Succession;
 using Landis.SpatialModeling;
 using Landis.Library.BiomassCohorts;
-using Landis.Extension.Insects;
 
 namespace Landis.Extension.LandUse.LandCover
 {
@@ -15,14 +14,17 @@ namespace Landis.Extension.LandUse.LandCover
         : IChange
     {
         public const string TypeName = "InsectDefoliation";
+        private bool repeat;
         private Planting.SpeciesList speciesToPlant;
 
         string IChange.Type { get { return TypeName; } }
+        bool IChange.Repeat { get { return repeat; } }
 
-        public InsectDefoliation(Planting.SpeciesList plants)
+        public InsectDefoliation(Planting.SpeciesList plants, bool repeatHarvest)
         {
             speciesToPlant = plants;
             CohortDefoliation.Compute = InsectDefoliate;
+            this.repeat = repeatHarvest;
         }
 
         public static double InsectDefoliate(ICohort cohort, ActiveSite active, int siteBiomass)
@@ -35,6 +37,7 @@ namespace Landis.Extension.LandUse.LandCover
              * Maybe define a new type of IChange for insect defoliation?
              * Return relevant data
              */
+            Model.Core.UI.WriteLine("Insects defoliating here...");
             return 0;
         }
 

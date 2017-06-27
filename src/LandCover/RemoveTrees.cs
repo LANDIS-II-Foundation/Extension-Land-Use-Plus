@@ -14,6 +14,7 @@ namespace Landis.Extension.LandUse.LandCover
         : IChange
     {
         public const string TypeName = "RemoveTrees";
+        private bool repeat = false;
         private ICohortCutter cohortCutter;
         private Planting.SpeciesList speciesToPlant;
         private static readonly ILog log = LogManager.GetLogger(typeof(RemoveTrees));
@@ -28,11 +29,20 @@ namespace Landis.Extension.LandUse.LandCover
 
         //---------------------------------------------------------------------
 
+        bool IChange.Repeat
+        {
+            get { return repeat; }
+        }
+
+        //---------------------------------------------------------------------
+
         public RemoveTrees(ICohortCutter        cohortCutter,
-                           Planting.SpeciesList speciesToPlant)
+                           Planting.SpeciesList speciesToPlant,
+                            bool repeatHarvest)
         {
             this.cohortCutter = cohortCutter;
             this.speciesToPlant = speciesToPlant;
+            this.repeat = repeatHarvest;
         }
 
         //---------------------------------------------------------------------

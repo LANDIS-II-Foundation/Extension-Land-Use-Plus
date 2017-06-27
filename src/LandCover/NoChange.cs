@@ -20,6 +20,11 @@ namespace Landis.Extension.LandUse.LandCover
             get { return TypeName; }
         }
 
+        public bool Repeat
+        {
+            get { return false; }
+        }
+
         public void ApplyTo(ActiveSite site)
         {
             // Do nothing to the site.

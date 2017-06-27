@@ -61,10 +61,6 @@
     <Reference Include="Landis.Core">
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.1\Landis.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Extension.BiomassInsects, Version=3.0.5893.22746, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.BiomassInsects.dll</HintPath>
-    </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts, Version=2.1.5520.27591, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.AgeOnlyCohorts.dll</HintPath>
