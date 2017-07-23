@@ -1,52 +1,63 @@
 ﻿using Landis.Core;
 using Landis.Library.Succession;
 using Landis.SpatialModeling;
-using Landis.Library.BiomassCohorts;
+using Landis.Library.Biomass;
+using Landis.Library.SiteHarvest;
+using Landis.Library.BiomassHarvest;
+using System.Collections.Generic;
 
 namespace Landis.Extension.LandUse.LandCover
 {
-     /**
-      * A class demonstrating LU+ connectivity to succession modules
-      * and Insect extension. Can directly call static Defoliation 
-      * methods from Insect library
-      **/
     class InsectDefoliation 
         : IChange
     {
         public const string TypeName = "InsectDefoliation";
         private bool repeat;
-        private Planting.SpeciesList speciesToPlant;
+        private static Dictionary<string, LandCoverCohortSelector>  landCoverSelectors;
 
         string IChange.Type { get { return TypeName; } }
         bool IChange.Repeat { get { return repeat; } }
 
-        public InsectDefoliation(Planting.SpeciesList plants, bool repeatHarvest)
+        public InsectDefoliation(Dictionary<string,LandCoverCohortSelector> selectors, bool repeatHarvest)
         {
-            speciesToPlant = plants;
+            landCoverSelectors = new Dictionary<string, LandCoverCohortSelector>();
+            foreach (KeyValuePair<string, LandCoverCohortSelector> kvp in selectors)
+            {
+                landCoverSelectors[kvp.Key] = kvp.Value;
+            }
             CohortDefoliation.Compute = InsectDefoliate;
             this.repeat = repeatHarvest;
         }
 
-        public static double InsectDefoliate(ICohort cohort, ActiveSite active, int siteBiomass)
-        {
-            //Do LU+ specific things?
-            //Tentative pseudo-code:
-            /* Wherever parameters on LandUses are stored, we should have insect defoliation data
-             * Use the active site to access this data
-             * Apply the species names and percentages to the ICohort - This happens in tree removal
-             * Maybe define a new type of IChange for insect defoliation?
-             * Return relevant data
-             */
-            Model.Core.UI.WriteLine("Insects defoliating here...");
-            return 0;
-        }
-
+        /// <summary>
+        ///Used to change the intensity of defoliation parameters across timesteps.
+        /// </summary>
+        /// <param name="site"></param>
         public void ApplyTo(ActiveSite site)
         {
-            // Hopefully we are doing something helpful by using the interface this way
-            // I think the idea was that qualitatively different changes to landscapes
-            // all subscribe to this interface. Maybe we can leverage the way cohort harvest
-            // is parsed from the landuse.txt for RemoveTrees.cs
+            //To change percentage values, need a dictionary of species and percentage changes
+            //InsectDefoliation.landCoverSelectors[species].percentages[ages].Value = ???
+        }
+
+        /// <summary>
+        /// Passed anonymously to succession modules to compute defoliation
+        /// In succession modules defoliation is computed per-cohort, hence cohortBiomass parameter
+        /// </summary>
+        /// <param name="active"></param>
+        /// <param name="species"></param>
+        /// <param name="cohortBiomass"></param>
+        /// <param name="siteBiomass"></param>
+        /// <returns></returns>
+        public static double InsectDefoliate(ActiveSite active, ISpecies species, int cohortBiomass, int siteBiomass)
+        {
+            double totalDefoliation = landCoverSelectors[species.Name].percentage.Value;
+
+            //And what the totalDefoliation parameter is used to compute.
+            if (totalDefoliation > 1.0)  // Cannot exceed 100% defoliation
+                totalDefoliation = 1.0;
+
+            return totalDefoliation;
         }
     }
 }
+ 

@@ -179,6 +179,7 @@ namespace Landis.Extension.LandUse
                 landCoverChange = noLandCoverChange;
             else if (landCoverChangeType.Value.Actual == LandCover.RemoveTrees.TypeName)
             {
+                LandCover.LandCover.DontParseTrees = true;
                 ICohortSelector selector = selector = ReadSpeciesAndCohorts("LandUse",
                                                         ParameterNames.Plant,
                                                         ParameterNames.PreventEstablishment,
@@ -187,6 +188,7 @@ namespace Landis.Extension.LandUse
                                                                               Main.ExtType);
                 Planting.SpeciesList speciesToPlant = ReadSpeciesToPlant();
                 landCoverChange = new LandCover.RemoveTrees(cohortCutter, speciesToPlant, repeatHarvest);
+                LandCover.LandCover.DontParseTrees = false;
             }
             else if (landCoverChangeType.Value.Actual == LandCover.InsectDefoliation.TypeName)
             {
@@ -195,9 +197,8 @@ namespace Landis.Extension.LandUse
                                                ParameterNames.Plant,
                                                ParameterNames.PreventEstablishment,
                                                               "LandCoverChange");
-
-                Planting.SpeciesList speciesToPlant = ReadSpeciesToPlant();
-                landCoverChange = new LandCover.InsectDefoliation(speciesToPlant, repeatHarvest);
+                landCoverChange = 
+                    new LandCover.InsectDefoliation(LandCover.LandCover.CohortSelectors, repeatHarvest);
             }
             else
                 throw new InputValueException(landCoverChangeType.Value.String,
@@ -214,17 +215,22 @@ namespace Landis.Extension.LandUse
         /// </summary>
         /// <remarks>
         /// This overrides the base method so it can use the PartialThinning
-        /// class to handle cohort selections with percentages.
+        /// class to handle cohort selections with percentages. Added support 
+        /// for InsectDefoliation via LandCover cohort selections
         /// </remarks>
         protected override void CreateCohortSelectionMethodFor(ISpecies species,
                                                                IList<ushort> ages,
                                                                IList<AgeRange> ranges)
         {
-            if (! PartialThinning.CreateCohortSelectorFor(species, ages, ranges))
+            if (LandCover.LandCover.DontParseTrees)
             {
-                // There were no percentages specified for this species' ages
-                // and ranges.  So just create and store a whole cohort
-                // selector using the base method.
+                if (!PartialThinning.CreateCohortSelectorFor(species, ages, ranges))
+                {
+                    base.CreateCohortSelectionMethodFor(species, ages, ranges);
+                }
+            }
+            else if (!LandCover.LandCover.CreateCohortSelectorFor(species, ages, ranges))
+            {
                 base.CreateCohortSelectionMethodFor(species, ages, ranges);
             }
         }

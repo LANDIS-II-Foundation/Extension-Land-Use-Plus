@@ -3,9 +3,6 @@
 // files in this project's top-level directory, and at:
 //   https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Change
 //
-//  Pause Extension for Thomspon lab
-//   https://github.com/llmorreale/LANDISPauseButton
-//
 
 using Landis.Core;
 using Landis.Library.Succession;
