@@ -50,11 +50,14 @@ namespace Landis.Extension.LandUse.LandCover
         /// <returns></returns>
         public static double InsectDefoliate(ActiveSite active, ISpecies species, int cohortBiomass, int siteBiomass)
         {
-            double totalDefoliation = landCoverSelectors[species.Name].percentage.Value;
+            double totalDefoliation = 0.0;
+            if (landCoverSelectors.ContainsKey(species.Name))
+            {
+                totalDefoliation = landCoverSelectors[species.Name].percentage.Value;
 
-            //And what the totalDefoliation parameter is used to compute.
-            if (totalDefoliation > 1.0)  // Cannot exceed 100% defoliation
-                totalDefoliation = 1.0;
+                if (totalDefoliation > 1.0)  // Cannot exceed 100% defoliation
+                    totalDefoliation = 1.0;
+            }
 
             return totalDefoliation;
         }

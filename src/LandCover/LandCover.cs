@@ -28,10 +28,8 @@ namespace Landis.Extension.LandUse.LandCover
             // Force the harvest library to register its read method for age
             // ranges.  Then replace it with this project's read method that
             // handles percentages for partial thinning.
-            AgeRangeParsing.InitializeClass();
-            InputValues.Register<AgeRange>(LandCover.ReadAgeOrRange);
-            //Insect defoliation values only require percentages (and only look for them)
-            //InputValues.Register<Percentage>(LandCover.ReadPercentage);
+            //AgeRangeParsing.InitializeClass();
+            //InputValues.Register<AgeRange>(LandCover.ReadAgeOrRange);
 
             percentages = new Dictionary<ushort, Percentage>();
             CohortSelectors = new Dictionary<string, LandCoverCohortSelector>();
@@ -60,7 +58,7 @@ namespace Landis.Extension.LandUse.LandCover
                                                                   string message)
         {
             return new InputValueException(value,
-                                           string.Format("\"{0}\" is not a valid percentage for partial thinning", value),
+                                           string.Format("\"{0}\" is not a valid percentage for insect defoliation", value),
                                            new MultiLineText(message));
         }
 
@@ -112,10 +110,10 @@ namespace Landis.Extension.LandUse.LandCover
                 throw MakeInputValueException(valueAsStr.ToString(),
                                               exc.Message);
             }
-            if (percentage.Value < 0.0 || percentage.Value > 0.99)
+            if (percentage.Value < 0.0 || percentage.Value > 1.0)
                 throw MakeInputValueException(valueAsStr.ToString(),
-                                              string.Format("{0} is not between 0% and 99%.  100% is indicated by omitting the parentheses and percentage.", word));
-
+                                              string.Format("{0} is not between 0% and 100%. Insects", word));
+            Model.Core.UI.WriteLine("Using LandCover ReadMethod");
             //  Read whitespace and ')'
             valueAsStr.Append(ReadWhitespace(reader));
             char? ch = TextReader.ReadChar(reader);

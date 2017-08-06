@@ -99,7 +99,7 @@ namespace Landis.Extension.LandUse
             
             Dictionary<string, int> nameLineNumbers = new Dictionary<string, int>();
             Dictionary<ushort, int> mapCodeLineNumbers = new Dictionary<ushort, int>();
-
+            PartialThinning.InitializeClass();
             while (!AtEndOfInput)
             {
                 int nameLineNum = LineNumber;
@@ -180,6 +180,7 @@ namespace Landis.Extension.LandUse
             else if (landCoverChangeType.Value.Actual == LandCover.RemoveTrees.TypeName)
             {
                 LandCover.LandCover.DontParseTrees = true;
+                InputValues.Register<AgeRange>(PartialThinning.ReadAgeOrRange);
                 ICohortSelector selector = selector = ReadSpeciesAndCohorts("LandUse",
                                                         ParameterNames.Plant,
                                                         ParameterNames.PreventEstablishment,
@@ -193,6 +194,7 @@ namespace Landis.Extension.LandUse
             else if (landCoverChangeType.Value.Actual == LandCover.InsectDefoliation.TypeName)
             {
                 //Insects will reduce biomass of cohorts rather than directly affecting demographics       
+                InputValues.Register<AgeRange>(LandCover.LandCover.ReadAgeOrRange);
                 ICohortSelector selector = ReadSpeciesAndCohorts("LandUse",
                                                ParameterNames.Plant,
                                                ParameterNames.PreventEstablishment,
