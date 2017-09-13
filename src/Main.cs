@@ -86,8 +86,9 @@ namespace Landis.Extension.LandUse
                          LandUse newLandUse)
                 {
                     LandUse currentLandUse = SiteVars.LandUse[site];
-                    if (newLandUse != currentLandUse)
-                    {
+                    // T. Fox edit
+                    //if (newLandUse != currentLandUse)
+                    //{
                         SiteVars.LandUse[site] = newLandUse;
                         string transition = string.Format("{0} --> {1}", currentLandUse.Name, newLandUse.Name);
                         if (!currentLandUse.AllowEstablishment && newLandUse.AllowEstablishment)
@@ -106,9 +107,10 @@ namespace Landis.Extension.LandUse
                         if (SiteLog.Enabled)
                             SiteLog.WriteTotalsFor((ActiveSite)site);
                         return transition;
-                    }
-                    else
-                        return null;
+                    // T. Fox edit
+                    //}
+                    //else
+                    //    return null;
                 });
 
             if (SiteLog.Enabled)
