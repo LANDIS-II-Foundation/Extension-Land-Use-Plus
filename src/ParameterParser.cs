@@ -183,7 +183,6 @@ namespace Landis.Extension.LandUse
                 InputValues.Register<AgeRange>(PartialThinning.ReadAgeOrRange);
                 ICohortSelector selector = selector = ReadSpeciesAndCohorts("LandUse",
                                                         ParameterNames.Plant,
-                                                        ParameterNames.PreventEstablishment,
                                                         "LandCoverChange");
                 ICohortCutter cohortCutter = CohortCutterFactory.CreateCutter(selector,
                                                                               Main.ExtType);
@@ -196,9 +195,8 @@ namespace Landis.Extension.LandUse
                 //Insects will reduce biomass of cohorts rather than directly affecting demographics       
                 InputValues.Register<AgeRange>(LandCover.LandCover.ReadAgeOrRange);
                 ICohortSelector selector = ReadSpeciesAndCohorts("LandUse",
-                                               ParameterNames.Plant,
-                                               ParameterNames.PreventEstablishment,
-                                                              "LandCoverChange");
+                                                            ParameterNames.Plant, 
+                                                            "LandCoverChange");
                 landCoverChange = 
                     new LandCover.InsectDefoliation(LandCover.LandCover.CohortSelectors, repeatHarvest);
             }

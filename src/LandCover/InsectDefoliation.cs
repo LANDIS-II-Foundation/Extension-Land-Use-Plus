@@ -37,6 +37,10 @@ namespace Landis.Extension.LandUse.LandCover
         {
             //To change percentage values, need a dictionary of species and percentage changes
             //InsectDefoliation.landCoverSelectors[species].percentages[ages].Value = ???
+            if (!this.repeat) //Disables defoliation when harvests aren't repeated
+            {
+                CohortDefoliation.Compute = DontRepeatHarvest;
+            }
         }
 
         /// <summary>
@@ -60,6 +64,12 @@ namespace Landis.Extension.LandUse.LandCover
             }
 
             return totalDefoliation;
+        }
+
+        //Cohort defoliation delegate when harvest isn't repeated
+        public static double DontRepeatHarvest(ActiveSite active, ISpecies species, int cohortBiomass, int siteBiomass)
+        {
+            return 0;
         }
     }
 }

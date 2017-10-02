@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Landis.Extension.LandUse</RootNamespace>
-    <AssemblyName>Landis.Extension.LandUse-1.2</AssemblyName>
+    <AssemblyName>Landis.Extension.LandUse-1.3</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -87,9 +87,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.SiteHarvest-v1.dll</HintPath>
     </Reference>
-    <Reference Include="Landis.Library.Succession, Version=4.0.5521.15032, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Landis.Library.Succession-v2, Version=5.0.6480.24730, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Succession.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Succession-v2.dll</HintPath>
     </Reference>
     <Reference Include="Landis.SpatialModeling">
       <HintPath>C:\Program Files\LANDIS-II\v6\bin\6.1\Landis.SpatialModeling.dll</HintPath>
