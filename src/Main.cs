@@ -3,12 +3,10 @@
 // files in this project's top-level directory, and at:
 //   https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Change
 //
-//  Pause Extension for Thomspon lab
-//   https://github.com/llmorreale/LANDISPauseButton
-//
 
 using Landis.Core;
 using Landis.Library.Succession;
+using Landis.Library.BiomassHarvest;
 using Landis.SpatialModeling;
 using log4net;
 using System.Collections.Generic;
@@ -19,7 +17,7 @@ namespace Landis.Extension.LandUse
         : Landis.Core.ExtensionMain
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(Main));
-        private static readonly bool isDebugEnabled = log.IsDebugEnabled;
+        private static readonly bool isDebugEnabled = true;
 
         public static readonly ExtensionType ExtType = new ExtensionType("disturbance:land use");
         public static readonly string ExtensionName = "Land Use";
@@ -57,8 +55,12 @@ namespace Landis.Extension.LandUse
             Timestep = parameters.Timestep;
             inputMapTemplate = parameters.InputMaps;
 
-            pauseFunction = new Pause(parameters.ExternalScript, parameters.ExternalEngine, parameters.ExternalCommand);
-
+            pauseFunction = new Pause(parameters.ExternalScript, parameters.ExternalExecutable, parameters.ExternalCommand);
+            if (!pauseFunction.UsePause)
+            {
+                Model.Core.UI.WriteLine("No pause processes specified, continuing normally");
+                pauseFunction = null;
+            }
             if (parameters.SiteLogPath != null)
                 SiteLog.Initialize(parameters.SiteLogPath);
 
@@ -79,36 +81,65 @@ namespace Landis.Extension.LandUse
             if (SiteLog.Enabled)
                 SiteLog.TimestepSetUp();
 
-            pauseFunction.PauseTimestep();
-            
+            if (pauseFunction != null)
+            {
+                pauseFunction.PauseTimestep();
+            }
+
             ProcessInputMap(
                 delegate(Site site,
                          LandUse newLandUse)
                 {
                     LandUse currentLandUse = SiteVars.LandUse[site];
+                    string siteKey = null;
+                    
                     if (newLandUse != currentLandUse)
                     {
                         SiteVars.LandUse[site] = newLandUse;
-                        string transition = string.Format("{0} --> {1}", currentLandUse.Name, newLandUse.Name);
+                        siteKey = string.Format("{0} --> {1}", currentLandUse.Name, newLandUse.Name);
                         if (!currentLandUse.AllowEstablishment && newLandUse.AllowEstablishment)
                         {
-                            string message = string.Format("Error: The land-use change ({0}) at pixel {1} requires re-enabling establishment, but that's not currently supported",
-                                                           transition,
-                                                           site.Location);
-                            throw new System.ApplicationException(message);
+                            Reproduction.EnableEstablishment((ActiveSite)site);
                         }
                         else if (currentLandUse.AllowEstablishment && !newLandUse.AllowEstablishment)
-                            Reproduction.PreventEstablishment((ActiveSite) site);
+                        {
+                            Reproduction.PreventEstablishment((ActiveSite)site);
+                        }
 
                         if (isDebugEnabled)
-                            log.DebugFormat("    LU at {0}: {1}", site.Location, transition);
-                        newLandUse.LandCoverChange.ApplyTo((ActiveSite)site);
-                        if (SiteLog.Enabled)
-                            SiteLog.WriteTotalsFor((ActiveSite)site);
-                        return transition;
+                            log.DebugFormat("    LU at {0}: {1}", site.Location, siteKey);
+
+                        for (int i = 0; i < newLandUse.LandCoverChanges.Length; i++)
+                        {
+                            LandCover.IChange LandCoverChange = newLandUse.LandCoverChanges[i];
+                            LandCoverChange.ApplyTo((ActiveSite)site);
+                        }
                     }
                     else
-                        return null;
+                    {
+                        /*if (!currentLandUse.AllowEstablishment)
+                        {
+                            Reproduction.PreventEstablishment((ActiveSite)site);
+                        }
+                        else
+                        {                    
+                            Reproduction.EnableEstablishment((ActiveSite)site);
+                        }*/
+
+                        for (int i = 0; i < currentLandUse.LandCoverChanges.Length; i++)
+                        {
+                            LandCover.IChange LandCoverChange = newLandUse.LandCoverChanges[i];
+                            if (LandCoverChange.Repeat)
+                            {
+                                LandCoverChange.ApplyTo((ActiveSite)site);
+                            }
+                        }
+                    }
+
+                    if (SiteLog.Enabled)
+                        SiteLog.WriteTotalsFor((ActiveSite)site);
+
+                    return siteKey;
                 });
 
             if (SiteLog.Enabled)

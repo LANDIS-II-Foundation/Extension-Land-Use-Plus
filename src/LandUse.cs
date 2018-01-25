@@ -15,10 +15,11 @@ namespace Landis.Extension.LandUse
         public string Name { get; protected set; }
         public ushort MapCode { get; protected set; }
         public bool AllowHarvest { get; protected set; }
-        //public bool AllowHarvest { get; set; }
         public bool AllowEstablishment { get; protected set; }
-        //public bool AllowEstablishment { get; set; }
+
+        //Maintaining support for single LandCoverChange -- probably not necessary like this.
         public LandCover.IChange LandCoverChange { get; protected set; }
+        public LandCover.IChange[] LandCoverChanges { get; protected set; }
 
         //---------------------------------------------------------------------
 
@@ -34,6 +35,20 @@ namespace Landis.Extension.LandUse
             AllowHarvest = harvestingAllowed;
             AllowEstablishment = establishmentAllowed;
             LandCoverChange = initialLCC;
+        }
+
+        public LandUse(
+            string name,
+            ushort mapCode,
+            bool harvestingAllowed,
+            bool establishmentAllowed,
+            LandCover.IChange[] initialLCC)
+        {
+            Name = name;
+            MapCode = mapCode;
+            AllowHarvest = harvestingAllowed;
+            AllowEstablishment = establishmentAllowed;
+            LandCoverChanges = initialLCC;
         }
     }
 }

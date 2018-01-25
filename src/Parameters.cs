@@ -15,7 +15,7 @@ namespace Landis.Extension.LandUse
 
         //Input variables for LANDIS Pause scripting
         private string externalScriptPath;
-        private string externalScriptEngine;
+        private string externalScriptExecutable;
         private string externalScriptCommand;
 
         //---------------------------------------------------------------------
@@ -98,18 +98,18 @@ namespace Landis.Extension.LandUse
         /// <summary>
         /// Path to the external script used during LANDIS Pause functionality
         /// </summary>
-        public string ExternalEngine
+        public string ExternalExecutable
         {
             get
             {
-                return externalScriptEngine;
+                return externalScriptExecutable;
             }
             set
             {
                 if (value == "")
                     throw new InputValueException(value.ToString(),
                                                   "Please specify an executable for processing scripts in Pause functionality");
-                externalScriptEngine = value;
+                externalScriptExecutable = value;
             }
         }
 

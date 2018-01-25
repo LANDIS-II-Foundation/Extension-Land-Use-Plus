@@ -71,11 +71,11 @@ namespace Landis.Extension.LandUse
             else
                 parameters.ExternalScript = null;
 
-            InputVar<string> pauseEngine = new InputVar<string>("Executable");
+            InputVar<string> pauseEngine = new InputVar<string>("ExternalExecutable");
             if (ReadOptionalVar(pauseEngine))
-                parameters.ExternalEngine = pauseEngine.Value;
+                parameters.ExternalExecutable = pauseEngine.Value;
             else
-                parameters.ExternalEngine = null;
+                parameters.ExternalExecutable = null;
 
             //Adding parse for script engine location, script name, script command line input
             InputVar<string> pauseCommand = new InputVar<string>("ExternalCommand");
@@ -96,10 +96,10 @@ namespace Landis.Extension.LandUse
             InputVar<ushort> mapCode = new InputVar<ushort>("MapCode");
             InputVar<bool> allowHarvest = new InputVar<bool>("AllowHarvest?");
             InputVar<string> landCoverChangeType = new InputVar<string>("LandCoverChange");
-
+            
             Dictionary<string, int> nameLineNumbers = new Dictionary<string, int>();
             Dictionary<ushort, int> mapCodeLineNumbers = new Dictionary<ushort, int>();
-
+            PartialThinning.InitializeClass();
             while (!AtEndOfInput)
             {
                 int nameLineNum = LineNumber;
@@ -127,36 +127,87 @@ namespace Landis.Extension.LandUse
 
                 // By default, a land use allows trees to establish.
                 bool allowEstablishment = true;
+                if (ReadPreventEstablishment())
+                    allowEstablishment = false;
 
+                Dictionary<string, LandCover.IChange> landCoverChanges = 
+                    new Dictionary<string, LandCover.IChange>();
+                List<LandCover.IChange> landCoverList = new List<LandCover.IChange>();
                 ReadVar(landCoverChangeType);
-                LandCover.IChange landCoverChange = null;
-                if (landCoverChangeType.Value.Actual == LandCover.NoChange.TypeName)
-                    landCoverChange = noLandCoverChange;
-                else if (landCoverChangeType.Value.Actual == LandCover.RemoveTrees.TypeName)
+                LandCover.IChange landCoverChange = ProcessLandCoverChange(landCoverChangeType);
+                landCoverChanges[landCoverChange.Type] = landCoverChange;
+                landCoverList.Add(landCoverChange);
+                while (ReadOptionalVar(landCoverChangeType)) //Get extra LandCoverChanges
                 {
-                    ICohortSelector selector = ReadSpeciesAndCohorts("LandUse",
-                                                                     ParameterNames.Plant,
-                                                                     ParameterNames.PreventEstablishment);
-                    ICohortCutter cohortCutter = CohortCutterFactory.CreateCutter(selector,
-                                                                                  Main.ExtType);
-                    Planting.SpeciesList speciesToPlant = ReadSpeciesToPlant();
-                    landCoverChange = new LandCover.RemoveTrees(cohortCutter, speciesToPlant);
-
-                    if (ReadPreventEstablishment())
-                        allowEstablishment = false;
+                    if (landCoverChanges.TryGetValue(landCoverChangeType.Value.Actual, out landCoverChange))
+                    {
+                        throw new InputValueException(landCoverChangeType.Value.String,
+                                                  "The land cover change \"{0}\" has already been defined for land use: {1}",
+                                                  landCoverChangeType.Value.Actual, name.Value.Actual);
+                    }
+                    else
+                    {
+                        landCoverChange = ProcessLandCoverChange(landCoverChangeType);
+                        landCoverChanges[landCoverChange.Type] = landCoverChange;
+                        landCoverList.Add(landCoverChange);
+                    }
                 }
-                else
-                    throw new InputValueException(landCoverChangeType.Value.String,
-                                                  "\"{0}\" is not a type of land cover change",
-                                                  landCoverChangeType.Value.Actual);
+
+                LandCover.IChange[] changes = new LandCover.IChange[landCoverList.Count];
+                for (int i = 0; i < landCoverList.Count; i++)
+                    changes[i] = landCoverList[i];
 
                 LandUse landUse = new LandUse(name.Value.Actual,
                                               mapCode.Value.Actual,
                                               allowHarvest.Value.Actual,
                                               allowEstablishment,
-                                              landCoverChange);
+                                              changes);
                 LandUseRegistry.Register(landUse);
             }
+        }
+
+        LandCover.IChange ProcessLandCoverChange(InputVar<string> landCoverChangeType)
+        {
+            InputVar<bool> repeatableHarvest = new InputVar<bool>("RepeatHarvest?");
+            bool repeatHarvest = false;
+            if (ReadOptionalVar(repeatableHarvest))
+            {
+                repeatHarvest = repeatableHarvest.Value.Actual;
+            }
+            LandCover.IChange landCoverChange = null;
+            if (landCoverChangeType.Value.Actual == LandCover.NoChange.TypeName)
+                landCoverChange = noLandCoverChange;
+            else if (landCoverChangeType.Value.Actual == LandCover.RemoveTrees.TypeName)
+            {
+                LandCover.LandCover.DontParseTrees = true;
+                InputValues.Register<AgeRange>(PartialThinning.ReadAgeOrRange);
+                ICohortSelector selector = selector = ReadSpeciesAndCohorts("LandUse",
+                                                        ParameterNames.Plant,
+                                                        "Tony Bonanza",
+                                                        "LandCoverChange");
+                ICohortCutter cohortCutter = CohortCutterFactory.CreateCutter(selector,
+                                                                              Main.ExtType);
+                Planting.SpeciesList speciesToPlant = ReadSpeciesToPlant();
+                landCoverChange = new LandCover.RemoveTrees(cohortCutter, speciesToPlant, repeatHarvest);
+                LandCover.LandCover.DontParseTrees = false;
+            }
+            else if (landCoverChangeType.Value.Actual == LandCover.InsectDefoliation.TypeName)
+            {
+                //Insects will reduce biomass of cohorts rather than directly affecting demographics       
+                InputValues.Register<AgeRange>(LandCover.LandCover.ReadAgeOrRange);
+                ICohortSelector selector = ReadSpeciesAndCohorts("LandUse",
+                                                            ParameterNames.Plant,
+                                                            "Vito Tortellini",
+                                                            "LandCoverChange");
+                Planting.SpeciesList speciesToPlant = ReadSpeciesToPlant();
+                landCoverChange = new LandCover.InsectDefoliation(LandCover.LandCover.CohortSelectors, speciesToPlant, repeatHarvest);
+            }
+            else
+                throw new InputValueException(landCoverChangeType.Value.String,
+                                              "\"{0}\" is not a type of land cover change",
+                                              landCoverChangeType.Value.Actual);
+            //landCoverChange.PrintLandCoverDetails();
+            return landCoverChange;
         }
 
         //---------------------------------------------------------------------
@@ -167,17 +218,22 @@ namespace Landis.Extension.LandUse
         /// </summary>
         /// <remarks>
         /// This overrides the base method so it can use the PartialThinning
-        /// class to handle cohort selections with percentages.
+        /// class to handle cohort selections with percentages. Added support 
+        /// for InsectDefoliation via LandCover cohort selections
         /// </remarks>
         protected override void CreateCohortSelectionMethodFor(ISpecies species,
                                                                IList<ushort> ages,
                                                                IList<AgeRange> ranges)
         {
-            if (! PartialThinning.CreateCohortSelectorFor(species, ages, ranges))
+            if (LandCover.LandCover.DontParseTrees)
             {
-                // There were no percentages specified for this species' ages
-                // and ranges.  So just create and store a whole cohort
-                // selector using the base method.
+                if (!PartialThinning.CreateCohortSelectorFor(species, ages, ranges))
+                {
+                    base.CreateCohortSelectionMethodFor(species, ages, ranges);
+                }
+            }
+            else if (!LandCover.LandCover.CreateCohortSelectorFor(species, ages, ranges))
+            {
                 base.CreateCohortSelectionMethodFor(species, ages, ranges);
             }
         }
