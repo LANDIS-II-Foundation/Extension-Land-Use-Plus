@@ -13,12 +13,13 @@ namespace Landis.Extension.LandUse.LandCover
     {
         public const string TypeName = "InsectDefoliation";
         private bool repeat;
+        private Planting.SpeciesList speciesToPlant;
         private static Dictionary<string, LandCoverCohortSelector>  landCoverSelectors;
 
         string IChange.Type { get { return TypeName; } }
         bool IChange.Repeat { get { return repeat; } }
 
-        public InsectDefoliation(Dictionary<string,LandCoverCohortSelector> selectors, bool repeatHarvest)
+        public InsectDefoliation(Dictionary<string,LandCoverCohortSelector> selectors, Planting.SpeciesList speciesToPlant, bool repeatHarvest)
         {
             landCoverSelectors = new Dictionary<string, LandCoverCohortSelector>();
             foreach (KeyValuePair<string, LandCoverCohortSelector> kvp in selectors)
@@ -27,6 +28,7 @@ namespace Landis.Extension.LandUse.LandCover
             }
             CohortDefoliation.Compute = InsectDefoliate;
             this.repeat = repeatHarvest;
+            this.speciesToPlant = speciesToPlant;
         }
 
         /// <summary>
@@ -41,6 +43,8 @@ namespace Landis.Extension.LandUse.LandCover
             {
                 CohortDefoliation.Compute = DontRepeatHarvest;
             }
+            if (speciesToPlant != null)
+                Reproduction.ScheduleForPlanting(speciesToPlant, site);
         }
 
         /// <summary>
@@ -62,6 +66,8 @@ namespace Landis.Extension.LandUse.LandCover
                 if (totalDefoliation > 1.0)  // Cannot exceed 100% defoliation
                     totalDefoliation = 1.0;
             }
+            else
+            {}
 
             return totalDefoliation;
         }
@@ -70,6 +76,15 @@ namespace Landis.Extension.LandUse.LandCover
         public static double DontRepeatHarvest(ActiveSite active, ISpecies species, int cohortBiomass, int siteBiomass)
         {
             return 0;
+        }
+
+        public void PrintLandCoverDetails()
+        {
+            Model.Core.UI.WriteLine("Insect defoliation details: ");
+            foreach (KeyValuePair<string, LandCoverCohortSelector> kvp in landCoverSelectors)
+            {
+                Model.Core.UI.WriteLine("Species: " + kvp.Key + " " + "Rate: " + kvp.Value.percentage.ToString());
+            }
         }
     }
 }

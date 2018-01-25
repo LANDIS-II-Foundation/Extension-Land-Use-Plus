@@ -60,5 +60,10 @@ namespace Landis.Extension.LandUse.LandCover
             if (speciesToPlant != null)
                 Reproduction.ScheduleForPlanting(speciesToPlant, site);
         }
+
+        public void PrintLandCoverDetails()
+        {
+            Model.Core.UI.WriteLine("Tree parameters not available due to library functionality");
+        }
     }
 }

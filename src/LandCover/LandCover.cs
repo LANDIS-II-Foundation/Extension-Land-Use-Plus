@@ -110,10 +110,10 @@ namespace Landis.Extension.LandUse.LandCover
                 throw MakeInputValueException(valueAsStr.ToString(),
                                               exc.Message);
             }
+
             if (percentage.Value < 0.0 || percentage.Value > 1.0)
                 throw MakeInputValueException(valueAsStr.ToString(),
                                               string.Format("{0} is not between 0% and 100%. Insects", word));
-            Model.Core.UI.WriteLine("Using LandCover ReadMethod");
             //  Read whitespace and ')'
             valueAsStr.Append(ReadWhitespace(reader));
             char? ch = TextReader.ReadChar(reader);
@@ -124,7 +124,7 @@ namespace Landis.Extension.LandUse.LandCover
             if (ch != ')')
                 throw MakeInputValueException(valueAsStr.ToString(),
                                               string.Format("Value ends with \"{0}\" instead of \")\"", ch));
-
+            Model.Core.UI.WriteLine("Purportedly a percentage value: " + valueAsStr.ToString());
             return new InputValue<Percentage>(percentage, valueAsStr.ToString());
         }
 

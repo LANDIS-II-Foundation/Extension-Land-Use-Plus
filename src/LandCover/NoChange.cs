@@ -29,5 +29,10 @@ namespace Landis.Extension.LandUse.LandCover
         {
             // Do nothing to the site.
         }
+
+        public void PrintLandCoverDetails()
+        {
+            Model.Core.UI.WriteLine("Nothing to see here");
+        }
     }
 }

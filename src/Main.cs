@@ -6,6 +6,7 @@
 
 using Landis.Core;
 using Landis.Library.Succession;
+using Landis.Library.BiomassHarvest;
 using Landis.SpatialModeling;
 using log4net;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Landis.Extension.LandUse
         : Landis.Core.ExtensionMain
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(Main));
-        private static readonly bool isDebugEnabled = log.IsDebugEnabled;
+        private static readonly bool isDebugEnabled = true;
 
         public static readonly ExtensionType ExtType = new ExtensionType("disturbance:land use");
         public static readonly string ExtensionName = "Land Use";
@@ -60,7 +61,6 @@ namespace Landis.Extension.LandUse
                 Model.Core.UI.WriteLine("No pause processes specified, continuing normally");
                 pauseFunction = null;
             }
-
             if (parameters.SiteLogPath != null)
                 SiteLog.Initialize(parameters.SiteLogPath);
 
@@ -92,6 +92,7 @@ namespace Landis.Extension.LandUse
                 {
                     LandUse currentLandUse = SiteVars.LandUse[site];
                     string siteKey = null;
+                    
                     if (newLandUse != currentLandUse)
                     {
                         SiteVars.LandUse[site] = newLandUse;
@@ -115,15 +116,24 @@ namespace Landis.Extension.LandUse
                         }
                     }
                     else
-                    {                        
+                    {
+                        /*if (!currentLandUse.AllowEstablishment)
+                        {
+                            Reproduction.PreventEstablishment((ActiveSite)site);
+                        }
+                        else
+                        {                    
+                            Reproduction.EnableEstablishment((ActiveSite)site);
+                        }*/
+
                         for (int i = 0; i < currentLandUse.LandCoverChanges.Length; i++)
                         {
                             LandCover.IChange LandCoverChange = newLandUse.LandCoverChanges[i];
-                            if(LandCoverChange.Repeat)
+                            if (LandCoverChange.Repeat)
+                            {
                                 LandCoverChange.ApplyTo((ActiveSite)site);
+                            }
                         }
-                        //Do we need to set the siteKey to mess with anything if we repeat harvests?
-                        //siteKey = string.Format("{0} --> {1}", currentLandUse.Name, currentLandUse.Name);
                     }
 
                     if (SiteLog.Enabled)

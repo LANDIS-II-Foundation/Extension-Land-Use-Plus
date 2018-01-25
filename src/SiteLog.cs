@@ -4,7 +4,6 @@
 //   https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Change
 
 using Landis.Core;
-using Landis.Library.BiomassCohorts;
 using Landis.Library.BiomassHarvest;
 using Landis.SpatialModeling;
 using log4net;
