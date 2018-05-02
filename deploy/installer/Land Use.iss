@@ -24,8 +24,8 @@ LicenseFile=..\..\LICENSE.txt
 Source: {#LandisBuildDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extensions
 
 ; Harvest libraries
-#define ConfigOutDir "..\..\src\bin\Release"
-Source: {#ConfigOutDir}\Landis.Library.BiomassHarvest-v1.dll; DestDir: {app}\bin\extensions
+#define ConfigOutDir "..\..\src\bin\Debug"
+Source: {#ConfigOutDir}\Landis.Library.BiomassHarvest-v2.0.1.dll; DestDir: {app}\bin\extensions
 Source: {#ConfigOutDir}\Landis.Library.SiteHarvest-v1.dll; DestDir: {app}\bin\extensions
 
 ; The user guide
