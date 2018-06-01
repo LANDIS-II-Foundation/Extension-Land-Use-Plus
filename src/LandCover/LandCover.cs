@@ -124,7 +124,6 @@ namespace Landis.Extension.LandUse.LandCover
             if (ch != ')')
                 throw MakeInputValueException(valueAsStr.ToString(),
                                               string.Format("Value ends with \"{0}\" instead of \")\"", ch));
-            Model.Core.UI.WriteLine("Purportedly a percentage value: " + valueAsStr.ToString());
             return new InputValue<Percentage>(percentage, valueAsStr.ToString());
         }
 

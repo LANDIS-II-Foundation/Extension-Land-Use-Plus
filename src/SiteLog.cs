@@ -33,14 +33,13 @@ namespace Landis.Extension.LandUse
 
         public static void Initialize(string path)
         {
-            Model.Core.UI.WriteLine("  Opening log file \"{0}\"...", path);
+            /*Model.Core.UI.WriteLine("  Opening log file \"{0}\"...", path);
             logFile = Landis.Data.CreateTextFile(path);
             logFile.Write("timestep,row,column");
             foreach (ISpecies species in Model.Core.Species)
                 logFile.Write(",{0}", species.Name);
             logFile.WriteLine();
-            Enabled = true;
-
+            Enabled = true;*/
             SiteBiomass.ResetHarvestTotals();
         }
 

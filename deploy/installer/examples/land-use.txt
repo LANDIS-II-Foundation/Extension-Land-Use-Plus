@@ -1,45 +1,55 @@
-LandisData   "Land Use"
+LandisData "Land Use"
 
-Timestep    3
-InputMaps   path\to\land-use_{timestep}.tif
+Timestep   10
+InputMaps  land-use-{timestep}.img
+SiteLog    land-use/site-log.csv    << optional: default = don't generate log
 
-SiteLog     logging/site-log.csv   << optional: default = don't generate log
-
-ExternalScript external_module.py  		<< optional 
-ExternalExecutable C:/Python27/ArcGIS10.4/python.exe	<< optional
-ExternalCommand "python external_module.py”	<< optional 
+ExternalScript external_module.py
+ExternalExecutable C:/Python27/ArcGIS10.4/python.exe
+ExternalCommand "python external_module.py”
 
 >>------------------------------------
-LandUse          forest
+LandUse forest
 >>------------------------------------
 MapCode          1
 AllowHarvest?    yes
 LandCoverChange  NoChange
 
 >>------------------------------------
-LandUse          "rural development"
+LandUse "Urban development"
 >>------------------------------------
 MapCode          2
-AllowHarvest?    no
+AllowHarvest?    No
+PreventEstablishment
 LandCoverChange  RemoveTrees
-                   ABBA   10 30-50
-                   CAGL8  100(55%) 110-200
-                   CAOV2  1-250
-				   FAGR   10 50-70(9%) 150-2,000
-                   FRAM2  1-300(34%)
-				 Plant NorwaySpruce     << Optional
-                 PreventEstablishment   << Optional
+RepeatHarvest? Yes
+                   PIST 1-300(100%)
+                   TSCA 1-300(100%)
+                   FAGR 1-300(100%)
+LandCoverChange  InsectDefoliation
+RepeatHarvest? Yes
+                   PIST 1-300(10%)
+                   TSCA 1-300(10%)
+                   FAGR 1-300(10%)
+		Plant PIST
+
 
 >>------------------------------------
-LandUse          "no-harvest easement"
->>------------------------------------
-MapCode          0
-AllowHarvest?    no
-LandCoverChange  NoChange
-
->>------------------------------------
-LandUse          "(unknown)"
+LandUse "Garden"
 >>------------------------------------
 MapCode          3
+AllowHarvest?    no
+LandCoverChange  RemoveTrees
+                   PIST 1-10(100%)
+	                Plant PIST
+		RepeatHarvest? Yes
+LandCoverChange InsectDefoliation
+		PIST 1 (15%)
+		RepeatHarvest? No
+
+>>------------------------------------
+LandUse "no-harvest easement"
+>>------------------------------------
+MapCode          4
 AllowHarvest?    no
 LandCoverChange  NoChange
