@@ -1,5 +1,6 @@
 # Visual Studio - solution user options
 *.suo
+.vs/
 
 # Staging directory for library packages
 packages/

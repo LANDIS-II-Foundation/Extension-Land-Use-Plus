@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -27,7 +27,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -58,36 +58,31 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Edu.Wisc.Forest.Flel.Util">
-      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\6.2\Edu.Wisc.Forest.Flel.Util.dll</HintPath>
+	      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Landis.Core">
-      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\6.2\Landis.Core.dll</HintPath>
+	      <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Landis.Library.AgeOnlyCohorts, Version=2.1.5520.27591, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.AgeOnlyCohorts.dll</HintPath>
+    <Reference Include="Landis.Library.AgeOnlyCohorts">
+	      <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Landis.Library.Biomass-v1.0.1, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Biomass-v1.0.1.dll</HintPath>
+    <Reference Include="Landis.Library.Biomass-v1">
+	      <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Landis.Library.BiomassHarvest-v2.0.1, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.BiomassHarvest-v2.0.1.dll</HintPath>
+    <Reference Include="Landis.Library.BiomassHarvest-v2">
+	      <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Landis.Library.SiteHarvest-v1, Version=1.0.6492.27595, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.SiteHarvest-v1.dll</HintPath>
+    <Reference Include="Landis.Library.SiteHarvest-v1">
+	      <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Landis.Library.Succession-v5, Version=5.0.6491.14006, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Library.Succession-v5.dll</HintPath>
+    <Reference Include="Landis.Library.Succession-v5">
+	      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Landis.SpatialModeling">
-      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\6.2\Landis.SpatialModeling.dll</HintPath>
+	      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\6.2\log4net.dll</HintPath>
+	      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
