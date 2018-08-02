@@ -18,7 +18,7 @@ namespace Landis.Extension.LandUse
     public static class SiteLog
     {
         public static bool Enabled { get; private set; }
-        private static StreamWriter logFile;
+        private static StreamWriter logFile = null;
         private static readonly ILog log = LogManager.GetLogger(typeof(SiteLog));
         private static readonly bool isDebugEnabled = log.IsDebugEnabled;
 
