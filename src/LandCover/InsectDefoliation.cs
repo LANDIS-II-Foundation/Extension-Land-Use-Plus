@@ -1,9 +1,13 @@
-﻿using Landis.Core;
+﻿using Edu.Wisc.Forest.Flel.Util;
+using Landis.Core;
 using Landis.Library.Succession;
 using Landis.SpatialModeling;
-using Landis.Library.Biomass;
+using Landis.Extension.Succession.BiomassPnET;
 using Landis.Library.SiteHarvest;
 using Landis.Library.BiomassHarvest;
+using Landis.Library.BiomassCohorts;
+
+using System;
 using System.Collections.Generic;
 
 namespace Landis.Extension.LandUse.LandCover
@@ -15,19 +19,30 @@ namespace Landis.Extension.LandUse.LandCover
         private bool repeat;
         private Planting.SpeciesList speciesToPlant;
         private Dictionary<string, LandCoverCohortSelector>  landCoverSelectors;
-        private Dictionary<string, bool> speciesChecked;
+
+        struct CohortData 
+        { string SpeciesName; AgeRange AgeRange; public CohortData(string species, AgeRange ageRange) { this.SpeciesName = species; this.AgeRange = ageRange; } }
+        private Dictionary<CohortData, bool> speciesCohortsChecked;
 
         string IChange.Type { get { return TypeName; } }
         bool IChange.Repeat { get { return repeat; } }
 
         public InsectDefoliation(Dictionary<string,LandCoverCohortSelector> selectors, Planting.SpeciesList speciesToPlant, bool repeatHarvest)
         {
+            
             landCoverSelectors = new Dictionary<string, LandCoverCohortSelector>();
-            speciesChecked = new Dictionary<string, bool>();
+            speciesCohortsChecked = new Dictionary<CohortData, bool>();
             foreach (KeyValuePair<string, LandCoverCohortSelector> kvp in selectors)
             {
+                //Key: Species name
+                //Value: Cohort-based age selector
+                foreach(AgeRange ag in kvp.Value.AgeRanges)
+                {
+                    CohortData cohortData = new CohortData(kvp.Key, ag);
+                    speciesCohortsChecked.Add(cohortData, false);
+                }
+                
                 landCoverSelectors[kvp.Key] = kvp.Value;
-                speciesChecked.Add(kvp.Key, false);
             }
             CohortDefoliation.Compute = InsectDefoliate;
             this.repeat = repeatHarvest;
@@ -45,10 +60,6 @@ namespace Landis.Extension.LandUse.LandCover
                 Reproduction.ScheduleForPlanting(speciesToPlant, site);
         }
 
-        //Issues:
-        //LandCoverSelectors can't be static
-        //Spillover between years (one year after de-activating non-repeats, one year before re-activating repeats)
-
         /// <summary>
         /// Passed anonymously to succession modules to compute defoliation
         /// In succession modules defoliation is computed per-cohort, hence cohortBiomass parameter
@@ -58,10 +69,12 @@ namespace Landis.Extension.LandUse.LandCover
         /// <param name="cohortBiomass"></param>
         /// <param name="siteBiomass"></param>
         /// <returns></returns>
-        public static double InsectDefoliate(ActiveSite active, ISpecies species, int cohortBiomass, int siteBiomass)
+        //public static double InsectDefoliate(ActiveSite active, ISpecies species, int cohortBiomass, int siteBiomass)
+        public static double InsectDefoliate(ICohort cohort, ActiveSite active, int siteBiomass)
         {
             double totalDefoliation = 0.0;
             InsectDefoliation id = null;
+            
             foreach (IChange lcc in SiteVars.LandUse[active].LandCoverChanges)
             {
                 if (lcc.GetType() == typeof(InsectDefoliation))
@@ -74,42 +87,50 @@ namespace Landis.Extension.LandUse.LandCover
                     break;
                 }
             }
+
             if (id != null)
             {
-                if (id.landCoverSelectors.ContainsKey(species.Name))
+                Landis.Extension.Succession.BiomassPnET.Cohort defolCohort = (cohort as Landis.Extension.Succession.BiomassPnET.Cohort);
+                if (id.landCoverSelectors.ContainsKey(defolCohort.Species.Name))
                 {
-                    totalDefoliation = id.landCoverSelectors[species.Name].percentage.Value;
+                    Percentage percentage;
+                    id.landCoverSelectors[defolCohort.Species.Name].Selects(defolCohort, out percentage);
+                    totalDefoliation = percentage.Value;
+
+                    AgeRange ar = id.landCoverSelectors[defolCohort.Species.Name].ContainingRange(defolCohort.Age);
+                    CohortData cd = new CohortData(defolCohort.Species.Name, ar);
+
                     if (totalDefoliation > 1.0)  // Cannot exceed 100% defoliation
                         totalDefoliation = 1.0;
 
+                    //If we move into a new cohort class, defoliation will still happen. After the first round of defoliation for a LandUse, should we just disable everything?
+                    //Make a note for Meg on the technicalities.
                     if (!id.repeat)
-                    { if (id.CheckSpeciesDefoliated(species.Name)) { totalDefoliation = 0.0f; } }
-                    id.CheckSpecies(species.Name);
+                    { if (id.CheckSpeciesDefoliated(cd)) { totalDefoliation = 0.0f; } }
+                    id.CheckSpecies(cd); //First cohort stops us
                 }
             }
-            else
-                Model.Core.UI.WriteLine("Insect defoliation null, something wrong");
             
             return totalDefoliation;
         }
 
         void ClearSpeciesDefoliated()
         {
-            List<string> spp = new List<string>(speciesChecked.Keys);
-            for (int i = 0; i < speciesChecked.Keys.Count; i++ )
+            List<CohortData> spp = new List<CohortData>(speciesCohortsChecked.Keys);
+            for (int i = 0; i < speciesCohortsChecked.Keys.Count; i++ )
             {
-                speciesChecked[spp[i]] = false;
+                speciesCohortsChecked[spp[i]] = false;
             }
         }
 
-        bool CheckSpeciesDefoliated(string name)
+        bool CheckSpeciesDefoliated(CohortData cd)
         {
-            return speciesChecked[name];
+            return speciesCohortsChecked[cd];
         }
 
-        public void CheckSpecies(string name)
+        private void CheckSpecies(CohortData cd)
         {
-            speciesChecked[name] = true;
+            speciesCohortsChecked[cd] = true;
         }
 
         public void PrintLandCoverDetails()
@@ -117,7 +138,7 @@ namespace Landis.Extension.LandUse.LandCover
             Model.Core.UI.WriteLine("Insect defoliation details: ");
             foreach (KeyValuePair<string, LandCoverCohortSelector> kvp in landCoverSelectors)
             {
-                Model.Core.UI.WriteLine("Species: " + kvp.Key + " " + "Rate: " + kvp.Value.percentage.ToString());
+                //Model.Core.UI.WriteLine("Species: " + kvp.Key + " " + "Rate: " + kvp.Value.percentage.ToString());
             }
         }
     }

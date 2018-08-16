@@ -219,7 +219,7 @@ namespace Landis.Extension.LandUse.LandCover
                 return false;
             else
             {
-                LandCoverCohortSelector lccs = new LandCoverCohortSelector(percentage);
+                LandCoverCohortSelector lccs = new LandCoverCohortSelector(ages, ageRanges, percentages);
                 CohortSelectors[species.Name] = lccs;
                 percentage = null;
                 return true;

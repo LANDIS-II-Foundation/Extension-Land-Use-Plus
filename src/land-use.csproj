@@ -58,31 +58,40 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Edu.Wisc.Forest.Flel.Util">
-	      <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Landis.Core">
-	      <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Landis.Extension.Succession.BiomassPnET.LUv2.0">
+      <HintPath>..\..\..\..\..\Program Files\LANDIS-II\v6\bin\extensions\Landis.Extension.Succession.BiomassPnET.LUv2.0.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts">
-	      <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Landis.Library.Biomass-v1">
-	      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Landis.Library.BiomassCohorts-v2, Version=1.3.6650.22592, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Landis.Library.BiomassCohorts-v2.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.BiomassHarvest-v2">
-	      <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Landis.Library.BiomassHarvest-v2.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Library.Cohorts, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Landis.Library.Cohorts.dll</HintPath>
     </Reference>
     <Reference Include="Landis.Library.SiteHarvest-v1">
-	      <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Landis.Library.Succession-v5">
-	      <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Landis.SpatialModeling">
-	      <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="log4net">
-	      <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>

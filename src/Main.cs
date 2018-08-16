@@ -196,9 +196,10 @@ namespace Landis.Extension.LandUse
         }    
 
         //---------------------------------------------------------------------
-
-        public new void CleanUp()
+        //Overriding base LandisExtension method allows logfile to close and preserves written data
+        public override void CleanUp()
         {
+            Model.Core.UI.WriteLine("Closing logfile");
             if (SiteLog.Enabled)
                 SiteLog.Close();
         }

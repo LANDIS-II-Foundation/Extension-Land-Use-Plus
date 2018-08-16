@@ -1,0 +1,5 @@
+C:\Users\Adam\Documents\Extension-Land-Use-Change\src\bin\Debug\Landis.Extension.LandUse-2.0.dll
+C:\Users\Adam\Documents\Extension-Land-Use-Change\src\bin\Debug\Landis.Extension.LandUse-2.0.pdb
+C:\Users\Adam\Documents\Extension-Land-Use-Change\src\obj\Release\land-use.csprojResolveAssemblyReference.cache
+C:\Users\Adam\Documents\Extension-Land-Use-Change\src\obj\Release\Landis.Extension.LandUse-2.0.dll
+C:\Users\Adam\Documents\Extension-Land-Use-Change\src\obj\Release\Landis.Extension.LandUse-2.0.pdb
