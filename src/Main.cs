@@ -112,27 +112,15 @@ namespace Landis.Extension.LandUse
                         for (int i = 0; i < newLandUse.LandCoverChanges.Length; i++)
                         {
                             LandCover.IChange LandCoverChange = newLandUse.LandCoverChanges[i];
-                            LandCoverChange.ApplyTo((ActiveSite)site);
+                            LandCoverChange.ApplyTo((ActiveSite)site, true);
                         }
                     }
                     else
                     {
-                        /*if (!currentLandUse.AllowEstablishment)
-                        {
-                            Reproduction.PreventEstablishment((ActiveSite)site);
-                        }
-                        else
-                        {                    
-                            Reproduction.EnableEstablishment((ActiveSite)site);
-                        }*/
-
                         for (int i = 0; i < currentLandUse.LandCoverChanges.Length; i++)
                         {
                             LandCover.IChange LandCoverChange = newLandUse.LandCoverChanges[i];
-                            if (LandCoverChange.Repeat)
-                            {
-                                LandCoverChange.ApplyTo((ActiveSite)site);
-                            }
+                            LandCoverChange.ApplyTo((ActiveSite)site, false);
                         }
                     }
 

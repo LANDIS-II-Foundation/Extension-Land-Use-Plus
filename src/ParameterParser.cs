@@ -204,6 +204,7 @@ namespace Landis.Extension.LandUse
                                                             "LandCoverChange");
                 Planting.SpeciesList speciesToPlant = ReadSpeciesToPlant();
                 landCoverChange = new LandCover.InsectDefoliation(LandCover.LandCover.CohortSelectors, speciesToPlant, repeatHarvest);
+                LandCover.LandCover.CohortSelectors.Clear();    //Clear static storage selector to prevent writing across land uses
             }
             else
                 throw new InputValueException(landCoverChangeType.Value.String,

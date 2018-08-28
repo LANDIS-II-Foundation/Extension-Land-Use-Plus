@@ -22,26 +22,15 @@ namespace Landis.Extension.LandUse.LandCover
 
         struct CohortData 
         { string SpeciesName; AgeRange AgeRange; public CohortData(string species, AgeRange ageRange) { this.SpeciesName = species; this.AgeRange = ageRange; } }
-        private Dictionary<CohortData, bool> speciesCohortsChecked;
 
         string IChange.Type { get { return TypeName; } }
         bool IChange.Repeat { get { return repeat; } }
 
         public InsectDefoliation(Dictionary<string,LandCoverCohortSelector> selectors, Planting.SpeciesList speciesToPlant, bool repeatHarvest)
         {
-            
             landCoverSelectors = new Dictionary<string, LandCoverCohortSelector>();
-            speciesCohortsChecked = new Dictionary<CohortData, bool>();
             foreach (KeyValuePair<string, LandCoverCohortSelector> kvp in selectors)
-            {
-                //Key: Species name
-                //Value: Cohort-based age selector
-                foreach(AgeRange ag in kvp.Value.AgeRanges)
-                {
-                    CohortData cohortData = new CohortData(kvp.Key, ag);
-                    speciesCohortsChecked.Add(cohortData, false);
-                }
-                
+            {              
                 landCoverSelectors[kvp.Key] = kvp.Value;
             }
             CohortDefoliation.Compute = InsectDefoliate;
@@ -53,9 +42,20 @@ namespace Landis.Extension.LandUse.LandCover
         ///Used to change the intensity of defoliation parameters across Landis.
         /// </summary>
         /// <param name="site"></param>
-        public void ApplyTo(ActiveSite site)
+        public void ApplyTo(ActiveSite site, bool newLandUse)
         {
-            ClearSpeciesDefoliated();
+            if (newLandUse)
+            {
+                CohortDefoliation.Compute = InsectDefoliate;
+            }
+            else
+            {
+                if (!repeat)
+                {
+                    Model.Core.UI.WriteLine("Disable Insects");
+                    CohortDefoliation.Compute = DontCompute;
+                }
+            }
             if (speciesToPlant != null)
                 Reproduction.ScheduleForPlanting(speciesToPlant, site);
         }
@@ -74,7 +74,6 @@ namespace Landis.Extension.LandUse.LandCover
         {
             double totalDefoliation = 0.0;
             InsectDefoliation id = null;
-            
             foreach (IChange lcc in SiteVars.LandUse[active].LandCoverChanges)
             {
                 if (lcc.GetType() == typeof(InsectDefoliation))
@@ -93,44 +92,30 @@ namespace Landis.Extension.LandUse.LandCover
                 Landis.Extension.Succession.BiomassPnET.Cohort defolCohort = (cohort as Landis.Extension.Succession.BiomassPnET.Cohort);
                 if (id.landCoverSelectors.ContainsKey(defolCohort.Species.Name))
                 {
-                    Percentage percentage;
+                    Model.Core.UI.WriteLine(defolCohort.Species.Name);
+                    Model.Core.UI.WriteLine(defolCohort.Age.ToString());
+                    Percentage percentage = null;
                     id.landCoverSelectors[defolCohort.Species.Name].Selects(defolCohort, out percentage);
-                    totalDefoliation = percentage.Value;
 
-                    AgeRange ar = id.landCoverSelectors[defolCohort.Species.Name].ContainingRange(defolCohort.Age);
-                    CohortData cd = new CohortData(defolCohort.Species.Name, ar);
-
+                    if (percentage == null)
+                        Model.Core.UI.WriteLine("Null percent");
+                    else
+                    {
+                        Model.Core.UI.WriteLine("Defoliating: " + percentage.ToString());
+                        totalDefoliation = percentage.Value;
+                    }
+                    
                     if (totalDefoliation > 1.0)  // Cannot exceed 100% defoliation
                         totalDefoliation = 1.0;
-
-                    //If we move into a new cohort class, defoliation will still happen. After the first round of defoliation for a LandUse, should we just disable everything?
-                    //Make a note for Meg on the technicalities.
-                    if (!id.repeat)
-                    { if (id.CheckSpeciesDefoliated(cd)) { totalDefoliation = 0.0f; } }
-                    id.CheckSpecies(cd); //First cohort stops us
                 }
             }
             
             return totalDefoliation;
         }
 
-        void ClearSpeciesDefoliated()
+        public static double DontCompute(ICohort cohort, ActiveSite active, int siteBiomass)
         {
-            List<CohortData> spp = new List<CohortData>(speciesCohortsChecked.Keys);
-            for (int i = 0; i < speciesCohortsChecked.Keys.Count; i++ )
-            {
-                speciesCohortsChecked[spp[i]] = false;
-            }
-        }
-
-        bool CheckSpeciesDefoliated(CohortData cd)
-        {
-            return speciesCohortsChecked[cd];
-        }
-
-        private void CheckSpecies(CohortData cd)
-        {
-            speciesCohortsChecked[cd] = true;
+            return 0;
         }
 
         public void PrintLandCoverDetails()

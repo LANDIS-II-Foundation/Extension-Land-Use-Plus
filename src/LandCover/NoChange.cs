@@ -25,7 +25,7 @@ namespace Landis.Extension.LandUse.LandCover
             get { return false; }
         }
 
-        public void ApplyTo(ActiveSite site)
+        public void ApplyTo(ActiveSite site, bool newLandUse)
         {
             // Do nothing to the site.
         }
