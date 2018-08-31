@@ -1,9 +1,9 @@
 // This file is part of the Land Use extension for LANDIS-II.
-// For copyright and licensing information, see the NOTICE and LICENSE
+// For licensing information, see the LICENSE
 // files in this project's top-level directory, and at:
 //   https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Change
 
-using Edu.Wisc.Forest.Flel.Util;
+using Landis.Utilities;
 using Landis.Core;
 using Landis.Library.BiomassHarvest;
 using Landis.Library.SiteHarvest;

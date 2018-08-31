@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Landis.Core;
-using Edu.Wisc.Forest.Flel.Util;
+using Landis.Utilities;
 using Landis.Library.BiomassHarvest;
 using Landis.Library.SiteHarvest;
 
