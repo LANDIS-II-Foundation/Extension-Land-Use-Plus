@@ -183,6 +183,7 @@ namespace Landis.Extension.LandUse
             else if (landCoverChangeType.Value.Actual == LandCover.RemoveTrees.TypeName)
             {
                 LandCover.LandCover.DontParseTrees = true;
+                PartialThinning.CohortSelectors.Clear();    //Clear static storage selector to prevent writing across land uses
                 InputValues.Register<AgeRange>(PartialThinning.ReadAgeOrRange);
                 ICohortSelector selector = selector = ReadSpeciesAndCohorts("LandUse",
                                                         ParameterNames.Plant,
@@ -191,7 +192,9 @@ namespace Landis.Extension.LandUse
                 ICohortCutter cohortCutter = CohortCutterFactory.CreateCutter(selector,
                                                                               Main.ExtType);
                 Planting.SpeciesList speciesToPlant = ReadSpeciesToPlant();
+                
                 landCoverChange = new LandCover.RemoveTrees(cohortCutter, speciesToPlant, repeatHarvest);
+                PartialThinning.CohortSelectors.Clear();    //Prevent interactions with Biomass Harvest
                 LandCover.LandCover.DontParseTrees = false;
             }
             else if (landCoverChangeType.Value.Actual == LandCover.InsectDefoliation.TypeName)

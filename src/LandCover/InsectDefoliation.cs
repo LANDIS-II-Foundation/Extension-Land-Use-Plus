@@ -17,6 +17,7 @@ namespace Landis.Extension.LandUse.LandCover
     {
         public const string TypeName = "InsectDefoliation";
         private bool repeat;
+        private int harvestTime;
         private Planting.SpeciesList speciesToPlant;
         private Dictionary<string, LandCoverCohortSelector>  landCoverSelectors;
 
@@ -47,10 +48,15 @@ namespace Landis.Extension.LandUse.LandCover
             if (newLandUse)
             {
                 CohortDefoliation.Compute = InsectDefoliate;
+                if (!repeat)
+                {
+                    harvestTime = Model.Core.CurrentTime;
+                    //Model.Core.UI.WriteLine("Setting defoliation harvest time: " + harvestTime);
+                }
             }
             else
             {
-                if (!repeat)
+                if (!repeat)    //When repeat harvest is off, shut down the delegate if the land use doesn't transition
                 {
                     Model.Core.UI.WriteLine("Disable Insects");
                     CohortDefoliation.Compute = DontCompute;
@@ -73,6 +79,7 @@ namespace Landis.Extension.LandUse.LandCover
         public static double InsectDefoliate(ICohort cohort, ActiveSite active, int siteBiomass)
         {
             double totalDefoliation = 0.0;
+            
             InsectDefoliation id = null;
             foreach (IChange lcc in SiteVars.LandUse[active].LandCoverChanges)
             {
@@ -83,6 +90,13 @@ namespace Landis.Extension.LandUse.LandCover
                     {
                         CohortDefoliation.Compute = InsectDefoliate;
                     }
+                    else if (Model.Core.CurrentTime > id.harvestTime)
+                    {
+                        //Model.Core.UI.WriteLine("Disabling defoliation after harvest time: " + Model.Core.CurrentTime);
+                        CohortDefoliation.Compute = DontCompute;
+                        id = null;
+                        break;
+                    }
                     break;
                 }
             }
@@ -92,6 +106,7 @@ namespace Landis.Extension.LandUse.LandCover
                 Landis.Extension.Succession.BiomassPnET.Cohort defolCohort = (cohort as Landis.Extension.Succession.BiomassPnET.Cohort);
                 if (id.landCoverSelectors.ContainsKey(defolCohort.Species.Name))
                 {
+                    //Model.Core.UI.WriteLine("Defoliating at harvest time: " + id.harvestTime);
                     Model.Core.UI.WriteLine(defolCohort.Species.Name);
                     Model.Core.UI.WriteLine(defolCohort.Age.ToString());
                     Percentage percentage = null;
@@ -101,7 +116,6 @@ namespace Landis.Extension.LandUse.LandCover
                         Model.Core.UI.WriteLine("Null percent");
                     else
                     {
-                        Model.Core.UI.WriteLine("Defoliating: " + percentage.ToString());
                         totalDefoliation = percentage.Value;
                     }
                     

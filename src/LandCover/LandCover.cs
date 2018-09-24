@@ -220,6 +220,10 @@ namespace Landis.Extension.LandUse.LandCover
             else
             {
                 LandCoverCohortSelector lccs = new LandCoverCohortSelector(ages, ageRanges, percentages);
+                if (CohortSelectors.ContainsKey(species.Name))
+                {
+                    Model.Core.UI.WriteLine("Contains species: " + species.Name);
+                }
                 CohortSelectors[species.Name] = lccs;
                 percentage = null;
                 return true;
