@@ -58,7 +58,6 @@ namespace Landis.Extension.LandUse.LandCover
             {
                 if (!repeat)    //When repeat harvest is off, shut down the delegate if the land use doesn't transition
                 {
-                    Model.Core.UI.WriteLine("Disable Insects");
                     CohortDefoliation.Compute = DontCompute;
                 }
             }
@@ -106,9 +105,6 @@ namespace Landis.Extension.LandUse.LandCover
                 Landis.Extension.Succession.BiomassPnET.Cohort defolCohort = (cohort as Landis.Extension.Succession.BiomassPnET.Cohort);
                 if (id.landCoverSelectors.ContainsKey(defolCohort.Species.Name))
                 {
-                    //Model.Core.UI.WriteLine("Defoliating at harvest time: " + id.harvestTime);
-                    Model.Core.UI.WriteLine(defolCohort.Species.Name);
-                    Model.Core.UI.WriteLine(defolCohort.Age.ToString());
                     Percentage percentage = null;
                     id.landCoverSelectors[defolCohort.Species.Name].Selects(defolCohort, out percentage);
 
