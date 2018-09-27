@@ -1,6 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using Edu.Wisc.Forest.Flel.Util;
+=======
+using System.Linq;
+using System.Text;
+
+using Landis.Utilities;
+>>>>>>> Core_v7
 using Landis.Core;
 using Landis.Library.SiteHarvest;
 using Landis.Library.BiomassCohorts;

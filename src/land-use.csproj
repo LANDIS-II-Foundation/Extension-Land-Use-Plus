@@ -1,13 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B8CED21D-693F-4551-908B-E63321DD1D9F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Landis.Extension.LandUse</RootNamespace>
+<<<<<<< HEAD
     <AssemblyName>Landis.Extension.LandUse-2.0</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -34,29 +29,37 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
+=======
+    <AssemblyName>Landis.Extension.LandUse-v3</AssemblyName>
+    <AssemblyTitle>Landis.Extension.LandUse-v3</AssemblyTitle>
+    <AssemblyCompany>Landis-II-Foundation</AssemblyCompany>
+    <AssemblyProduct>Landis.Extension.LandUse-v3</AssemblyProduct>
+    <AssemblyCopyright>Landis-II-Foundation</AssemblyCopyright>
+    <AssemblyVersion>3.0</AssemblyVersion>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Change</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseUrl>https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Change</PackageLicenseUrl>
+    <PackageProjectUrl>http://www.landis-ii.org</PackageProjectUrl>
+    <NeutralLanguage>English</NeutralLanguage>
+    <Authors>Landis-II-Foundation</Authors>
+    <Product>Landis.Extension.LandUse-v3</Product>
+    <Copyright>Landis-II-Foundation</Copyright>
+    <Version>3.0</Version>
+    <PackageTags>LANDIS-II;Landis;Extension;Land-Use-Change</PackageTags>
+    <Description></Description>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <FileVersion>7.0.0.0</FileVersion>
+>>>>>>> Core_v7
   </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="AllowHarvestSiteVar.cs" />
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="LandCover\InsectDefoliation.cs" />
-    <Compile Include="LandCover\IChange.cs" />
-    <Compile Include="LandCover\LandCover.cs" />
-    <Compile Include="LandCover\LandCoverCohortSelector.cs" />
-    <Compile Include="LandCover\NoChange.cs" />
-    <Compile Include="LandCover\RemoveTrees.cs" />
-    <Compile Include="LandUse.cs" />
-    <Compile Include="LandUseRegistry.cs" />
-    <Compile Include="Main.cs" />
-    <Compile Include="MapNames.cs" />
-    <Compile Include="MapPixel.cs" />
-    <Compile Include="Model.cs" />
-    <Compile Include="ParameterParser.cs" />
-    <Compile Include="Parameters.cs" />
-    <Compile Include="Pause.cs" />
-    <Compile Include="SiteLog.cs" />
-    <Compile Include="SiteVars.cs" />
+    <PackageReference Include="Landis.Core" Version="2.0.0" />
   </ItemGroup>
+
   <ItemGroup>
+<<<<<<< HEAD
     <Reference Include="Edu.Wisc.Forest.Flel.Util">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -94,35 +97,30 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemDefinitionGroup>
-    <Reference>
-      <!-- Do not copy any of referenced assemblies to the output directory during a build.
-	       We only want the libraries that are fetched as NuGet packages to be copied to
-		   that directory.  In order to make it easier to stage them (without dealing without
-		   the version #s in their package paths -->
-      <Private>False</Private>
+=======
+    <Reference Include="Landis.Library.AgeOnlyCohorts-v3">
+      <HintPath>lib\Landis.Library.AgeOnlyCohorts-v3.dll</HintPath>
     </Reference>
-  </ItemDefinitionGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+    <Reference Include="Landis.Library.Biomass-v2">
+      <HintPath>lib\Landis.Library.Biomass-v2.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Library.BiomassCohorts-v3">
+      <HintPath>lib\Landis.Library.BiomassCohorts-v3.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Library.BiomassHarvest-v3">
+      <HintPath>lib\Landis.Library.LandUse-v3.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Library.Cohorts-v2">
+      <HintPath>lib\Landis.Library.Cohorts-v2.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Library.SiteHarvest-v2">
+      <HintPath>lib\Landis.Library.SiteHarvest-v2.dll</HintPath>
+    </Reference>
+    <Reference Include="Landis.Library.Succession-v6">
+      <HintPath>lib\Landis.Library.Succession-v6.dll</HintPath>
+    </Reference>
+>>>>>>> Core_v7
+  </ItemGroup>
+
 </Project>
+

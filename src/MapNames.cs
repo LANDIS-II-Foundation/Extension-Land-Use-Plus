@@ -1,12 +1,10 @@
-// Copyright 2005 University of Wisconsin
-
-using Edu.Wisc.Forest.Flel.Util;
+using Landis.Utilities;
 using System.Collections.Generic;
 
 // Although this utility class was designed for output path templates, it
 // can also be used for input path templates.  Should rename it in the library
 // eventually.
-using FilePath = Edu.Wisc.Forest.Flel.Util.OutputPath;
+using FilePath = Landis.Utilities.OutputPath;
 
 namespace Landis.Extension.LandUse
 {
