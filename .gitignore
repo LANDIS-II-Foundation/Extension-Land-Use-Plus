@@ -7,7 +7,7 @@ packages/
 
 # Build directories
 src/bin/
-# src/obj/
+src/obj/
 
 # Compiled installers
 deploy/*.exe
@@ -16,3 +16,5 @@ deploy/*.exe
 insect_example/
 wobegon_PnET/
 LUtesting/
+*.sln
+old/
