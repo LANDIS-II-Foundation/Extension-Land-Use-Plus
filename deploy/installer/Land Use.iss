@@ -21,20 +21,21 @@ LicenseFile=..\..\LICENSE.txt
 
 [Files]
 ; The extension's assembly
-Source: {#LandisBuildDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extensions
+#define ExtBuildDir "..\..\src\obj\Debug\"
+Source: {#ExtBuildDir}\{#ExtensionAssembly}.dll; DestDir: {app}\bin\extensions
 
 ; Harvest libraries
-#define ConfigOutDir "..\..\src\bin\Debug"
-Source: {#ConfigOutDir}\Landis.Library.BiomassHarvest-v2.0.1.dll; DestDir: {app}\bin\extensions
+#define ConfigOutDir "..\..\..\libraries-MUSTUPDATE\Support-Library-Dlls-v6-master"
+Source: {#ConfigOutDir}\Landis.Library.BiomassHarvest-v2.dll; DestDir: {app}\bin\extensions
 Source: {#ConfigOutDir}\Landis.Library.SiteHarvest-v1.dll; DestDir: {app}\bin\extensions
 
 ; The user guide
 #define UserGuideSrc ExtensionName + " vX.Y - User Guide.pdf"
 #define UserGuide    StringChange(UserGuideSrc, "X.Y", MajorMinor)
-Source: docs\{#UserGuideSrc}; DestDir: {app}\docs; DestName: {#UserGuide}
+Source: ..\..\docs\{#UserGuideSrc}; DestDir: {app}\docs; DestName: {#UserGuide}
 
 ; Sample input files
-Source: examples\*; DestDir: {app}\examples\{#ExtensionName}; Flags: recursesubdirs
+Source: ..\examples\*; DestDir: {app}\examples\{#ExtensionName}; Flags: recursesubdirs
 
 ; The extension's info file
 #define ExtensionInfo  ExtensionName + " " + MajorMinor + ".txt"

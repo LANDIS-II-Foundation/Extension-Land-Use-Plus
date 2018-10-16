@@ -1,0 +1,4 @@
+Y:\LANDIS_SOURCE_CODE\Extension-Land-Use-Change\src\obj\Debug\land-use.csprojResolveAssemblyReference.cache
+Y:\LANDIS_SOURCE_CODE\Extension-Land-Use-Change\src\obj\Debug\land-use.csproj.CoreCompileInputs.cache
+Y:\LANDIS_SOURCE_CODE\Extension-Land-Use-Change\src\obj\Debug\Landis.Extension.LandUse-2.0.dll
+Y:\LANDIS_SOURCE_CODE\Extension-Land-Use-Change\src\obj\Debug\Landis.Extension.LandUse-2.0.pdb

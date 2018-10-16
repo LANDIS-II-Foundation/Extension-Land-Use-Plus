@@ -7,4 +7,4 @@ Assembly     Landis.Extension.LandUse-2.0
 Class        Landis.Extension.LandUse.Main
 Description  "Land Use and Land Cover Change"
 UserGuide    "Land Use v2.0 - User Guide.pdf"
-CoreVersion  6.0
+CoreVersion  6.2
