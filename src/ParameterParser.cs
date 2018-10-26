@@ -60,7 +60,10 @@ namespace Landis.Extension.LandUse
 
             InputVar<string> siteLog = new InputVar<string>("SiteLog");
             if (ReadOptionalVar(siteLog))
+            {
                 parameters.SiteLogPath = siteLog.Value;
+                Model.Core.UI.WriteLine("SiteLog specified, writing to PATH: " + siteLog.Value);
+            }
             else
                 parameters.SiteLogPath = null;
 
@@ -180,6 +183,7 @@ namespace Landis.Extension.LandUse
             else if (landCoverChangeType.Value.Actual == LandCover.RemoveTrees.TypeName)
             {
                 LandCover.LandCover.DontParseTrees = true;
+                PartialThinning.CohortSelectors.Clear();    //Clear static storage selector to prevent writing across land uses
                 InputValues.Register<AgeRange>(PartialThinning.ReadAgeOrRange);
                 ICohortSelector selector = selector = ReadSpeciesAndCohorts("LandUse",
                                                         ParameterNames.Plant,
@@ -189,6 +193,7 @@ namespace Landis.Extension.LandUse
                                                                               Main.ExtType);
                 Planting.SpeciesList speciesToPlant = ReadSpeciesToPlant();
                 landCoverChange = new LandCover.RemoveTrees(cohortCutter, speciesToPlant, repeatHarvest);
+                PartialThinning.CohortSelectors.Clear();    //Prevent interactions with Biomass Harvest
                 LandCover.LandCover.DontParseTrees = false;
             }
             else if (landCoverChangeType.Value.Actual == LandCover.InsectDefoliation.TypeName)
@@ -201,6 +206,7 @@ namespace Landis.Extension.LandUse
                                                             "LandCoverChange");
                 Planting.SpeciesList speciesToPlant = ReadSpeciesToPlant();
                 landCoverChange = new LandCover.InsectDefoliation(LandCover.LandCover.CohortSelectors, speciesToPlant, repeatHarvest);
+                LandCover.LandCover.CohortSelectors.Clear();    //Clear static storage selector to prevent writing across land uses
             }
             else
                 throw new InputValueException(landCoverChangeType.Value.String,

@@ -21,12 +21,13 @@
     <Version>3.0</Version>
     <PackageTags>LANDIS-II;Landis;Extension;Land-Use-Change</PackageTags>
     <Description></Description>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <FileVersion>7.0.0.0</FileVersion>
+    <PackageReleaseNotes>.NET Standard 2.0 update</PackageReleaseNotes>
+    <FileVersion>3.0.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Landis.Core" Version="2.0.0" />
+    <PackageReference Include="Landis.Core.Implementation" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>

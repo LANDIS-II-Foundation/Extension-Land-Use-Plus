@@ -129,10 +129,7 @@ namespace Landis.Extension.LandUse
                         for (int i = 0; i < currentLandUse.LandCoverChanges.Length; i++)
                         {
                             LandCover.IChange LandCoverChange = newLandUse.LandCoverChanges[i];
-                            if (LandCoverChange.Repeat)
-                            {
-                                LandCoverChange.ApplyTo((ActiveSite)site);
-                            }
+                            LandCoverChange.ApplyTo((ActiveSite)site);
                         }
                     }
 
@@ -196,9 +193,10 @@ namespace Landis.Extension.LandUse
         }    
 
         //---------------------------------------------------------------------
-
-        public new void CleanUp()
+        //Overriding base LandisExtension method allows logfile to close and preserves written data
+        public override void CleanUp()
         {
+            Model.Core.UI.WriteLine("Closing logfile");
             if (SiteLog.Enabled)
                 SiteLog.Close();
         }
