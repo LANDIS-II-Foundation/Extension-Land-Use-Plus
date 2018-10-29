@@ -1,12 +1,10 @@
-﻿using Landis.Core;
-using Landis.Utilities;
+﻿using Landis.Utilities;
 using Landis.Library.Succession;
 using Landis.SpatialModeling;
 using Landis.Library.BiomassCohorts;
 using Landis.Library.SiteHarvest;
-using Landis.Library.BiomassHarvest;
 using System.Collections.Generic;
-using Landis.Extension.Succession.BiomassPnET;
+using Landis.Library.BiomassHarvest;
 
 namespace Landis.Extension.LandUse.LandCover
 {
