@@ -1,10 +1,12 @@
-﻿using Landis.Utilities;
+﻿using Landis.Core;
+using Landis.Utilities;
 using Landis.Library.Succession;
 using Landis.SpatialModeling;
-using Landis.Library.BiomassCohorts;
 using Landis.Library.SiteHarvest;
-using System.Collections.Generic;
 using Landis.Library.BiomassHarvest;
+using Landis.Library.BiomassCohorts;
+using System.Collections.Generic;
+using Landis.Extension.Succession.BiomassPnET;
 
 namespace Landis.Extension.LandUse.LandCover
 {
@@ -129,7 +131,7 @@ namespace Landis.Extension.LandUse.LandCover
             Model.Core.UI.WriteLine("Insect defoliation details: ");
             foreach (KeyValuePair<string, LandCoverCohortSelector> kvp in landCoverSelectors)
             {
-                //Model.Core.UI.WriteLine("Species: " + kvp.Key + " " + "Rate: " + kvp.Value.percentage.ToString());
+                Model.Core.UI.WriteLine("Species: " + kvp.Key + " " + "Rate: " + kvp.Value.percentage.ToString());
             }
         }
     }
