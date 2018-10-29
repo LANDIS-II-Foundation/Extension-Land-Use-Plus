@@ -1,10 +1,12 @@
 ﻿using Landis.Core;
+using Landis.Utilities;
 using Landis.Library.Succession;
 using Landis.SpatialModeling;
-using Landis.Library.Biomass;
+using Landis.Library.BiomassCohorts;
 using Landis.Library.SiteHarvest;
 using Landis.Library.BiomassHarvest;
 using System.Collections.Generic;
+using Landis.Extension.Succession.BiomassPnET;
 
 namespace Landis.Extension.LandUse.LandCover
 {
@@ -13,9 +15,12 @@ namespace Landis.Extension.LandUse.LandCover
     {
         public const string TypeName = "InsectDefoliation";
         private bool repeat;
+        private int harvestTime;
         private Planting.SpeciesList speciesToPlant;
         private Dictionary<string, LandCoverCohortSelector>  landCoverSelectors;
-        private Dictionary<string, bool> speciesChecked;
+
+        struct CohortData 
+        { string SpeciesName; AgeRange AgeRange; public CohortData(string species, AgeRange ageRange) { this.SpeciesName = species; this.AgeRange = ageRange; } }
 
         string IChange.Type { get { return TypeName; } }
         bool IChange.Repeat { get { return repeat; } }
@@ -23,11 +28,9 @@ namespace Landis.Extension.LandUse.LandCover
         public InsectDefoliation(Dictionary<string,LandCoverCohortSelector> selectors, Planting.SpeciesList speciesToPlant, bool repeatHarvest)
         {
             landCoverSelectors = new Dictionary<string, LandCoverCohortSelector>();
-            speciesChecked = new Dictionary<string, bool>();
             foreach (KeyValuePair<string, LandCoverCohortSelector> kvp in selectors)
-            {
+            {              
                 landCoverSelectors[kvp.Key] = kvp.Value;
-                speciesChecked.Add(kvp.Key, false);
             }
             CohortDefoliation.Compute = InsectDefoliate;
             this.repeat = repeatHarvest;
@@ -38,16 +41,27 @@ namespace Landis.Extension.LandUse.LandCover
         ///Used to change the intensity of defoliation parameters across Landis.
         /// </summary>
         /// <param name="site"></param>
-        public void ApplyTo(ActiveSite site)
+        public void ApplyTo(ActiveSite site, bool newLandUse)
         {
-            ClearSpeciesDefoliated();
+            if (newLandUse)
+            {
+                CohortDefoliation.Compute = InsectDefoliate;
+                if (!repeat)
+                {
+                    harvestTime = Model.Core.CurrentTime;
+                    //Model.Core.UI.WriteLine("Setting defoliation harvest time: " + harvestTime);
+                }
+            }
+            else
+            {
+                if (!repeat)    //When repeat harvest is off, shut down the delegate if the land use doesn't transition
+                {
+                    CohortDefoliation.Compute = DontCompute;
+                }
+            }
             if (speciesToPlant != null)
                 Reproduction.ScheduleForPlanting(speciesToPlant, site);
         }
-
-        //Issues:
-        //LandCoverSelectors can't be static
-        //Spillover between years (one year after de-activating non-repeats, one year before re-activating repeats)
 
         /// <summary>
         /// Passed anonymously to succession modules to compute defoliation
@@ -58,9 +72,11 @@ namespace Landis.Extension.LandUse.LandCover
         /// <param name="cohortBiomass"></param>
         /// <param name="siteBiomass"></param>
         /// <returns></returns>
-        public static double InsectDefoliate(ActiveSite active, ISpecies species, int cohortBiomass, int siteBiomass)
+        //public static double InsectDefoliate(ActiveSite active, ISpecies species, int cohortBiomass, int siteBiomass)
+        public static double InsectDefoliate(ICohort cohort, ActiveSite active, int siteBiomass)
         {
             double totalDefoliation = 0.0;
+            
             InsectDefoliation id = null;
             foreach (IChange lcc in SiteVars.LandUse[active].LandCoverChanges)
             {
@@ -71,45 +87,43 @@ namespace Landis.Extension.LandUse.LandCover
                     {
                         CohortDefoliation.Compute = InsectDefoliate;
                     }
+                    else if (Model.Core.CurrentTime > id.harvestTime)
+                    {
+                        //Model.Core.UI.WriteLine("Disabling defoliation after harvest time: " + Model.Core.CurrentTime);
+                        CohortDefoliation.Compute = DontCompute;
+                        id = null;
+                        break;
+                    }
                     break;
                 }
             }
+
             if (id != null)
             {
-                if (id.landCoverSelectors.ContainsKey(species.Name))
+                Landis.Extension.Succession.BiomassPnET.Cohort defolCohort = (cohort as Landis.Extension.Succession.BiomassPnET.Cohort);
+                if (id.landCoverSelectors.ContainsKey(defolCohort.Species.Name))
                 {
-                    totalDefoliation = id.landCoverSelectors[species.Name].percentage.Value;
+                    Percentage percentage = null;
+                    id.landCoverSelectors[defolCohort.Species.Name].Selects(defolCohort, out percentage);
+
+                    if (percentage == null)
+                        Model.Core.UI.WriteLine("Null percent");
+                    else
+                    {
+                        totalDefoliation = percentage.Value;
+                    }
+                    
                     if (totalDefoliation > 1.0)  // Cannot exceed 100% defoliation
                         totalDefoliation = 1.0;
-
-                    if (!id.repeat)
-                    { if (id.CheckSpeciesDefoliated(species.Name)) { totalDefoliation = 0.0f; } }
-                    id.CheckSpecies(species.Name);
                 }
             }
-            else
-                Model.Core.UI.WriteLine("Insect defoliation null, something wrong");
             
             return totalDefoliation;
         }
 
-        void ClearSpeciesDefoliated()
+        public static double DontCompute(ICohort cohort, ActiveSite active, int siteBiomass)
         {
-            List<string> spp = new List<string>(speciesChecked.Keys);
-            for (int i = 0; i < speciesChecked.Keys.Count; i++ )
-            {
-                speciesChecked[spp[i]] = false;
-            }
-        }
-
-        bool CheckSpeciesDefoliated(string name)
-        {
-            return speciesChecked[name];
-        }
-
-        public void CheckSpecies(string name)
-        {
-            speciesChecked[name] = true;
+            return 0;
         }
 
         public void PrintLandCoverDetails()
@@ -117,7 +131,7 @@ namespace Landis.Extension.LandUse.LandCover
             Model.Core.UI.WriteLine("Insect defoliation details: ");
             foreach (KeyValuePair<string, LandCoverCohortSelector> kvp in landCoverSelectors)
             {
-                Model.Core.UI.WriteLine("Species: " + kvp.Key + " " + "Rate: " + kvp.Value.percentage.ToString());
+                //Model.Core.UI.WriteLine("Species: " + kvp.Key + " " + "Rate: " + kvp.Value.percentage.ToString());
             }
         }
     }

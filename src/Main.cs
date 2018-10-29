@@ -112,7 +112,7 @@ namespace Landis.Extension.LandUse
                         for (int i = 0; i < newLandUse.LandCoverChanges.Length; i++)
                         {
                             LandCover.IChange LandCoverChange = newLandUse.LandCoverChanges[i];
-                            LandCoverChange.ApplyTo((ActiveSite)site);
+                            LandCoverChange.ApplyTo((ActiveSite)site, true);
                         }
                     }
                     else
@@ -129,7 +129,7 @@ namespace Landis.Extension.LandUse
                         for (int i = 0; i < currentLandUse.LandCoverChanges.Length; i++)
                         {
                             LandCover.IChange LandCoverChange = newLandUse.LandCoverChanges[i];
-                            LandCoverChange.ApplyTo((ActiveSite)site);
+                            LandCoverChange.ApplyTo((ActiveSite)site, false);
                         }
                     }
 

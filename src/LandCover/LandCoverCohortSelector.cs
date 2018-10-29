@@ -1,19 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using System.Collections.Generic;
 using Landis.Utilities;
 using Landis.Core;
+using Landis.Library.SiteHarvest;
+using Landis.Library.BiomassCohorts;
 
 namespace Landis.Extension.LandUse.LandCover
 {
-    public class LandCoverCohortSelector : Landis.Library.BiomassHarvest.PartialCohortSelectors 
+    public class LandCoverCohortSelector : Landis.Library.BiomassHarvest.SpecificAgesCohortSelector 
     {
-        public Percentage percentage;
-        public LandCoverCohortSelector(Percentage percent)
+        private AgesAndRanges agesAndRanges;
+        public List<AgeRange> AgeRanges;
+        private IDictionary<ushort, Percentage> percentages;
+        public LandCoverCohortSelector(IList<ushort> ages, IList<AgeRange> ranges, IDictionary<ushort, Percentage> percentages)
+            : base(ages, ranges, percentages)
         {
-            this.percentage = percent;
+            agesAndRanges = new AgesAndRanges(ages, ranges);
+            this.percentages = new Dictionary<ushort, Percentage>(percentages);
+            AgeRanges = new List<AgeRange>(ranges);
+        }
+
+        public AgeRange ContainingRange(ushort age)
+        {
+            AgeRange? ageRange;
+            agesAndRanges.Contains(age, out ageRange);
+            return (AgeRange)ageRange;
         }
     }
 }

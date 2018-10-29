@@ -47,18 +47,21 @@ namespace Landis.Extension.LandUse.LandCover
 
         //---------------------------------------------------------------------
 
-        public void ApplyTo(ActiveSite site)
+        public void ApplyTo(ActiveSite site, bool newLandUse)
         {
-            if (isDebugEnabled)
-                log.DebugFormat("    Applying LCC {0} to site {1}",
-                                GetType().Name,
-                                site.Location);
+            if (newLandUse || (!newLandUse && repeat))
+            {
+                if (isDebugEnabled)
+                    log.DebugFormat("    Applying LCC {0} to site {1}",
+                                    GetType().Name,
+                                    site.Location);
 
-            // For now, we don't do anything with the counts of cohorts cut.
-            CohortCounts cohortCounts = new CohortCounts();
-            cohortCutter.Cut(site, cohortCounts);
-            if (speciesToPlant != null)
-                Reproduction.ScheduleForPlanting(speciesToPlant, site);
+                // For now, we don't do anything with the counts of cohorts cut.
+                CohortCounts cohortCounts = new CohortCounts();
+                cohortCutter.Cut(site, cohortCounts);
+                if (speciesToPlant != null)
+                    Reproduction.ScheduleForPlanting(speciesToPlant, site);
+            }
         }
 
         public void PrintLandCoverDetails()

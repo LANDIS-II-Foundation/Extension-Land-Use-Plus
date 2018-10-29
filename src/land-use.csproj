@@ -31,6 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Landis.Extension.Succession.BiomassPnET-v3-LU">
+      <HintPath>..\..\Extension-PnET-Succession-Core-v7\src\obj\Debug\netstandard2.0\Landis.Extension.Succession.BiomassPnET-v3-LU.dll</HintPath>
+    </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts-v3">
       <HintPath>lib\Landis.Library.AgeOnlyCohorts-v3.dll</HintPath>
     </Reference>

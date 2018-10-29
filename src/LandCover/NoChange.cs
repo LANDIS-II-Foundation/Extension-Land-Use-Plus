@@ -25,14 +25,14 @@ namespace Landis.Extension.LandUse.LandCover
             get { return false; }
         }
 
-        public void ApplyTo(ActiveSite site)
+        public void ApplyTo(ActiveSite site, bool newLandUse)
         {
             // Do nothing to the site.
         }
 
         public void PrintLandCoverDetails()
         {
-            Model.Core.UI.WriteLine("Nothing to see here");
+           //  Model.Core.UI.WriteLine("Nothing to see here");
         }
     }
 }

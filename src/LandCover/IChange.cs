@@ -18,7 +18,7 @@ namespace Landis.Extension.LandUse.LandCover
         /// <summary>
         /// Apply the change to the land cover at an individual site.
         /// </summary>
-        void ApplyTo(ActiveSite site);
+        void ApplyTo(ActiveSite site, bool newLandUse);
         void PrintLandCoverDetails();
     }
 }
