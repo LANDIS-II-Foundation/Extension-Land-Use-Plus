@@ -107,8 +107,8 @@ namespace Landis.Extension.LandUse.LandCover
                     Percentage percentage = null;
                     id.landCoverSelectors[defolCohort.Species.Name].Selects(defolCohort, out percentage);
 
-                    if (percentage == null)
-                        //Model.Core.UI.WriteLine("Null percent");
+                    if (percentage == null) ;
+                    //Model.Core.UI.WriteLine("Null percent");
                     else
                     {
                         totalDefoliation = percentage.Value;
