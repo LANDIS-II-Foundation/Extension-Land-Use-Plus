@@ -7,7 +7,7 @@ using Landis.Library.BiomassHarvest;
 using Landis.Library.BiomassCohorts;
 using System.Collections.Generic;
 using System;
-using Landis.Extension.Succession.BiomassPnET;
+//using Landis.Extension.Succession.BiomassPnET;
 
 namespace Landis.Extension.LandUse.LandCover
 {
@@ -101,14 +101,17 @@ namespace Landis.Extension.LandUse.LandCover
 
             if (id != null)
             {
-                Landis.Extension.Succession.BiomassPnET.Cohort defolCohort = (cohort as Landis.Extension.Succession.BiomassPnET.Cohort);
+                //Landis.Extension.Succession.BiomassPnET.Cohort defolCohort = (cohort as Landis.Extension.Succession.BiomassPnET.Cohort);
+                ICohort defolCohort = cohort;
                 if (id.landCoverSelectors.ContainsKey(defolCohort.Species.Name))
                 {
                     Percentage percentage = null;
                     id.landCoverSelectors[defolCohort.Species.Name].Selects(defolCohort, out percentage);
 
-                    if (percentage == null) ;
-                    //Model.Core.UI.WriteLine("Null percent");
+                    if (percentage == null)
+                    {
+                        //Model.Core.UI.WriteLine("Null percent");
+                    }
                     else
                     {
                         totalDefoliation = percentage.Value;
