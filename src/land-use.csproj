@@ -43,6 +43,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Landis.Extension.Succession.BiomassPnET-v3">
+      <HintPath>..\..\..\Extension-PnET-Succession\deploy\Landis.Extension.Succession.BiomassPnET-v3.dll</HintPath>
+    </Reference>
     <Reference Include="Landis.Library.AgeOnlyCohorts-v3">
       <HintPath>..\..\..\Support-Library-Dlls-v7\Landis.Library.AgeOnlyCohorts-v3.dll</HintPath>
     </Reference>
