@@ -1,7 +1,7 @@
 LandisData   Extension
 
 Name         "Land Use Change"
-Version      "3.2 (beta release 2)"
+Version      "3.2 (beta release 3)"
 Type         "disturbance:land use"
 Assembly     Landis.Extension.LandUse-v3
 Class        Landis.Extension.LandUse.Main
