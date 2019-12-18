@@ -1,0 +1,5 @@
+LandisData	Ecoregions			
+>>	Active	MapCode	ecoregion_name	description
+no	0	water	"water"	
+yes	1	eco162	"Clim_region: 16 SoilType: SALO"  	
+	
