@@ -1,55 +1,75 @@
-LandisData "Land Use"
+LandisData   "Land Use"  << this is 7.0
 
-Timestep   10
-InputMaps  land-use-{timestep}.img
-SiteLog    land-use/site-log.csv    << optional: default = don't generate log
+Timestep    1
 
-ExternalScript external_module.py
-ExternalExecutable C:/Python27/ArcGIS10.4/python.exe
-ExternalCommand "python external_module.py”
+ InputMaps	landuse-{timestep}.img
+
+SiteLog		output/land-use/site-log.csv  <<optional:  default=don't generate log
+
+>>  ExternalScript "C:/Users/dml486/Desktop/LUtesting/singlecell/test_simple.R"
+>>   ExternalExecutable "C:\Program Files\R\R-3.3.1\bin\RScript.exe"
+>> ExternalCommand "Rscript test_simple.R"  <<test_R-insects<<  
+
+>>------------------------------->>------------------------------------
+
+LandUse          forest
+>>------------------------------------
+MapCode          4 
+AllowHarvest?    no 
+LandCoverChange  NoChange
+>>------------------------------------
+LandUse          "FIPSandHarvest"
+>>------------------------------------
+MapCode          3
+AllowHarvest?    yes
+>>         PreventEstablishment  
+ LandCoverChange  RemoveTrees
+ >>RepeatHarvest?   yes
+  		acerrubr 1-200(20%)
+		pinustro  50-300(30%)
+		querrubr 50-200 (40%)
+		abiebals 1-100 (10%)
+		
+ LandCoverChange	 InsectDefoliation 
+>>   RepeatHarvest?    yes
+    		querrubr 1-300 (60%) 
+ 		tsugcana 15-100 (25%)
 
 >>------------------------------------
-LandUse forest
+LandUse          "RemoveTreesOnly"  
+>>------------------------------------
+ MapCode          2  <<time0==4
+ AllowHarvest?    yes
+>>         PreventEstablishment  
+ LandCoverChange  RemoveTrees
+ >>RepeatHarvest?   yes
+  		acerrubr 1-200(20%)
+		pinustro  50-300(30%)
+		querrubr 50-200 (40%)
+>>  Plant fraxamer
+>> PreventEstablishment  <<prevent establishment implemented before LandCoverChange
+>> LandCoverChange	 InsectDefoliation <<removes the set percentage of foliage biomass
+>>   RepeatHarvest?    yes
+    >> 	acerrubr 1-100 (40%) 
+>>		tsugcana 45-100 (20%)
+>> Plant	ulmuamer
+
+>>------------------------------------
+LandUse          "FIPS" <<"Urban  development"
 >>------------------------------------
 MapCode          1
 AllowHarvest?    yes
-LandCoverChange  NoChange
-
->>------------------------------------
-LandUse "Urban development"
->>------------------------------------
-MapCode          2
-AllowHarvest?    No
-PreventEstablishment
-LandCoverChange  RemoveTrees
-RepeatHarvest? Yes
-                   PIST 1-300(100%)
-                   TSCA 1-300(100%)
-                   FAGR 1-300(100%)
-LandCoverChange  InsectDefoliation
-RepeatHarvest? Yes
-                   PIST 1-300(10%)
-                   TSCA 1-300(10%)
-                   FAGR 1-300(10%)
-		Plant PIST
-
-
->>------------------------------------
-LandUse "Garden"
->>------------------------------------
-MapCode          3
-AllowHarvest?    no
-LandCoverChange  RemoveTrees
-                   PIST 1-10(100%)
-	                Plant PIST
-		RepeatHarvest? Yes
-LandCoverChange InsectDefoliation
-		PIST 1 (15%)
-		RepeatHarvest? No
-
->>------------------------------------
-LandUse "no-harvest easement"
->>------------------------------------
-MapCode          4
-AllowHarvest?    no
-LandCoverChange  NoChange
+>>  PreventEstablishment   << Optional
+ >>LandCoverChange  RemoveTrees
+>> RepeatHarvest?   yes
+ >> 		acerrubr 1-100(40%)
+>>		pinustro  100-300(20%)
+>>		tsugcana 45-100 (20%)
+ 	
+      LandCoverChange	 InsectDefoliation <<removes the set percentage of foliage biomass
+      RepeatHarvest?    no
+            	querrubr 1-300 (75%) 
+		pinustro 1-62 (20%) 71-200 (25%)  
+		tsugcana 1-300 (25%)
+	
+>>Plant fraxamer

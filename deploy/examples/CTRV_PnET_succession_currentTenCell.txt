@@ -1,0 +1,20 @@
+LandisData "PnET-Succession"
+PnET-Succession	Value  
+Timestep 1 
+StartYear 2010 
+SeedingAlgorithm  WardSeedDispersal 
+Latitude  44 
+PNEToutputsites "CTRV_PNEToutputsites.txt" 
+
+InitialCommunities	"IC_sameMapCode.txt" 
+InitialCommunitiesMap	"mc1.img"
+
+LitterMap		"IC_highbioplotsLitter0.img"
+WoodyDebrisMap		"IC_highbioplotsWoodyDebris0.img"
+
+
+PnETSpeciesParameters  "./SPECIES_PNET_V42.txt"  
+EcoregionParameters  "CTRV_march2017_current_rcp85_pnet_EcoregionParametersTenCell.txt" 
+
+
+PnETGenericParameters "./GENERIC_PNET_V31dev9000PreEstFALSE.txt" 
