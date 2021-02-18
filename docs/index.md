@@ -10,7 +10,7 @@ Features
 Release Notes
 Latest official release: Version 3.0 — February 2021
 This extension was formerly named Land Use Plus and informally named Land Use Change.
-[LU+ User Guide](https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Plus/blob/master/docs/Land%20Use%Plus%20v3.0_User%20Guide.docx).
+[LU+ User Guide](https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Plus/blob/master/docs/Land%20Use%20Plus%20v3.0%20User%20Guide.docx).
 Full release details found in the LU+ User Guide and on GitHub.
 Requirements
 To use LU+, you need:
