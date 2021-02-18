@@ -26,7 +26,7 @@ Thompson, J.T., E. Simons-Legaard, K. Legaard, J.B. Domingo, 2016. A LANDIS-II e
 Example Files
 LANDIS-II requires a global parameter file for your scenario, and then different parameter files for each extension.
 
-[LUC+ text file example]().
+[LU+ text file example]().
 
 Support
 If you have a question, please contact Jonathan Thompson at jthomps@fas.harvard.edu. You can also ask for help in the LANDIS-II users group.
