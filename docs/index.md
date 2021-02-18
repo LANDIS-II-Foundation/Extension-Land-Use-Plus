@@ -1,8 +1,8 @@
-What is the Land Use Change Extension?
-The Land Use Change (LUC+) extension allows users to incorporate a sequence of maps depicting changes in land use, land cover, or other user-defined disturbances. Map values correspond to prescribed forest changes where changes in map value trigger a prescribed forest change. Forest change prescriptions are derived from, and analogous to, the harvest prescription s used in the Biomass Harvest extension.
+What is the Land Use Plus (LU+) Extension?
+The Land Use Plus (LU+) extension allows users to incorporate a sequence of maps depicting changes in land use, land cover, or other user-defined disturbances. Map values correspond to prescribed forest changes where changes in map value trigger a prescribed forest change. Forest change prescriptions are derived from, and analogous to, the harvest prescription s used in the Biomass Harvest extension.
 
 Features
- Incorporate land use, land cover change, or forest stressor into LANDIS-II simulations.
+ Incorporate land use or land cover change into LANDIS-II simulations.
  Create reactive land use or land cover changes using PAUSE functionality.
  Simulate forest stressors (i.e. disturbance caused by insects).
  Remove biomass according to user-defined land cover class prescriptions.
@@ -10,7 +10,7 @@ Features
 Release Notes
 Latest official release: Version 3.0 — February 2021
 This extension was formerly named Land Use Plus and informally named Land Use Change.
-[LUC+ User Guide](https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Change/blob/master/docs/Land%20Use%Plus%20v3.0_User%20Guide.docx).
+[LU+ User Guide](https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Change/blob/master/docs/Land%20Use%Plus%20v3.0_User%20Guide.docx).
 Full release details found in the LUC+ User Guide and on GitHub.
 Requirements
 To use LU+, you need:
