@@ -2,7 +2,7 @@
 
 This repository contains the source code for the [Land Use extension][] for the [LANDIS-II simulation model][].
 
-[Land Use extension]: http://www.landis-ii.org/extensions/land-use-change
+[Land Use extension]: https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Plus/blob/master/docs/index.md
 [LANDIS-II simulation model]: http:/www.landis-ii.org
 
 ## Users
