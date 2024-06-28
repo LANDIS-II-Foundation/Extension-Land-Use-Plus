@@ -5,7 +5,7 @@ using System.Text;
 
 using Landis.Core;
 using Landis.Utilities;
-using Landis.Library.BiomassHarvest;
+
 using Landis.Library.SiteHarvest;
 
 namespace Landis.Extension.LandUse.LandCover

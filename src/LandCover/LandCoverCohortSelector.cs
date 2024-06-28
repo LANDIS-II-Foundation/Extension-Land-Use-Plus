@@ -2,7 +2,7 @@
 using Landis.Utilities;
 using Landis.Core;
 using Landis.Library.SiteHarvest;
-using Landis.Library.BiomassCohorts;
+using Landis.Library.UniversalCohorts;
 
 namespace Landis.Extension.LandUse.LandCover
 {

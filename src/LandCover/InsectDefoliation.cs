@@ -1,10 +1,8 @@
-﻿using Landis.Core;
-using Landis.Utilities;
+﻿using Landis.Utilities;
 using Landis.Library.Succession;
 using Landis.SpatialModeling;
 using Landis.Library.SiteHarvest;
-using Landis.Library.BiomassHarvest;
-using Landis.Library.BiomassCohorts;
+using Landis.Library.UniversalCohorts;
 using System.Collections.Generic;
 using System;
 //using Landis.Extension.Succession.BiomassPnET;
@@ -68,18 +66,18 @@ namespace Landis.Extension.LandUse.LandCover
         /// Passed anonymously to succession modules to compute defoliation
         /// In succession modules defoliation is computed per-cohort, hence cohortBiomass parameter
         /// </summary>
-        /// <param name="active"></param>
-        /// <param name="species"></param>
+        /// <param name="site"></param>
+        /// <param name="cohort"></param>
         /// <param name="cohortBiomass"></param>
         /// <param name="siteBiomass"></param>
         /// <returns></returns>
         //public static double InsectDefoliate(ActiveSite active, ISpecies species, int cohortBiomass, int siteBiomass)
-        public static double InsectDefoliate(ICohort cohort, ActiveSite active, int siteBiomass)
+        public static double InsectDefoliate(ActiveSite site, ICohort cohort, int cohortBiomass, int siteBiomass)
         {
             double totalDefoliation = 0.0;
             
             InsectDefoliation id = null;
-            foreach (IChange lcc in SiteVars.LandUse[active].LandCoverChanges)
+            foreach (IChange lcc in SiteVars.LandUse[site].LandCoverChanges)
             {
                 if (lcc.GetType() == typeof(InsectDefoliation))
                 {
@@ -125,7 +123,7 @@ namespace Landis.Extension.LandUse.LandCover
             return totalDefoliation;
         }
 
-        public static double DontCompute(ICohort cohort, ActiveSite active, int siteBiomass)
+        public static double DontCompute(ActiveSite site, ICohort cohort, int cohortBiomass, int siteBiomass)
         {
             return 0;
         }

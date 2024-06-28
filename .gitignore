@@ -208,3 +208,12 @@ FakesAssemblies/
 
 # LANDIS-II	
 *.dll
+deploy/examples/Core-v8 Biomass Succession/Biomass-succession-log.csv
+/deploy/examples/Core-v8 Biomass Succession/biomass-succession
+deploy/examples/Core-v8 Biomass Succession/Climate-annual-log.csv
+deploy/examples/Core-v8 Biomass Succession/Climate-future-input-log.csv
+deploy/examples/Core-v8 Biomass Succession/Climate-spinup-input-log.csv
+deploy/examples/Core-v8 Biomass Succession/Landis-climate-log.txt
+deploy/examples/Core-v8 Biomass Succession/Landis-log.txt
+/deploy/examples/Core-v8 Biomass Succession/Metadata
+/deploy/examples/Core-v8 Biomass Succession/output

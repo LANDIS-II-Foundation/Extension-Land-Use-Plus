@@ -6,7 +6,7 @@
 
 using Landis.Core;
 using Landis.Library.Succession;
-using Landis.Library.BiomassHarvest;
+
 using Landis.SpatialModeling;
 using log4net;
 using System.Collections.Generic;
@@ -156,22 +156,22 @@ namespace Landis.Extension.LandUse
             string inputMapPath = MapNames.ReplaceTemplateVars(inputMapTemplate, Model.Core.CurrentTime);
             Model.Core.UI.WriteLine("  Reading map \"{0}\"...", inputMapPath);
 
-            IInputRaster<MapPixel> inputMap;
+            IInputRaster<UShortPixel> inputMap;
             Dictionary<string, int> counts = new Dictionary<string, int>();
 
-            using (inputMap = Model.Core.OpenRaster<MapPixel>(inputMapPath))
+            using (inputMap = Model.Core.OpenRaster<UShortPixel>(inputMapPath))
             {
-                MapPixel pixel = inputMap.BufferPixel;
+                UShortPixel pixel = inputMap.BufferPixel;
                 foreach (Site site in Model.Core.Landscape.AllSites)
                 {
                     inputMap.ReadBufferPixel();
                     if (site.IsActive)
                     {
-                        LandUse landUse = LandUseRegistry.LookUp(pixel.LandUseCode.Value);
+                        LandUse landUse = LandUseRegistry.LookUp(pixel.MapCode.Value);
                         if (landUse == null)
                         {
                             string message = string.Format("Error: Unknown map code ({0}) at pixel {1}",
-                                                           pixel.LandUseCode.Value,
+                                                           pixel.MapCode.Value,
                                                            site.Location);
                             throw new System.ApplicationException(message);
                         }
@@ -199,6 +199,12 @@ namespace Landis.Extension.LandUse
             Model.Core.UI.WriteLine("Closing logfile");
             if (SiteLog.Enabled)
                 SiteLog.Close();
+        }
+
+        public override void AddCohortData()
+        {
+            // ADD CUSTOM DYNAMIC COHORT PARAMETERS HERE
+            return;
         }
     }
 
