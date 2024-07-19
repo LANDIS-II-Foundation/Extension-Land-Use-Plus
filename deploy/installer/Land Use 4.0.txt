@@ -1,9 +1,9 @@
 LandisData   Extension
 
 Name         "Land Use Change"
-Version      "3.1"
+Version      "4.0"
 Type         "disturbance:land use"
-Assembly     Landis.Extension.LandUse-v3
+Assembly     Landis.Extension.LandUse-v4
 Class        Landis.Extension.LandUse.Main
 Description  "Land Use and Land Cover Change"
-CoreVersion  7.0
+CoreVersion  8.0
