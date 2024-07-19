@@ -217,3 +217,17 @@ deploy/examples/Core-v8 Biomass Succession/Landis-climate-log.txt
 deploy/examples/Core-v8 Biomass Succession/Landis-log.txt
 /deploy/examples/Core-v8 Biomass Succession/Metadata
 /deploy/examples/Core-v8 Biomass Succession/output
+testing/Core-v7 PnET/LUCexampleFile.zip
+testing/Core-v7 PnET/LUPlusExampleFile.zip
+testing/Core-v8 Biomass Succession/Biomass-succession-log.csv
+testing/Core-v8 Biomass Succession/Climate-annual-log.csv
+testing/Core-v8 Biomass Succession/Climate-future-input-log.csv
+testing/Core-v8 Biomass Succession/Climate-spinup-input-log.csv
+testing/Core-v8 Biomass Succession/Landis-climate-log.txt
+testing/Core-v8 Biomass Succession/Metadata/Biomass Succession/Biomass Succession.xml
+testing/Core-v8 Biomass Succession/Metadata/Biomass Succession/SummaryLog_Metadata.xml
+testing/Core-v8 Biomass Succession/Metadata/Climate-Library/Annual-Log_Metadata.xml
+testing/Core-v8 Biomass Succession/Metadata/Climate-Library/Climate-Library.xml
+testing/Core-v8 Biomass Succession/Metadata/Climate-Library/Future-Input-Log_Metadata.xml
+testing/Core-v8 Biomass Succession/Metadata/Climate-Library/Spinup-Input-Log_Metadata.xml
+testing/Core-v8 Biomass Succession/Metadata/LANDIS-II v8.0/LANDIS-II v8.0.xml

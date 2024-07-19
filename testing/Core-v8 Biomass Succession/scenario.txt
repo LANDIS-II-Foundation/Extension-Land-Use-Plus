@@ -1,8 +1,8 @@
 LandisData Scenario
 Duration 10
 Species species_s2e1.txt
-Ecoregions ecoregions_s2e1.txt
-EcoregionsMap ecoregions_s2e1.gis
+Ecoregions ecoregions.txt
+EcoregionsMap ecoregions.tif
 CellLength 100 << meters
 
 >> Succession Extension     Initialization File

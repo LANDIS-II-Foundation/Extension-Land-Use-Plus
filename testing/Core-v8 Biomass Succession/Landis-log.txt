@@ -1,0 +1,51 @@
+2024-07-19 12:58:47,099 - LANDIS-II 8.0 (8)
+2024-07-19 12:58:47,103 - 
+2024-07-19 12:58:47,150 - Loading scenario from file "scenario.txt" ...
+2024-07-19 12:58:47,180 - Initialized random number generator with user-supplied seed = 4,084,232,854
+2024-07-19 12:58:47,181 - Loading species data from file "species_s2e1.txt" ...
+2024-07-19 12:58:47,186 - Loading ecoregions from file "ecoregions.txt" ...
+2024-07-19 12:58:47,194 - Core metadata:
+2024-07-19 12:58:47,195 - LANDIS-II v8.0, Seed: 4084232854, ecoregions.tif, ecoregions.txt, species_s2e1.txt
+Succession:
+Biomass Succession Version: 7.0.0, Input: biomass-succession.txt
+Disturbance Extensions:
+Land Use Change Version: 4.0, Input: land-use.txt
+Other Extensions:
+
+2024-07-19 12:58:47,195 - Initializing landscape from ecoregions map "ecoregions.tif" ...
+2024-07-19 12:58:47,204 - Cell length = 100 m, cell area = 1 ha
+2024-07-19 12:58:47,205 - Map dimensions: 99 rows by 99 columns = 9,801 cells
+2024-07-19 12:58:47,211 - Sites: 9,801 active (100.0%), 0 inactive (0.0%)
+2024-07-19 12:58:47,217 - Loading Biomass Succession extension ...
+2024-07-19 12:58:47,276 -    Registering Data:  Succession.UniversalCohorts.
+2024-07-19 12:58:47,276 -    Registering Data:  Succession.WoodyDebris.
+2024-07-19 12:58:47,276 -    Registering Data:  Succession.Litter.
+2024-07-19 12:58:47,276 -    Registering Data:  Succession.MaxBiomass.
+2024-07-19 12:58:47,304 -    Begin reading FIRE REDUCTION parameters.
+2024-07-19 12:58:47,305 -    Begin reading HARVEST REDUCTION parameters.
+2024-07-19 12:58:47,321 -    Loading weather data ...
+2024-07-19 12:58:50,791 -    Generating summary table...
+2024-07-19 12:58:50,795 -    Registering Data:  TimeOfLastSuccession.
+2024-07-19 12:58:50,795 -    Registering Data:  Shade.
+2024-07-19 12:58:50,796 -    Creating Dispersal Neighborhood List.
+2024-07-19 12:58:50,796 -    Dispersal:  NeighborRadius=5050, CellLength=100, numCellRadius=50
+2024-07-19 12:58:50,807 -    Loading initial communities from file "./biomass-succession_InitialCommunities.csv" ...
+2024-07-19 12:58:50,811 -    Reading initial communities map "Initial-Communities.tif" ...
+2024-07-19 12:58:50,853 - Internal error occurred within the program:
+2024-07-19 12:58:50,854 -   Method not found: 'Double Compute.Invoke(Landis.SpatialModeling.ActiveSite, Landis.Core.ISpecies, Int32, Int32)'.
+2024-07-19 12:58:50,855 - 
+2024-07-19 12:58:50,855 - Stack trace:
+2024-07-19 12:58:50,871 -    at Landis.Extension.Succession.Biomass.CohortBiomass.ComputeChange(ICohort cohort, ActiveSite site, ExpandoObject& otherParams)
+   at Landis.Library.UniversalCohorts.SpeciesCohorts.GrowCohort(Int32 index, ActiveSite site, Boolean annualTimestep)
+   at Landis.Library.UniversalCohorts.OldToYoungIterator.GrowCurrentCohort(ActiveSite site, Boolean annualTimestep)
+   at Landis.Library.UniversalCohorts.SiteCohorts.GrowFor1Year(ActiveSite site)
+   at Landis.Library.UniversalCohorts.SiteCohorts.Grow(ActiveSite site, Boolean isSuccessionTimestep)
+   at Landis.Extension.Succession.Biomass.PlugIn.GrowCohorts(ActiveSite site, Int32 years, Boolean isSuccessionTimestep) in C:\Users\rschell\Documents\GitHub\Extension-Biomass-Succession\src\PlugIn.cs:line 298
+   at Landis.Extension.Succession.Biomass.InitialBiomass.MakeBiomassCohorts(List`1 ageCohorts, ActiveSite site, ComputeMethod initialBiomassMethod) in C:\Users\rschell\Documents\GitHub\Extension-Biomass-Succession\src\InitialBiomass.cs:line 228
+   at Landis.Extension.Succession.Biomass.InitialBiomass.MakeBiomassCohorts(List`1 ageCohorts, ActiveSite site) in C:\Users\rschell\Documents\GitHub\Extension-Biomass-Succession\src\InitialBiomass.cs:line 270
+   at Landis.Extension.Succession.Biomass.InitialBiomass.Compute(ActiveSite site, ICommunity initialCommunity) in C:\Users\rschell\Documents\GitHub\Extension-Biomass-Succession\src\InitialBiomass.cs:line 150
+   at Landis.Extension.Succession.Biomass.PlugIn.InitializeSite(ActiveSite site) in C:\Users\rschell\Documents\GitHub\Extension-Biomass-Succession\src\PlugIn.cs:line 120
+   at Landis.Extension.Succession.Biomass.PlugIn.InitializeSites(String initialCommunitiesText, String initialCommunitiesMap, ICore modelCore) in C:\Users\rschell\Documents\GitHub\Extension-Biomass-Succession\src\PlugIn.cs:line 420
+   at Landis.Extension.Succession.Biomass.PlugIn.Initialize() in C:\Users\rschell\Documents\GitHub\Extension-Biomass-Succession\src\PlugIn.cs:line 112
+   at Landis.Model.Run(String scenarioPath, IUserInterface ui)
+   at Landis.App.Main(String[] args) in C:\GitHub\Core-Model-v8\Tool-Console\src\App.cs:line 99
