@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <RootNamespace>Landis.Extension.LandUse</RootNamespace>
-    <AssemblyName>Landis.Extension.LandUse-v4</AssemblyName>
-    <AssemblyTitle>Landis.Extension.LandUse-v3</AssemblyTitle>
     <AssemblyCompany>Landis-II-Foundation</AssemblyCompany>
-    <AssemblyProduct>Landis.Extension.LandUse-v3</AssemblyProduct>
+	<AssemblyName>Landis.Extension.LandUse-v4</AssemblyName>
+    <AssemblyTitle>Landis.Extension.LandUse-v4</AssemblyTitle>
+    <AssemblyProduct>Landis.Extension.LandUse-v4</AssemblyProduct>
     <AssemblyCopyright>Landis-II-Foundation</AssemblyCopyright>
     <AssemblyVersion>4.0</AssemblyVersion>
     <TargetFramework>netstandard2.0</TargetFramework>
