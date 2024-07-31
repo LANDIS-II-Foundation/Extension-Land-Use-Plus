@@ -1,8 +1,0 @@
-LandisData "Initial Communities"
->>MapCode 0 <<
-
-MapCode 1 << 
-acerrubr 118 (5500)
-querrubr 100 (3500)
-tsugcana 150 (3000)
-pinustro 30 (2000)

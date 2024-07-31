@@ -1,3 +1,0 @@
-LandisData  EcoregionParameters						
-EcoregionParameters	PrecLossFrac	climateFileName	SoilType	RootingDepth	LeakageFrac	SnowSublimFrac
-eco162	0.07	16_june_2016_cr_currentrcp85_climate.txt	SALO	1000	1	0.15

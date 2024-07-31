@@ -2,7 +2,7 @@ LandisData   "Land Use"  << this is 7.0
 
 Timestep    1
 
- InputMaps	landuse-{timestep}.img
+ InputMaps	landuse-{timestep}.tif
 
 SiteLog		output/land-use/site-log.csv  <<optional:  default=don't generate log
 

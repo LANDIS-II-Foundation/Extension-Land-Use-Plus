@@ -11,11 +11,10 @@ CellLength 100 << meters
 
 >> Disturbance Extensions   Initialization File
 >> ----------------------   -------------------
- "Land Use Change"	"land-use.txt"     
+ "Land Use Change"	"land-use-change-inputs.txt"     
 
 >> Other Extensions         Initialization File
 >> ----------------         -------------------
->> "Output-PnET" 		"pnet_biomass_output_landscape.txt"
 
 
 RandomNumberSeed  4084232854  << optional parameter; default = the seed is randomly generated using the current time
