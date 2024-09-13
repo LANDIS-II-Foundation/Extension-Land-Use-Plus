@@ -13,7 +13,7 @@ Thompson, J.T., E. Simons-Legaard, K. Legaard, J.B. Domingo, 2016. A LANDIS-II e
 # Release Notes
  - Latest official release: Version 4.0 — August 2024
  - This extension was formerly named Land Use Plus and informally named Land Use Change.
- - [LU+ User Guide](https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Plus/blob/master/docs/Land%20Use%20Plus%20v4.0%20User%20Guide.docx).
+ - [LU+ User Guide](https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Plus/blob/master/docs/Land%20Use%20Plus%20v4.0%20User%20Guide.pdf).
  - Full release details found in the LU+ User Guide and on GitHub.
  - Copyright The LANDIS-II Foundation
 
