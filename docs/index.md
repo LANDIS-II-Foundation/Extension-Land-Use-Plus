@@ -15,12 +15,13 @@ Thompson, J.T., E. Simons-Legaard, K. Legaard, J.B. Domingo, 2016. A LANDIS-II e
  - This extension was formerly named Land Use Plus and informally named Land Use Change.
  - [LU+ User Guide](https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Plus/blob/master/docs/Land%20Use%20Plus%20v4.0%20User%20Guide.docx).
  - Full release details found in the LU+ User Guide and on GitHub.
+ - Copyright The LANDIS-II Foundation
 
 # Requirements
 
 You need:
 
- - The LANDIS-II model v8.0 installed on your computer, a succession extension, an output extension.  We use PnET Succession and PnET Output.
+- The [LANDIS-II model v8.0](http://www.landis-ii.org/install) installed on your computer.
 - Extension Installer
 - Example files (see below)
 
@@ -32,7 +33,7 @@ You need:
 
 
 ## Support
-If you have a question, please contact Jonathan Thompson at jthomps@fas.harvard.edu. You can also ask for help in the LANDIS-II users group.
+If you have a question, please contact Jonathan Thompson. You can also ask for help in the LANDIS-II users group.
 
 If you come across any issue or suspected bug when using LU+, please post about it in the issue section of the Github repository.
 
@@ -41,4 +42,4 @@ Jonathan Thompson
 
 Senior Scientist at Harvard Forest
 
-Mail : jthomps@fas.harvard.edu
+
