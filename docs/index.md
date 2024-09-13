@@ -26,7 +26,7 @@ You need:
 - Example files (see below)
 
 # Download and Run the Extension Installer
-- The latest version can be downloaded [here](https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Plus/blob/master/deploy/installer/LANDIS-II-V8%20Land%20Use%20Change%204.0setup.exe). (Look for the download icon in the upper right corner.)  Launch the installer.
+- The latest version can be downloaded [here](https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Plus/blob/master/deploy/installer/LANDIS-II-V8%20Land%20Use%20Change%204.0-setup.exe). (Look for the download icon in the upper right corner.)  Launch the installer.
 
 # Example Files
 - Example files can be [downloaded from GitHub](https://downgit.github.io/#/home?url=https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Plus/tree/master/Testing/Core-v8%20Biomass%20Succession).
