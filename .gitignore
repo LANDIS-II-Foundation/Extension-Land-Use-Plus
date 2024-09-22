@@ -256,3 +256,7 @@ testing/Core8.0-LUC4.0/biomass-succession/biomass-anpp-7.tif
 testing/Core8.0-LUC4.0/biomass-succession/biomass-anpp-8.tif
 testing/Core8.0-LUC4.0/biomass-succession/biomass-anpp-9.tif
 src/land-use.sln
+testing/Core8.0-LUC4.0/Climate-future-annual-log.csv
+testing/Core8.0-LUC4.0/Climate-spinup-annual-log.csv
+testing/Core8.0-LUC4.0/Metadata/Climate-Library/Future-Annual-Log_Metadata.xml
+testing/Core8.0-LUC4.0/Metadata/Climate-Library/Spinup-Annual-Log_Metadata.xml
