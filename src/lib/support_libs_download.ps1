@@ -8,8 +8,8 @@ $master = "https://github.com/LANDIS-II-Foundation/Support-Library-Dlls-v8/raw/m
 
 $dlls = "Landis.Library.BiomassHarvest-v3.dll",
 "Landis.Library.SiteHarvest-v2.dll",
-"Landis.Library.Succession-v9.dll",
-"Landis.Library.UniversalCohorts-v1.dll"
+"Landis.Library.Succession-v10.dll",
+"Landis.Library.UniversalCohorts-v2.dll"
 #************************************************
 
 
