@@ -6,8 +6,8 @@ $master = "https://github.com/LANDIS-II-Foundation/Support-Library-Dlls-v8/raw/m
 # LANDIS-II support library dependencies
 # Modify here when any dependencies change 
 
-$dlls = "Landis.Library.BiomassHarvest-v3.dll",
-"Landis.Library.SiteHarvest-v2.dll",
+$dlls = "Landis.Library.BiomassHarvest-v4.dll",
+"Landis.Library.SiteHarvest-v3.dll",
 "Landis.Library.Succession-v10.dll",
 "Landis.Library.UniversalCohorts-v2.dll"
 #************************************************
