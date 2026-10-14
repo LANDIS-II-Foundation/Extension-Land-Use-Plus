@@ -31,7 +31,7 @@ You need:
 
 # Example Files
 
-- Example files can be [downloaded from GitHub](https://downgit.github.io/#/home?url=https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Plus/tree/master/testing/Core8.0-LUC4.0).
+- Example files that use PnET Succession with Land Use Plus can be [downloaded from GitHub](https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Plus/blob/master/testing/LandUsePlusExampleFile.zip).
 
 
 ## Support
