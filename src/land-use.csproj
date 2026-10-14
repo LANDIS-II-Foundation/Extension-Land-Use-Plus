@@ -7,7 +7,7 @@
     <AssemblyTitle>Landis.Extension.LandUse-v4</AssemblyTitle>
     <AssemblyProduct>Landis.Extension.LandUse-v4</AssemblyProduct>
     <AssemblyCopyright>Landis-II-Foundation</AssemblyCopyright>
-    <AssemblyVersion>4.0</AssemblyVersion>
+    <AssemblyVersion>4.1</AssemblyVersion>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/LANDIS-II-Foundation/Extension-Land-Use-Change</RepositoryUrl>
@@ -16,13 +16,13 @@
     <PackageProjectUrl>http://www.landis-ii.org</PackageProjectUrl>
     <NeutralLanguage>English</NeutralLanguage>
     <Authors>Landis-II-Foundation</Authors>
-    <Product>Landis.Extension.LandUse-v3</Product>
+    <Product>Landis.Extension.LandUse-v4</Product>
     <Copyright>Landis-II-Foundation</Copyright>
-    <Version>4.0</Version>
+    <Version>4.1</Version>
     <PackageTags>LANDIS-II;Landis;Extension;Land-Use-Change</PackageTags>
     <Description></Description>
     <PackageReleaseNotes>.NET Standard 2.0 update</PackageReleaseNotes>
-    <FileVersion>4.0.0.0</FileVersion>
+    <FileVersion>4.1.0.0</FileVersion>
 
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
